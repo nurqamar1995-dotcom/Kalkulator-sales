@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#d92525">
+    <title>Retail Assistant Pro</title>
+
+    <style>
+        :root {
+            --header-red: #d92525;
+            --badge-yellow: #f8c102;
+            --card-border: #f8c102;
+            --bg-color: #f6f7fb;
+            --card-bg: #ffffff;
+            --text-primary: #1f242e;
+            --text-secondary: #636b78;
+            --input-border: #d2d6dc;
+            --input-bg: #ffffff;
+            --accent-btn: #d92525;
+        }
+
+        body.dark-mode {
+            --bg-color: #121418;
+            --card-bg: #1e2229;
+            --text-primary: #f0f2f5;
+            --text-secondary: #9da4b0;
+            --input-border: #3b4252;
+            --input-bg: #282d37;
+            --card-border: #d4a000;
+        }
+
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; transition: background-color 0.2s, color 0.2s; }
+        body { background-color: var(--bg-color); color: var(--text-primary); margin: 0; padding: 0; padding-bottom: 50px; }
+
+        /* HEADER */
+        .app-header {
+            background-color: var(--header-red);
+            color: #ffffff;
+            padding: 22px 16px 18px 16px;
+            border-bottom-left-radius: 26px;
+            border-bottom-right-radius: 26px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(217, 37, 37, 0.25);
+            text-align: center;
+        }
+
+        .dark-btn {
+            position: absolute;
+            right: 14px;
+            top: 14px;
+            background: rgba(0, 0, 0, 0.18);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            font-family: 'Arial Black', Impact, sans-serif;
+        }
+
+        .header-subtitle {
+            font-size: 11px;
+            font-style: italic;
+            opacity: 0.9;
+            margin-top: 2px;
+            margin-bottom: 12px;
+            font-family: Georgia, serif;
+        }
+
+        .toko-input-badge {
+            display: inline-block;
+            background-color: var(--badge-yellow);
+            padding: 2px 8px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .toko-input-badge input {
+            background: transparent;
+            border: none;
+            outline: none;
+            font-weight: 900;
+            font-size: 13px;
+            color: #000000;
+            text-align: center;
+            width: 220px;
+            text-transform: uppercase;
+        }
+
+        /* GRID DASHBOARD */
+        .main-container { padding: 18px 16px; }
+        .grid-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .menu-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 16px;
+            padding: 18px 10px;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 105px;
+        }
+
+        .menu-card:active { transform: scale(0.96); opacity: 0.9; }
+        .menu-icon { font-size: 32px; margin-bottom: 8px; line-height: 1; }
+        .menu-title { font-size: 11.5px; font-weight: 700; color: var(--text-primary); }
+
+        /* SUB PAGES */
+        .sub-page { display: none; }
+        .sub-page.active { display: block; }
+        
+        .btn-back-home {
+            background: #e2e8f0;
+            color: #334155;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-view {
+            background-color: var(--card-bg);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 14px;
+        }
+
+        .row { display: flex; gap: 8px; margin-bottom: 8px; }
+        .col { flex: 1; }
+        label { font-size: 10px; font-weight: bold; color: var(--text-secondary); display: block; margin-bottom: 4px; text-transform: uppercase; }
+        input, select { width: 100%; padding: 9px; border: 1px solid var(--input-border); background-color: var(--input-bg); color: var(--text-primary); border-radius: 8px; font-size: 13px; outline: none; }
+        input[readonly] { background-color: rgba(0,0,0,0.05); font-weight: bold; }
+        
+        .btn-act { width: 100%; padding: 11px; border: none; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; color: white; margin-top: 10px; background-color: var(--accent-btn); }
+        .btn-green { background-color: #137333; }
+        .btn-outline { background: transparent; border: 1px solid var(--input-border); color: var(--text-primary); }
+        
+        .grid-result { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .res-box { background: var(--bg-color); padding: 10px; border-radius: 8px; border-left: 4px solid var(--input-border); }
+        .res-box.full { grid-column: span 2; }
+        .res-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; font-weight: bold; }
+        .res-value { font-size: 13px; font-weight: bold; color: var(--text-primary); margin-top: 3px; }
+
+        /* SPREADSHEET ABSENSI */
+        .sheet-wrapper {
+            overflow-x: auto;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #ffffff;
+            max-width: 100%;
+        }
+
+        .sheet-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .sheet-table th, .sheet-table td {
+            border: 1px solid #cbd5e1;
+            padding: 4px;
+            text-align: center;
+            min-width: 32px;
+        }
+
+        .sheet-table th.col-nama, .sheet-table td.col-nama {
+            position: sticky;
+            left: 0;
+            background: #f8fafc;
+            z-index: 2;
+            min-width: 120px;
+            text-align: left;
+            padding-left: 6px;
+            font-weight: bold;
+        }
+
+        .sheet-table th { background: #00bcd4; color: white; font-weight: bold; }
+        
+        .shift-cell {
+            width: 100%;
+            border: none;
+            outline: none;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+            padding: 3px 0;
+            background: transparent;
+            text-transform: uppercase;
+        }
+
+        .cell-off { background-color: #e53935 !important; color: #ffffff !important; font-weight: bold; }
+        .cell-so { background-color: #fb8c00 !important; color: #ffffff !important; font-weight: bold; }
+        .cell-p { background-color: #ffffff; color: #1e293b; }
+        .cell-s { background-color: #ffffff; color: #1e293b; }
+
+        .btn-del-row {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 13px;
+            padding: 0 4px;
+            font-weight: bold;
+        }
+
+        .app-footer {
+            text-align: center;
+            font-size: 11px;
+            color: #d92525;
+            margin-top: 25px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="app-header">
+        <button class="dark-btn" onclick="toggleDarkMode()" id="darkIcon">🌙</button>
+        <h1 class="header-title">RETAIL ASSISTANT PRO</h1>
+        <div class="header-subtitle">by : qmr</div>
+        <div class="toko-input-badge">
+            <input type="text" id="tokoIdentitas" placeholder="KODE TOKO|NAMA TOKO" oninput="saveIdentitas()">
+        </div>
+    </header>
+
+    <div class="main-container">
+        
+        <!-- DASHBOARD 8 MENU -->
+        <div id="pageHome" class="sub-page active">
+            <div class="grid-dashboard">
+                <div class="menu-card" onclick="openMenu('pageSales')"><div class="menu-icon">📊</div><div class="menu-title">Sales & GM</div></div>
+                <div class="menu-card" onclick="openMenu('pageIkt')"><div class="menu-icon">🎯</div><div class="menu-title">IKT Calculator</div></div>
+                <div class="menu-card" onclick="openMenu('pageProyeksi')"><div class="menu-icon">🚀</div><div class="menu-title">Kejar SPD</div></div>
+                <div class="menu-card" onclick="openMenu('pageKasir')"><div class="menu-icon">👥</div><div class="menu-title">Target Kasir</div></div>
+                <div class="menu-card" onclick="openMenu('pageMath')"><div class="menu-icon">📐</div><div class="menu-title">MTK Retail</div></div>
+                <div class="menu-card" onclick="openMenu('pageDict')"><div class="menu-icon">📖</div><div class="menu-title">Kamus</div></div>
+                <div class="menu-card" onclick="openMenu('pageGame')"><div class="menu-icon">🎮</div><div class="menu-title">Memory Game</div></div>
+                <div class="menu-card" onclick="openMenu('pageAbsensi')"><div class="menu-icon">📅</div><div class="menu-title">PLAN ABSENSI</div></div>
+            </div>
+        </div>
+
+        <!-- 1. SALES & GM -->
+        <div id="pageSales" class="sub-page">
+            <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
+            <div class="card-view">
+                <h3 style="margin-top:0; color:var(--header-red);">Laporan Sales & Gross Margin</h3>
+                <div style="margin-bottom: 8px;">
+                    <label>Jumlah Hari Kerja (JHK)</label>
+                    <input type="number" id="jhk" placeholder="Contoh: 30" oninput="formatRupiahInput(this); hitungAutoSalesTargets(); autoSaveTargets();">
+                </div>
+                <div class="row">
+                    <div class="col"><label>Net Sales Target</label><input type="text" id="targetNetSales" placeholder="0" oninput="formatRupiahInput(this); hitungAutoSalesTargets(); autoSaveTargets();"></div>
+                    <div class="col"><label>Net Sales Actual (SPD x JHK)</label><input type="text" id="actualNetSales" placeholder="Otomatis" readonly></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>SPD Target (Sales/JHK)</label><input type="text" id="targetSpd" placeholder="Otomatis" readonly></div>
+                    <div class="col"><label>SPD Actual</label><input type="text" id="actualSpd" placeholder="0" oninput="formatRupiahInput(this); hitungAutoSalesTargets();"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>APC Target</label><input type="text" id="targetApc" placeholder="0" oninput="formatRupiahInput(this); hitungAutoSalesTargets(); autoSaveTargets();"></div>
+                    <div class="col"><label>APC Actual</label><input type="text" id="actualApc" placeholder="0" oninput="formatRupiahInput(this)"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>STD Target (SPD/APC)</label><input type="text" id="targetStd" placeholder="Otomatis" readonly></div>
+                    <div class="col"><label>STD Actual</label><input type="text" id="actualStd" placeholder="0" oninput="formatRupiahInput(this)"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Target GM (%)</label><input type="number" step="0.01" id="targetGm" placeholder="21.50" oninput="autoSaveTargets()"></div>
+                    <div class="col"><label>Actual GM (%)</label><input type="number" step="0.01" id="actualGm" placeholder="20.80"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>PSM Target</label><input type="text" id="targetPsm" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div>
+                    <div class="col"><label>PSM Actual</label><input type="text" id="actualPsm" placeholder="0" oninput="formatRupiahInput(this)"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>PWP Target</label><input type="text" id="targetPwp" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div>
+                    <div class="col"><label>PWP Actual</label><input type="text" id="actualPwp" placeholder="0" oninput="formatRupiahInput(this)"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Serba Target</label><input type="text" id="targetSg" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div>
+                    <div class="col"><label>Serba Actual</label><input type="text" id="actualSg" placeholder="0" oninput="formatRupiahInput(this)"></div>
+                </div>
+
+                <div style="display:flex; gap:6px;">
+                    <button class="btn-act" onclick="kalkulasiSales()">HITUNG SALES</button>
+                    <button class="btn-act btn-outline" style="width:80px;" onclick="resetSales()">RESET</button>
+                </div>
+            </div>
+
+            <div class="card-view" id="hasilSalesBox" style="display:none;">
+                <h4 style="margin-top:0;">Hasil Analisis Sales & Margin</h4>
+                <div class="grid-result">
+                    <div class="res-box" id="bAcvSales"><div class="res-label">ACV Net Sales</div><div class="res-value" id="rAcvSales">0%</div></div>
+                    <div class="res-box" id="bGapSales"><div class="res-label">GAP Net Sales</div><div class="res-value" id="rGapSales">0</div></div>
+                    <div class="res-box" id="bAcvSpd"><div class="res-label">ACV SPD</div><div class="res-value" id="rAcvSpd">0%</div></div>
+                    <div class="res-box" id="bGapSpd"><div class="res-label">GAP SPD</div><div class="res-value" id="rGapSpd">0</div></div>
+                    <div class="res-box" id="bAcvApc"><div class="res-label">ACV APC</div><div class="res-value" id="rAcvApc">0%</div></div>
+                    <div class="res-box" id="bGapApc"><div class="res-label">GAP APC</div><div class="res-value" id="rGapApc">0</div></div>
+                    <div class="res-box" id="bAcvStd"><div class="res-label">ACV STD</div><div class="res-value" id="rAcvStd">0%</div></div>
+                    <div class="res-box" id="bGapStd"><div class="res-label">GAP STD</div><div class="res-value" id="rGapStd">0</div></div>
+                    <div class="res-box" id="bAcvGm"><div class="res-label">ACV GM (%)</div><div class="res-value" id="rAcvGm">0%</div></div>
+                    <div class="res-box" id="bGapGm"><div class="res-label">GAP GM (%)</div><div class="res-value" id="rGapGm">0</div></div>
+                    <div class="res-box" id="bAcvPsm"><div class="res-label">ACV PSM</div><div class="res-value" id="rAcvPsm">0%</div></div>
+                    <div class="res-box" id="bGapPsm"><div class="res-label">GAP PSM</div><div class="res-value" id="rGapPsm">0</div></div>
+                    <div class="res-box" id="bAcvPwp"><div class="res-label">ACV PWP</div><div class="res-value" id="rAcvPwp">0%</div></div>
+                    <div class="res-box" id="bGapPwp"><div class="res-label">GAP PWP</div><div class="res-value" id="rGapPwp">0</div></div>
+                    <div class="res-box" id="bAcvSg"><div class="res-label">ACV Serba</div><div class="res-value" id="rAcvSg">0%</div></div>
+                    <div class="res-box" id="bGapSg"><div class="res-label">GAP Serba</div><div class="res-value" id="rGapSg">0</div></div>
+                </div>
+                <button class="btn-act btn-green" onclick="copySalesWa()">📲 SALIN LAPORAN KE WHATSAPP</button>
+            </div>
+        </div>
+
+        <!-- 2. IKT CALCULATOR -->
+        <div id="pageIkt" class="sub-page">
+            <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
+            <div class="card-view">
+                <h3 style="margin-top:0; color:var(--header-red);">Persentase Pencapaian IKT</h3>
+                <div class="row"><div class="col"><label>APC Target</label><input type="text" id="iktTApc" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div><div class="col"><label>APC Actual</label><input type="text" id="iktAApc" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
+                <div class="row"><div class="col"><label>PWP Target</label><input type="text" id="iktTPwp" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div><div class="col"><label>PWP Actual</label><input type="text" id="iktAPwp" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
+                <div class="row"><div class="col"><label>PSM Target</label><input type="text" id="iktTPsm" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div><div class="col"><label>PSM Actual</label><input type="text" id="iktAPsm" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
+                <div class="row"><div class="col"><label>Serba Target</label><input type="text" id="iktTSg" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div><div class="col"><label>Serba Actual</label><input type="text" id="iktASg" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
+                <button class="btn-act" onclick="kalkulasiIkt()">HITUNG IKT</button>
+            </div>
+            <div class="card-view" id="hasilIktBox" style="display:none;">
+                <div class="res-box full" id="bTotIkt" style="text-align:center;"><div class="res-label">TOTAL ACHIEVE IKT</div><div class="res-value" id="rTotIkt" style="font-size:22px;">0%</div></div>
+                <div class="grid-result">
+                    <div class="res-box"><div class="res-label">APC (% ACV)</div><div class="res-value" id="rIktAcvApc">0%</div></div>
+                    <div class="res-box"><div class="res-label">APC (BOBOT %)</div><div class="res-value" id="rIktBobotApc">0%</div></div>
+                    <div class="res-box"><div class="res-label">PWP (% ACV)</div><div class="res-value" id="rIktAcvPwp">0%</div></div>
+                    <div class="res-box"><div class="res-label">PWP (BOBOT %)</div><div class="res-value" id="rIktBobotPwp">0%</div></div>
+                    <div class="res-box"><div class="res-label">PSM (% ACV)</div><div class="res-value" id="rIktAcvPsm">0%</div></div>
+                    <div class="res-box"><div class="res-label">PSM (BOBOT %)</div><div class="res-value" id="rIktBobotPsm">0%</div></div>
+                    <div class="res-box"><div class="res-label">SERBA (% ACV)</div><div class="res-value" id="rIktAcvSg">0%</div></div>
+                    <div class="res-box"><div class="res-label">SERBA (BOBOT %)</div><div class="res-value" id="rIktBobotSg">0%</div></div>
+                </div>
+                <div id="notifIktArea" style="margin-top:10px;"></div>
+                <button class="btn-act btn-green" onclick="copyIktWa()">📲 SALIN IKT KE WHATSAPP</button>
+            </div>
+        </div>
+
+        <!-- 3. KEJAR SPD -->
+        <div id="pageProyeksi" class="sub-page">
+            <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
+            <div class="card-view">
+                <h3 style="margin-top:0; color:var(--header-red);">Kejar SPD & Target Shift</h3>
+                <div class="row"><div class="col"><label>HK Berjalan (HKB)</label><input type="number" id="hkb" placeholder="15" oninput="hitungSpdShift()"></div><div class="col"><label>Sisa HK (SHK)</label><input type="number" id="shk" placeholder="15" oninput="hitungSpdShift()"></div></div>
+                <div class="row"><div class="col"><label>Net Sales Target</label><input type="text" id="pTargetSales" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift(); autoSaveTargets();"></div><div class="col"><label>Total Realisasi Sales</label><input type="text" id="pRealSales" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift();"></div></div>
+                <div style="margin-bottom:8px;">
+                    <label>Pola Shift Toko</label>
+                    <select id="pShiftType" onchange="hitungSpdShift(); autoSaveTargets();">
+                        <option value="2">2 Shift (S2: 55% | S1: 45%)</option>
+                        <option value="3">3 Shift (S2: 45% | S1: 35% | S3: 20%)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-view" id="hasilSpdBox" style="display:none;">
+                <div class="res-box full"><div class="res-label">SPD Wajib / Hari (Sisa Hari)</div><div class="res-value" id="rSpdKejar" style="font-size:18px; color:#d92525;">Rp 0</div></div>
+                <div style="margin-top:10px; font-size:13px; line-height:1.8;">
+                    <div>🔥 <b>Shift 2:</b> <span id="rSpdS2" style="font-weight:bold; color:#1e40af;">Rp 0</span></div>
+                    <div>☀️ <b>Shift 1:</b> <span id="rSpdS1" style="font-weight:bold; color:#1e40af;">Rp 0</span></div>
+                    <div id="rowS3" style="display:none;">🌙 <b>Shift 3:</b> <span id="rSpdS3" style="font-weight:bold; color:#1e40af;">Rp 0</span></div>
+                </div>
+                <button class="btn-act btn-green" onclick="copySpdWa()">📲 SALIN TARGET SHIFT KE WA</button>
+            </div>
+        </div>
+
+        <!-- 4. TARGET KASIR -->
+        <div id="pageKasir" class="sub-page">
+            <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
+            <div class="card-view">
+                <h3 style="margin-top:0; color:var(--header-red);">Target Kasir / Shift (PPS)</h3>
+                <div class="row"><div class="col"><label>Sisa Hari Kerja (SHK)</label><input type="number" id="kShk" placeholder="10"></div><div class="col"><label>Jumlah Kasir / Shift</label><input type="number" id="kKasir" placeholder="2"></div></div>
+                <div class="row"><div class="col"><label>GAP PSM (Pcs)</label><input type="number" id="kPsm" placeholder="0"></div><div class="col"><label>GAP PWP (Pcs)</label><input type="number" id="kPwp" placeholder="0"></div></div>
+                <div class="row"><div class="col"><label>GAP Serba (Pcs)</label><input type="number" id="kSg" placeholder="0"></div></div>
+                <button class="btn-act" onclick="hitungTargetKasir()">BAGI TARGET KASIR</button>
+            </div>
+            <div class="card-view" id="hasilKasirBox" style="display:none;">
+                <div class="grid-result">
+                    <div class="res-box"><div class="res-label">PSM / Kasir / Shift</div><div class="res-value" id="rPsmK">0 pcs</div></div>
+                    <div class="res-box"><div class="res-label">PWP / Kasir / Shift</div><div class="res-value" id="rPwpK">0 pcs</div></div>
+                    <div class="res-box full"><div class="res-label">Serba / Kasir / Shift</div><div class="res-value" id="rSgK">0 pcs</div></div>
+                </div>
+                <button class="btn-act btn-green" onclick="copyKasirWa()">📲 SALIN KE WA BRIEFING</button>
+            </div>
+        </div>
+
+        <!-- 5. MATEMATIKA RETAIL (26 RUMUS) -->
+        <div id="pageMath" class="sub-page">
+            <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
+            <div class="card-view">
+                <h3 style="margin-top:0; color:var(--header-red);">📐 Matematika Retail (26 Rumus)</h3>
+                <label>Pilih Rumus Retail:</label>
+                <select id="pilihRumusRetail" onchange="renderFormMtk()">
+                    <option value="pkm">1. PKM = AVG_SLS x (LT + SS) + Minor</option>
+                    <option value="pkm_harian">2. PKM Harian = AVG_SLS x Target DSI</option>
+                    <option value="dsi">3. DSI = ((Saldo Awal+Akhir)/2 / HPP-Retur) x HK</option>
+                    <option value="dsi_harian">4. DSI Harian = Inventory Akhir / SPD (HPP)</option>
+                    <option value="pb">5. PB (RO) = ((PKM Exist - OH)/Minor) x Minor</option>
+                    <option value="spd_calc">6. SPD = STD x APC</option>
+                    <option value="std_apc_calc">7. STD & APC (SPD/APC atau SPD/STD)</option>
+                    <option value="lose_profit">8. Lose / Profit = (Net SLS x GM) - Biaya</option>
+                    <option value="bad_estimate">9. Bad Estimate Sales</option>
+                    <option value="best_estimate">10. Best Estimate Sales</option>
+                    <option value="spd_vs_biaya">11. Target SPD Vs Biaya</option>
+                    <option value="nbh">12. NBH = (Total SLS x Toleransi %) - Selisih SO</option>
+                    <option value="gross_margin">13. Gross Margin (%) = (Net Price - HPP)/HPP x 100%</option>
+                    <option value="acv_spd">14. Achievement SPD (%)</option>
+                    <option value="acv_nbh">15. Achievement NBH (%)</option>
+                    <option value="acv_oos">16. Achievement OOS (%)</option>
+                    <option value="acv_dsi">17. Achievement DSI (%)</option>
+                    <option value="growth">18. Growth Sales (%)</option>
+                    <option value="to">19. Turn Over (TO) = Saldo Akhir / AVG Qty/Day</option>
+                    <option value="lt">20. Lead Time (LT) = (Hari Kirim + 1) / Frekuensi</option>
+                    <option value="safety_stock">21. Safety Stock (SS) Ketentuan Standar</option>
+                    <option value="over_stock">22. Over Stock = Stock OH - PKM</option>
+                    <option value="cos_ratio">23. Cost Ratio (%) = Biaya / Pendapatan</option>
+                    <option value="hk_target">24. Target HK Berjalan</option>
+                    <option value="laba_rugi_full">25. Laba Operasional, Net & Cash Profit</option>
+                    <option value="lembur">26. Perhitungan Upah Lembur Karyawan</option>
+                </select>
+                <div id="mtkInputArea" style="margin-top:10px;"></div>
+                <button class="btn-act" onclick="kalkulasiMtk()">HITUNG RUMUS</button>
+            </div>
+            <div class="card-view" id="hasilMtkBox" style="display:none;">
+                <h4 id="judulMtkRes" style="margin-top:0; color:var(--header-red);"></h4>
+                <div id="isiMtkRes" style="font-size:13px; line-height:1.6;"></div>
+            </div>
+        </div>
+
+        <!-- 6. KAMUS ISTILAH (34 ISTILAH) -->
+        <div id="pageDict" class="sub-page">
+            <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
+            <div class="card-view">
+                <h3 style="margin-top:0; color:var(--header-red);">📖 Kamus Istilah Retail (34 Istilah)</h3>
+                <label>Pilih Singkatan / Istilah:</label>
+                <select id="pilihKamus" onchange="showDefinisiKamus()">
+                    <option value="">-- Pilih Istilah --</option>
+                    <option value="BISNIS">1. Bisnis Retail</option>
+                    <option value="HAKEKAT">2. Hakekat Bisnis Retail</option>
+                    <option value="PKM">3. PKM (Penetapan Kuantitas Maksimum)</option>
+                    <option value="MPKM">4. MPKM (Minimum PKM)</option>
+                    <option value="MINOR">5. MINOR (Minimum Order)</option>
+                    <option value="DSI">6. DSI (Day Sales Inventory)</option>
+                    <option value="SPD">7. SPD (Sales Per Day)</option>
+                    <option value="STD">8. STD (Struk Per Day)</option>
+                    <option value="APC">9. APC (Average Purchase Customer)</option>
+                    <option value="SO">10. Stock Opname (SO)</option>
+                    <option value="PROMOSI">11. Promosi</option>
+                    <option value="ATRIBUT">12. Atribut Promosi</option>
+                    <option value="LT">13. Lead Time (LT)</option>
+                    <option value="NX">14. N X (N Kali)</option>
+                    <option value="NT">15. N + (N Tambah)</option>
+                    <option value="OOS">16. Stock Out (OOS)</option>
+                    <option value="PEL_LANGSUNG">17. Pelayanan Langsung</option>
+                    <option value="PEL_TDK_LANGSUNG">18. Pelayanan Tidak Langsung</option>
+                    <option value="BIAYA">19. Biaya</option>
+                    <option value="HOUSE">20. House Brand</option>
+                    <option value="PRIVATE">21. Private Label</option>
+                    <option value="EFISIENSI">22. Efisiensi</option>
+                    <option value="PENGENDALIAN">23. Pengendalian</option>
+                    <option value="ADMIN">24. Administrasi</option>
+                    <option value="KONTROL_ADMIN">25. Pengendalian Administrasi</option>
+                    <option value="PENDAPATAN_LAIN">26. Pendapatan Lain-lain (PLL)</option>
+                    <option value="GONDOLA">27. Gondola Depan (Endcap)</option>
+                    <option value="BLOCK">28. Block Shelfing</option>
+                    <option value="FRANCHISE">29. Waralaba / Franchise</option>
+                    <option value="FRANCHISOR">30. Franchisor</option>
+                    <option value="FRANCHISEE">31. Franchisee</option>
+                    <option value="AREA">32. Area Coverage</option>
+                    <option value="LEADERSHIP">33. Leadership (Kepemimpinan)</option>
+                    <option value="ISO">34. ISO</option>
+                </select>
+                <div id="kamusResultBox" style="display:none; margin-top:12px; padding:12px; background:var(--bg-color); border-left:4px solid var(--header-red); border-radius:6px;">
+                    <h4 id="kTitle" style="margin:0 0 6px 0; color:var(--header-red);"></h4>
+                    <p id="kDesc" style="margin:0; font-size:12.5px; line-height:1.5;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. MEMORY GAME -->
+        <div id="pageGame" class="sub-page">
+            <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
+            <div class="card-view" style="text-align:center;">
+                <h3 style="margin-top:0; color:var(--header-red);">🎮 Memory Game</h3>
+                <p style="font-size:12px; color:var(--text-secondary);">Cocokkan 2 kartu simbol retail yang sama!</p>
+                <div id="gameBoard" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-top:15px;"></div>
+                <button class="btn-act btn-green" onclick="initGame()" style="margin-top:15px;">🔄 Mulai Ulang Game</button>
+            </div>
+        </div>
+
+        <!-- 8. PLAN ABSENSI (KALENDER OTOMATIS & NAMA BEBAS) -->
+        <div id="pageAbsensi" class="sub-page">
+            <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
+            <div class="card-view">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                    <h3 style="margin:0; color:var(--header-red);">📋 Plan Absensi Bulanan</h3>
+                    <button onclick="tambahBarisKaryawan()" style="background:var(--header-red); color:white; border:none; padding:6px 12px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">+ Tambah Nama</button>
+                </div>
+
+                <!-- PILIHAN BULAN & TAHUN OTOMATIS KALENDER -->
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col">
+                        <label>Bulan Roster</label>
+                        <select id="selBulanAbsensi" onchange="gantiPeriodeKalender()">
+                            <option value="0">Januari</option>
+                            <option value="1">Februari</option>
+                            <option value="2">Maret</option>
+                            <option value="3">April</option>
+                            <option value="4">Mei</option>
+                            <option value="5">Juni</option>
+                            <option value="6">Juli</option>
+                            <option value="7">Agustus</option>
+                            <option value="8">September</option>
+                            <option value="9">Oktober</option>
+                            <option value="10">November</option>
+                            <option value="11">Desember</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>Tahun</label>
+                        <select id="selTahunAbsensi" onchange="gantiPeriodeKalender()">
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                        </select>
+                    </div>
+                </div>
+
+                <p style="font-size:11px; color:var(--text-secondary); margin-top:0;">
+                    Ketik: <b>P</b> = Pagi | <b>S</b> = Siang | <span style="background:#e53935; color:white; padding:1px 4px; border-radius:3px;">OFF / O / X</span> = Libur | <span style="background:#fb8c00; color:white; padding:1px 4px; border-radius:3px;">SO</span> = Stock Opname
+                </p>
+
+                <div class="sheet-wrapper">
+                    <table class="sheet-table" id="tabelPlanAbsensi">
+                        <thead>
+                            <tr id="rowTanggalHeader">
+                                <th class="col-nama">NAMA PERSONEL</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyPlanAbsensi">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="app-footer">
+        developed by : Qmr
+    </div>
+
+    <script>
+        // --- 1. DARK MODE & IDENTITAS TOKO ---
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            let isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('darkIcon').innerText = isDark ? '☀️' : '🌙';
+            localStorage.setItem('qmr_dark_pro', isDark ? 'yes' : 'no');
+        }
+
+        function saveIdentitas() {
+            localStorage.setItem('qmr_identitas_toko', document.getElementById('tokoIdentitas').value);
+        }
+
+        function loadIdentitas() {
+            let saved = localStorage.getItem('qmr_identitas_toko');
+            if (saved) document.getElementById('tokoIdentitas').value = saved;
+            if (localStorage.getItem('qmr_dark_pro') === 'yes') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('darkIcon').innerText = '☀️';
+            }
+            
+            // Set default kalender ke bulan & tahun saat ini
+            let now = new Date();
+            document.getElementById('selBulanAbsensi').value = now.getMonth();
+            document.getElementById('selTahunAbsensi').value = now.getFullYear();
+
+            loadAutoTargets();
+            generateAbsensiTable();
+            renderFormMtk();
+        }
+
+        // --- 2. NAVIGASI MENU ---
+        function openMenu(pageId) {
+            document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+            if (pageId === 'pageGame') initGame();
+        }
+
+        function backToHome() {
+            document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
+            document.getElementById('pageHome').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // --- 3. FORMAT RUPIAH & HELPER ---
+        function formatRupiahInput(el) {
+            let val = el.value.replace(/\D/g, '');
+            el.value = val !== '' ? new Intl.NumberFormat('id-ID').format(parseInt(val, 10)) : '';
+        }
+        function parseVal(id) {
+            let el = document.getElementById(id);
+            if (!el) return 0;
+            return parseFloat(el.value.replace(/\./g, '')) || 0;
+        }
+        function formatNum(num) {
+            return new Intl.NumberFormat('id-ID').format(Math.round(num));
+        }
+
+        // --- 4. SALES & GM LOGIC ---
+        function hitungAutoSalesTargets() {
+            let jhk = parseFloat(document.getElementById('jhk').value) || 0;
+            let tSales = parseVal('targetNetSales');
+            let tApc = parseVal('targetApc');
+            let aSpd = parseVal('actualSpd');
+
+            let tSpd = (jhk > 0 && tSales > 0) ? (tSales / jhk) : 0;
+            document.getElementById('targetSpd').value = tSpd > 0 ? formatNum(tSpd) : '';
+
+            let tStd = (tSpd > 0 && tApc > 0) ? (tSpd / tApc) : 0;
+            document.getElementById('targetStd').value = tStd > 0 ? formatNum(tStd) : '';
+
+            let aSales = aSpd * jhk;
+            document.getElementById('actualNetSales').value = aSales > 0 ? formatNum(aSales) : '';
+        }
+
+        function kalkulasiSales() {
+            let jhk = parseFloat(document.getElementById('jhk').value) || 0;
+            let tSales = parseVal('targetNetSales');
+            let aSpd = parseVal('actualSpd');
+            let aSales = aSpd * jhk;
+            let tSpd = parseVal('targetSpd');
+            let tApc = parseVal('targetApc');
+            let aApc = parseVal('actualApc');
+            let tStd = parseVal('targetStd');
+            let aStd = parseVal('actualStd');
+            let tGm = parseFloat(document.getElementById('targetGm').value) || 0;
+            let aGm = parseFloat(document.getElementById('actualGm').value) || 0;
+
+            let tPsm = parseVal('targetPsm'), aPsm = parseVal('actualPsm');
+            let tPwp = parseVal('targetPwp'), aPwp = parseVal('actualPwp');
+            let tSg  = parseVal('targetSg'),  aSg  = parseVal('actualSg');
+
+            let calc = (t, a) => ({ acv: t > 0 ? (a / t) * 100 : 0, gap: a - t });
+
+            let sM = calc(tSales, aSales), spdM = calc(tSpd, aSpd), apcM = calc(tApc, aApc), stdM = calc(tStd, aStd);
+            let psmM = calc(tPsm, aPsm), pwpM = calc(tPwp, aPwp), sgM = calc(tSg, aSg);
+            let gmM = { acv: tGm > 0 ? (aGm / tGm) * 100 : 0, gap: aGm - tGm };
+
+            document.getElementById('hasilSalesBox').style.display = 'block';
+            document.getElementById('rAcvSales').innerText = sM.acv.toFixed(2) + '%';
+            document.getElementById('rGapSales').innerText = formatNum(sM.gap);
+            document.getElementById('rAcvSpd').innerText = spdM.acv.toFixed(2) + '%';
+            document.getElementById('rGapSpd').innerText = formatNum(spdM.gap);
+            document.getElementById('rAcvApc').innerText = apcM.acv.toFixed(2) + '%';
+            document.getElementById('rGapApc').innerText = formatNum(apcM.gap);
+            document.getElementById('rAcvStd').innerText = stdM.acv.toFixed(2) + '%';
+            document.getElementById('rGapStd').innerText = formatNum(stdM.gap);
+            document.getElementById('rAcvGm').innerText = gmM.acv.toFixed(2) + '%';
+            document.getElementById('rGapGm').innerText = gmM.gap.toFixed(2) + '%';
+            document.getElementById('rAcvPsm').innerText = psmM.acv.toFixed(2) + '%';
+            document.getElementById('rGapPsm').innerText = formatNum(psmM.gap);
+            document.getElementById('rAcvPwp').innerText = pwpM.acv.toFixed(2) + '%';
+            document.getElementById('rGapPwp').innerText = formatNum(pwpM.gap);
+            document.getElementById('rAcvSg').innerText = sgM.acv.toFixed(2) + '%';
+            document.getElementById('rGapSg').innerText = formatNum(sgM.gap);
+        }
+
+        function resetSales() {
+            ['actualSpd', 'actualNetSales', 'actualApc', 'actualStd', 'actualGm', 'actualPsm', 'actualPwp', 'actualSg'].forEach(id => {
+                let el = document.getElementById(id); if (el) el.value = '';
+            });
+            document.getElementById('hasilSalesBox').style.display = 'none';
+        }
+
+        function copySalesWa() {
+            let t = `*📊 LAPORAN SALES & GM*\n------------------------------------\n` +
+                `*Net Sales:* ACV ${document.getElementById('rAcvSales').innerText} (GAP: ${document.getElementById('rGapSales').innerText})\n` +
+                `*SPD:* ACV ${document.getElementById('rAcvSpd').innerText} (GAP: ${document.getElementById('rGapSpd').innerText})\n` +
+                `*APC:* ACV ${document.getElementById('rAcvApc').innerText} (GAP: ${document.getElementById('rGapApc').innerText})\n` +
+                `*STD:* ACV ${document.getElementById('rAcvStd').innerText} (GAP: ${document.getElementById('rGapStd').innerText})\n` +
+                `*GM (%):* ACV ${document.getElementById('rAcvGm').innerText} (GAP: ${document.getElementById('rGapGm').innerText})\n` +
+                `------------------------------------\n_Generated by Retail Assistant Pro (by : qmr)_`;
+            navigator.clipboard.writeText(t).then(() => alert('Laporan Sales disalin ke WhatsApp!'));
+        }
+
+        // --- 5. IKT LOGIC ---
+        function kalkulasiIkt() {
+            let tA = parseVal('iktTApc'), aA = parseVal('iktAApc');
+            let tP = parseVal('iktTPwp'), aP = parseVal('iktAPwp');
+            let tS = parseVal('iktTPsm'), aS = parseVal('iktAPsm');
+            let tG = parseVal('iktTSg'), aG = parseVal('iktASg');
+
+            let acvA = tA > 0 ? (aA / tA) * 100 : 0;
+            let acvP = tP > 0 ? (aP / tP) * 100 : 0;
+            let acvS = tS > 0 ? (aS / tS) * 100 : 0;
+            let acvG = tG > 0 ? (aG / tG) * 100 : 0;
+
+            let bA = (acvA * 0.25) / 100;
+            let bP = (acvP * 25.0) / 100;
+            let bS = (acvS * 20.0) / 100;
+            let bG = (acvG * 30.0) / 100;
+            let tot = bA + bP + bS + bG;
+
+            document.getElementById('hasilIktBox').style.display = 'block';
+            document.getElementById('rTotIkt').innerText = tot.toFixed(2) + '%';
+            document.getElementById('rIktAcvApc').innerText = acvA.toFixed(2) + '%';
+            document.getElementById('rIktBobotApc').innerText = bA.toFixed(2) + '%';
+            document.getElementById('rIktAcvPwp').innerText = acvP.toFixed(2) + '%';
+            document.getElementById('rIktBobotPwp').innerText = bP.toFixed(2) + '%';
+            document.getElementById('rIktAcvPsm').innerText = acvS.toFixed(2) + '%';
+            document.getElementById('rIktBobotPsm').innerText = bS.toFixed(2) + '%';
+            document.getElementById('rIktAcvSg').innerText = acvG.toFixed(2) + '%';
+            document.getElementById('rIktBobotSg').innerText = bG.toFixed(2) + '%';
+
+            let notif = document.getElementById('notifIktArea');
+            if (tot < 100) {
+                notif.innerHTML = '<div style="background:#fee2e2; border:1px solid #ef4444; color:#b91c1c; padding:10px; border-radius:6px; font-size:12px;"><b>Wah sayang sekali... 😢</b> Belum mencapai target minimal IKT (100%). Kejar GAP indikator di atas!</div>';
+            } else {
+                notif.innerHTML = '<div style="background:#dcfce7; border:1px solid #22c55e; color:#15803d; padding:10px; border-radius:6px; font-size:12px;"><b>Selamat! 🎉😃</b> Berpotensi menang IKT (' + tot.toFixed(2) + '%). Pertahankan! 🔥</div>';
+            }
+        }
+
+        function copyIktWa() {
+            let t = `*🎯 LAPORAN PERCENTAGE IKT*\n------------------------------------\n` +
+                `*TOTAL ACHIEVE IKT:* ${document.getElementById('rTotIkt').innerText}\n` +
+                `• APC: ACV ${document.getElementById('rIktAcvApc').innerText} | Bobot: ${document.getElementById('rIktBobotApc').innerText}\n` +
+                `• PWP: ACV ${document.getElementById('rIktAcvPwp').innerText} | Bobot: ${document.getElementById('rIktBobotPwp').innerText}\n` +
+                `• PSM: ACV ${document.getElementById('rIktAcvPsm').innerText} | Bobot: ${document.getElementById('rIktBobotPsm').innerText}\n` +
+                `• Serba: ACV ${document.getElementById('rIktAcvSg').innerText} | Bobot: ${document.getElementById('rIktBobotSg').innerText}\n` +
+                `------------------------------------\n_Generated by Retail Assistant Pro_`;
+            navigator.clipboard.writeText(t).then(() => alert('Laporan IKT disalin ke WA!'));
+        }
+
+        // --- 6. KEJAR SPD & SHIFT ---
+        function hitungSpdShift() {
+            let hkb = parseFloat(document.getElementById('hkb').value) || 0;
+            let shk = parseFloat(document.getElementById('shk').value) || 0;
+            let tSales = parseVal('pTargetSales');
+            let rSales = parseVal('pRealSales');
+            let shiftType = document.getElementById('pShiftType').value;
+
+            if (shk <= 0 || tSales <= 0) return;
+            let sisa = tSales - rSales;
+            let spdWajib = sisa > 0 ? (sisa / shk) : 0;
+
+            document.getElementById('hasilSpdBox').style.display = 'block';
+            document.getElementById('rSpdKejar').innerText = 'Rp ' + formatNum(spdWajib);
+
+            if (shiftType === "2") {
+                document.getElementById('rSpdS2').innerText = 'Rp ' + formatNum(spdWajib * 0.55);
+                document.getElementById('rSpdS1').innerText = 'Rp ' + formatNum(spdWajib * 0.45);
+                document.getElementById('rowS3').style.display = 'none';
+            } else {
+                document.getElementById('rSpdS2').innerText = 'Rp ' + formatNum(spdWajib * 0.45);
+                document.getElementById('rSpdS1').innerText = 'Rp ' + formatNum(spdWajib * 0.35);
+                document.getElementById('rSpdS3').innerText = 'Rp ' + formatNum(spdWajib * 0.20);
+                document.getElementById('rowS3').style.display = 'block';
+            }
+        }
+
+        function copySpdWa() {
+            let s = document.getElementById('pShiftType').value;
+            let t = `*🎯 TARGET KEJAR SPD & SHIFT*\n------------------------------------\n` +
+                `*Total Target SPD/Hari:* ${document.getElementById('rSpdKejar').innerText}\n` +
+                `🔥 Shift 2: ${document.getElementById('rSpdS2').innerText}\n` +
+                `☀️ Shift 1: ${document.getElementById('rSpdS1').innerText}\n` +
+                (s === "3" ? `🌙 Shift 3: ${document.getElementById('rSpdS3').innerText}\n` : '') +
+                `------------------------------------\n_Ayo kejar target bersama! 🔥_`;
+            navigator.clipboard.writeText(t).then(() => alert('Target SPD disalin ke WA!'));
+        }
+
+        // --- 7. TARGET KASIR ---
+        function hitungTargetKasir() {
+            let shk = parseFloat(document.getElementById('kShk').value) || 1;
+            let k = parseFloat(document.getElementById('kKasir').value) || 1;
+            let psm = parseFloat(document.getElementById('kPsm').value) || 0;
+            let pwp = parseFloat(document.getElementById('kPwp').value) || 0;
+            let sg = parseFloat(document.getElementById('kSg').value) || 0;
+
+            document.getElementById('hasilKasirBox').style.display = 'block';
+            document.getElementById('rPsmK').innerText = Math.ceil(psm / (shk * k * 2)) + ' pcs/kasir';
+            document.getElementById('rPwpK').innerText = Math.ceil(pwp / (shk * k * 2)) + ' pcs/kasir';
+            document.getElementById('rSgK').innerText = Math.ceil(sg / (shk * k * 2)) + ' pcs/kasir';
+        }
+
+        function copyKasirWa() {
+            let t = `*📢 TARGET HARIAN PPS KASIR*\n------------------------------------\n` +
+                `• *PSM:* ${document.getElementById('rPsmK').innerText}\n` +
+                `• *PWP:* ${document.getElementById('rPwpK').innerText}\n` +
+                `• *Serba:* ${document.getElementById('rSgK').innerText}\n` +
+                `------------------------------------\n_Semangat jualan tim toko! 🔥_`;
+            navigator.clipboard.writeText(t).then(() => alert('Target Kasir disalin ke WA!'));
+        }
+
+        // --- 8. MATEMATIKA RETAIL (26 RUMUS) ---
+        function renderFormMtk() {
+            let r = document.getElementById('pilihRumusRetail').value;
+            let a = document.getElementById('mtkInputArea');
+            let h = '';
+
+            if (r === 'pkm') {
+                h = '<div class="row"><div class="col"><label>AVG Sales Qty/Day</label><input type="number" id="m_avgSls"></div><div class="col"><label>Lead Time (LT)</label><input type="number" id="m_lt"></div></div><div class="row"><div class="col"><label>Safety Stock (SS)</label><input type="number" id="m_ss" value="2"></div><div class="col"><label>Minor</label><input type="number" id="m_minor"></div></div>';
+            } else if (r === 'pkm_harian') {
+                h = '<div class="row"><div class="col"><label>AVG SLS (Qty/Hari)</label><input type="number" id="m_avgHarian"></div><div class="col"><label>Target DSI (Hari)</label><input type="number" id="m_targetDsi"></div></div>';
+            } else if (r === 'dsi') {
+                h = '<div class="row"><div class="col"><label>Saldo Awal (Rp)</label><input type="text" id="m_saldoAwal" oninput="formatRupiahInput(this)"></div><div class="col"><label>Saldo Akhir (Rp)</label><input type="text" id="m_saldoAkhirDsi" oninput="formatRupiahInput(this)"></div></div><div class="row"><div class="col"><label>HPP Sebulan</label><input type="text" id="m_hppDsi" oninput="formatRupiahInput(this)"></div><div class="col"><label>Retur Sebulan</label><input type="text" id="m_returDsi" oninput="formatRupiahInput(this)"></div></div><div class="row"><div class="col"><label>Hari Kerja (HK)</label><input type="number" id="m_hkDsi" value="30"></div></div>';
+            } else if (r === 'dsi_harian') {
+                h = '<div class="row"><div class="col"><label>Inventory Akhir (Rp)</label><input type="text" id="m_invAkhir" oninput="formatRupiahInput(this)"></div><div class="col"><label>SPD (HPP) (Rp)</label><input type="text" id="m_spdHpp" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'pb') {
+                h = '<div class="row"><div class="col"><label>PKM Exist</label><input type="number" id="m_pkm"></div><div class="col"><label>Stock On Hand (OH)</label><input type="number" id="m_oh"></div></div><div class="row"><div class="col"><label>Minor Item</label><input type="number" id="m_minorPb"></div></div>';
+            } else if (r === 'spd_calc') {
+                h = '<div class="row"><div class="col"><label>STD (Struk/Hari)</label><input type="number" id="m_stdCalc"></div><div class="col"><label>APC (Rupiah)</label><input type="text" id="m_apcCalc" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'std_apc_calc') {
+                h = '<div class="row"><div class="col"><label>SPD (Rupiah)</label><input type="text" id="m_spdApcStd" oninput="formatRupiahInput(this)"></div></div><div class="row"><div class="col"><label>Isi APC (Cari STD)</label><input type="text" id="m_apcKnown" oninput="formatRupiahInput(this)"></div><div class="col"><label>Atau Isi STD (Cari APC)</label><input type="number" id="m_stdKnown"></div></div>';
+            } else if (r === 'lose_profit') {
+                h = '<div class="row"><div class="col"><label>Net Sales (Rp)</label><input type="text" id="m_netSlsLp" oninput="formatRupiahInput(this)"></div><div class="col"><label>Gross Margin (%)</label><input type="number" step="0.01" id="m_gmLp"></div></div><div class="row"><div class="col"><label>Total Biaya (Rp)</label><input type="text" id="m_biayaLp" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'bad_estimate') {
+                h = '<div class="row"><div class="col"><label>Real SPD (Rp)</label><input type="text" id="m_realSpdBad" oninput="formatRupiahInput(this)"></div><div class="col"><label>HK Berjalan</label><input type="number" id="m_hkbBad"></div></div><div class="row"><div class="col"><label>Target SPD (Rp)</label><input type="text" id="m_targetSpdBad" oninput="formatRupiahInput(this)"></div><div class="col"><label>Sisa HK</label><input type="number" id="m_shkBad"></div></div><div class="row"><div class="col"><label>Total HK Sebulan</label><input type="number" id="m_totHkBad" value="30"></div></div>';
+            } else if (r === 'best_estimate') {
+                h = '<div class="row"><div class="col"><label>Selisih Target SPD (Real-Target)</label><input type="text" id="m_selisihTargetBest" oninput="formatRupiahInput(this)"></div><div class="col"><label>HK Berjalan</label><input type="number" id="m_hkbBest"></div></div><div class="row"><div class="col"><label>Sisa HK</label><input type="number" id="m_shkBest"></div><div class="col"><label>Target SPD Awal</label><input type="text" id="m_targetAwalBest" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'spd_vs_biaya') {
+                h = '<div class="row"><div class="col"><label>Value Biaya (Rp)</label><input type="text" id="m_valBiaya" oninput="formatRupiahInput(this)"></div><div class="col"><label>Target Biaya (%)</label><input type="number" step="0.01" id="m_targetBiayaPersen"></div></div><div class="row"><div class="col"><label>Hari Kerja (HK)</label><input type="number" id="m_hkSpdBiaya" value="30"></div></div>';
+            } else if (r === 'nbh') {
+                h = '<div class="row"><div class="col"><label>Total Net Sales Toko</label><input type="text" id="m_salesNbh" oninput="formatRupiahInput(this)"></div><div class="col"><label>Toleransi BTK (%)</label><input type="number" step="0.01" id="m_btkPersen" value="0.18"></div></div><div class="row"><div class="col"><label>Total Selisih SO</label><input type="text" id="m_selisihSo" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'gross_margin') {
+                h = '<div class="row"><div class="col"><label>Harga Jual (Net Price)</label><input type="text" id="m_netPrice" oninput="formatRupiahInput(this)"></div><div class="col"><label>HPP (Modal)</label><input type="text" id="m_hppPrice" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'acv_spd') {
+                h = '<div class="row"><div class="col"><label>Real SPD (Rp)</label><input type="text" id="m_realAcvSpd" oninput="formatRupiahInput(this)"></div><div class="col"><label>Target SPD (Rp)</label><input type="text" id="m_targetAcvSpd" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'acv_nbh') {
+                h = '<div class="row"><div class="col"><label>Target NBH (Rp)</label><input type="text" id="m_tNbh" oninput="formatRupiahInput(this)"></div><div class="col"><label>Real NBH (Rp)</label><input type="text" id="m_rNbh" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'acv_oos') {
+                h = '<div class="row"><div class="col"><label>Target OOS (Item)</label><input type="number" id="m_tOos"></div><div class="col"><label>Real OOS (Item)</label><input type="number" id="m_rOos"></div></div>';
+            } else if (r === 'acv_dsi') {
+                h = '<div class="row"><div class="col"><label>Target DSI (Hari)</label><input type="number" id="m_tDsi"></div><div class="col"><label>Real DSI (Hari)</label><input type="number" id="m_rDsi"></div></div>';
+            } else if (r === 'growth') {
+                h = '<div class="row"><div class="col"><label>SPD Bulan Ini</label><input type="text" id="m_spdIni" oninput="formatRupiahInput(this)"></div><div class="col"><label>SPD Bulan Lalu</label><input type="text" id="m_spdLalu" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'to') {
+                h = '<div class="row"><div class="col"><label>Saldo Akhir (Qty/Rp)</label><input type="text" id="m_saldoAkhir" oninput="formatRupiahInput(this)"></div><div class="col"><label>AVG Qty/Day</label><input type="text" id="m_avgQtyDay" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'lt') {
+                h = '<div class="row"><div class="col"><label>Hari Kirim dlm Seminggu</label><input type="number" id="m_hariKirim" value="6"></div><div class="col"><label>Frekuensi Kirim</label><input type="number" id="m_frekKirim" value="3"></div></div>';
+            } else if (r === 'safety_stock') {
+                h = '<p style="font-size:12px;"><b>Standar Manajemen:</b> Safety Stock (SS) = <b>2 Hari</b> untuk mengamankan stok pajangan rak toko.</p>';
+            } else if (r === 'over_stock') {
+                h = '<div class="row"><div class="col"><label>Stock OH</label><input type="number" id="m_ohOver"></div><div class="col"><label>PKM</label><input type="number" id="m_pkmOver"></div></div>';
+            } else if (r === 'cos_ratio') {
+                h = '<div class="row"><div class="col"><label>Total Biaya (Rp)</label><input type="text" id="m_biayaCos" oninput="formatRupiahInput(this)"></div><div class="col"><label>Pendapatan (Rp)</label><input type="text" id="m_pendapatanCos" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'hk_target') {
+                h = '<div class="row"><div class="col"><label>HK Berjalan</label><input type="number" id="m_hkbTarget"></div><div class="col"><label>Total HK</label><input type="number" id="m_totHkTarget" value="30"></div></div><div class="row"><div class="col"><label>Target Sebulan (Rp)</label><input type="text" id="m_totTargetNom" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'laba_rugi_full') {
+                h = '<div class="row"><div class="col"><label>Laba Kotor</label><input type="text" id="m_labaKotorFull" oninput="formatRupiahInput(this)"></div><div class="col"><label>Beban Operasional</label><input type="text" id="m_bebanOprFull" oninput="formatRupiahInput(this)"></div></div><div class="row"><div class="col"><label>PLL (Pendapatan Lain)</label><input type="text" id="m_pllFull" oninput="formatRupiahInput(this)"></div><div class="col"><label>Amortisasi+Penyusutan</label><input type="text" id="m_amortisasiFull" oninput="formatRupiahInput(this)"></div></div>';
+            } else if (r === 'lembur') {
+                h = '<div class="row"><div class="col"><label>Upah Pokok Sebulan</label><input type="text" id="m_upahPokok" oninput="formatRupiahInput(this)"></div><div class="col"><label>Total Jam Lembur</label><input type="number" step="0.5" id="m_jamLembur"></div></div>';
+            }
+
+            a.innerHTML = h;
+            document.getElementById('hasilMtkBox').style.display = 'none';
+        }
+
+        function kalkulasiMtk() {
+            let r = document.getElementById('pilihRumusRetail').value;
+            let j = document.getElementById('judulMtkRes');
+            let isi = document.getElementById('isiMtkRes');
+            document.getElementById('hasilMtkBox').style.display = 'block';
+
+            if (r === 'pkm') {
+                let avg = parseFloat(document.getElementById('m_avgSls').value) || 0;
+                let lt = parseFloat(document.getElementById('m_lt').value) || 0;
+                let ss = parseFloat(document.getElementById('m_ss').value) || 0;
+                let m = parseFloat(document.getElementById('m_minor').value) || 0;
+                let res = (avg * (lt + ss)) + m;
+                j.innerText = "Hasil PKM";
+                isi.innerHTML = `<b>PKM =</b> <b style="color:#d92525; font-size:16px;">${Math.round(res)} Pcs</b>`;
+            } else if (r === 'pkm_harian') {
+                let avg = parseFloat(document.getElementById('m_avgHarian').value) || 0;
+                let dsi = parseFloat(document.getElementById('m_targetDsi').value) || 0;
+                j.innerText = "Hasil PKM Harian";
+                isi.innerHTML = `<b>PKM Harian =</b> <b style="color:#d92525; font-size:16px;">${Math.round(avg * dsi)} Pcs</b>`;
+            } else if (r === 'dsi') {
+                let aw = parseVal('m_saldoAwal'), ak = parseVal('m_saldoAkhirDsi'), hpp = parseVal('m_hppDsi'), ret = parseVal('m_returDsi');
+                let hk = parseFloat(document.getElementById('m_hkDsi').value) || 30;
+                let dsi = (hpp - ret) > 0 ? (((aw + ak) / 2) / (hpp - ret)) * hk : 0;
+                j.innerText = "Hasil DSI";
+                isi.innerHTML = `<b>DSI =</b> <b style="color:#d92525; font-size:16px;">${dsi.toFixed(1)} Hari</b>`;
+            } else if (r === 'dsi_harian') {
+                let inv = parseVal('m_invAkhir'), spd = parseVal('m_spdHpp');
+                let dsi = spd > 0 ? (inv / spd) : 0;
+                j.innerText = "Hasil DSI Harian";
+                isi.innerHTML = `<b>DSI Harian =</b> <b style="color:#d92525; font-size:16px;">${dsi.toFixed(1)} Hari</b>`;
+            } else if (r === 'pb') {
+                let p = parseFloat(document.getElementById('m_pkm').value) || 0;
+                let oh = parseFloat(document.getElementById('m_oh').value) || 0;
+                let m = parseFloat(document.getElementById('m_minorPb').value) || 1;
+                let pb = (p - oh) > 0 ? Math.ceil((p - oh) / m) * m : 0;
+                j.innerText = "Hasil Permintaan Barang (PB)";
+                isi.innerHTML = `<b>Order PB =</b> <b style="color:#d92525; font-size:16px;">${pb} Pcs</b>`;
+            } else if (r === 'spd_calc') {
+                let std = parseFloat(document.getElementById('m_stdCalc').value) || 0;
+                let apc = parseVal('m_apcCalc');
+                j.innerText = "Hasil SPD";
+                isi.innerHTML = `<b>SPD =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(std * apc)}</b>`;
+            } else if (r === 'std_apc_calc') {
+                let spd = parseVal('m_spdApcStd'), apc = parseVal('m_apcKnown'), std = parseFloat(document.getElementById('m_stdKnown').value) || 0;
+                j.innerText = "Hasil STD / APC";
+                let res = '';
+                if (apc > 0) res += `<b>STD:</b> ${Math.round(spd / apc)} Struk/Hari<br>`;
+                if (std > 0) res += `<b>APC:</b> Rp ${formatNum(spd / std)} / Konsumen`;
+                isi.innerHTML = res || "Isi SPD dan salah satu dari APC atau STD.";
+            } else if (r === 'lose_profit') {
+                let sls = parseVal('m_netSlsLp'), gm = parseFloat(document.getElementById('m_gmLp').value) || 0, biaya = parseVal('m_biayaLp');
+                let net = ((sls * gm) / 100) - biaya;
+                j.innerText = "Hasil Lose / Profit";
+                isi.innerHTML = `<b>Hasil:</b> <b style="color:${net >= 0 ? '#15803d' : '#b91c1c'}; font-size:16px;">${net >= 0 ? 'PROFIT Rp ' + formatNum(net) : 'RUGI Rp ' + formatNum(Math.abs(net))}</b>`;
+            } else if (r === 'bad_estimate') {
+                let rSpd = parseVal('m_realSpdBad'), hkb = parseFloat(document.getElementById('m_hkbBad').value) || 0;
+                let tSpd = parseVal('m_targetSpdBad'), shk = parseFloat(document.getElementById('m_shkBad').value) || 0;
+                let tot = parseFloat(document.getElementById('m_totHkBad').value) || 30;
+                let bad = ((rSpd * hkb) + (tSpd * shk)) / tot;
+                j.innerText = "Hasil Bad Estimate";
+                isi.innerHTML = `<b>Estimasi SPD Minimal =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(bad)} / Hari</b>`;
+            } else if (r === 'best_estimate') {
+                let sel = parseVal('m_selisihTargetBest'), hkb = parseFloat(document.getElementById('m_hkbBest').value) || 0;
+                let shk = parseFloat(document.getElementById('m_shkBest').value) || 1, tAwal = parseVal('m_targetAwalBest');
+                let best = ((sel * hkb) / shk) + tAwal;
+                j.innerText = "Hasil Best Estimate";
+                isi.innerHTML = `<b>Proyeksi Best Estimate =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(best)}</b>`;
+            } else if (r === 'spd_vs_biaya') {
+                let val = parseVal('m_valBiaya'), tBiaya = parseFloat(document.getElementById('m_targetBiayaPersen').value) || 1, hk = parseFloat(document.getElementById('m_hkSpdBiaya').value) || 30;
+                let spd = val / ((tBiaya / 100) * hk);
+                j.innerText = "Target SPD Vs Biaya";
+                isi.innerHTML = `<b>Target SPD Wajib =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(spd)} / Hari</b>`;
+            } else if (r === 'nbh') {
+                let sls = parseVal('m_salesNbh'), btk = parseFloat(document.getElementById('m_btkPersen').value) || 0.18, so = parseVal('m_selisihSo');
+                let tol = (sls * btk) / 100, nbh = so - tol;
+                j.innerText = "Hasil NBH Toko";
+                isi.innerHTML = `Toleransi (${btk}%): Rp ${formatNum(tol)}<br><b>Beban NBH:</b> <b style="color:${nbh > 0 ? '#b91c1c' : '#15803d'}; font-size:16px;">Rp ${formatNum(nbh > 0 ? nbh : 0)}</b>`;
+            } else if (r === 'gross_margin') {
+                let p = parseVal('m_netPrice'), hpp = parseVal('m_hppPrice');
+                let gm = hpp > 0 ? ((p - hpp) / hpp) * 100 : 0;
+                j.innerText = "Hasil Gross Margin Item";
+                isi.innerHTML = `<b>Gross Margin =</b> <b style="color:#d92525; font-size:16px;">${gm.toFixed(2)}%</b>`;
+            } else if (r === 'acv_spd') {
+                let rSpd = parseVal('m_realAcvSpd'), tSpd = parseVal('m_targetAcvSpd');
+                let acv = tSpd > 0 ? (rSpd / tSpd) * 100 : 0;
+                j.innerText = "Achievement SPD";
+                isi.innerHTML = `<b>ACV SPD =</b> <b style="color:#d92525; font-size:16px;">${acv.toFixed(2)}%</b>`;
+            } else if (r === 'acv_nbh') {
+                let t = parseVal('m_tNbh'), real = parseVal('m_rNbh');
+                let acv = real > 0 ? (t / real) * 100 : 100;
+                j.innerText = "Achievement NBH";
+                isi.innerHTML = `<b>ACV NBH =</b> <b style="color:#d92525; font-size:16px;">${acv.toFixed(2)}%</b>`;
+            } else if (r === 'acv_oos') {
+                let t = parseFloat(document.getElementById('m_tOos').value) || 0, real = parseFloat(document.getElementById('m_rOos').value) || 1;
+                j.innerText = "Achievement OOS";
+                isi.innerHTML = `<b>ACV OOS =</b> <b style="color:#d92525; font-size:16px;">${((t / real) * 100).toFixed(2)}%</b>`;
+            } else if (r === 'acv_dsi') {
+                let t = parseFloat(document.getElementById('m_tDsi').value) || 0, real = parseFloat(document.getElementById('m_rDsi').value) || 1;
+                j.innerText = "Achievement DSI";
+                isi.innerHTML = `<b>ACV DSI =</b> <b style="color:#d92525; font-size:16px;">${((t / real) * 100).toFixed(2)}%</b>`;
+            } else if (r === 'growth') {
+                let ini = parseVal('m_spdIni'), lalu = parseVal('m_spdLalu');
+                let g = lalu > 0 ? ((ini - lalu) / lalu) * 100 : 0;
+                j.innerText = "Growth Sales";
+                isi.innerHTML = `<b>Growth =</b> <b style="color:${g >= 0 ? '#15803d' : '#b91c1c'}; font-size:16px;">${g.toFixed(2)}%</b>`;
+            } else if (r === 'to') {
+                let s = parseVal('m_saldoAkhir'), avg = parseVal('m_avgQtyDay');
+                let to = avg > 0 ? (s / avg) : 0;
+                j.innerText = "Turn Over (TO)";
+                isi.innerHTML = `<b>TO =</b> <b style="color:#d92525; font-size:16px;">${to.toFixed(1)} Hari</b>`;
+            } else if (r === 'lt') {
+                let h = parseFloat(document.getElementById('m_hariKirim').value) || 0, f = parseFloat(document.getElementById('m_frekKirim').value) || 1;
+                j.innerText = "Lead Time (LT)";
+                isi.innerHTML = `<b>Lead Time =</b> <b style="color:#d92525; font-size:16px;">${((h + 1) / f).toFixed(1)} Hari</b>`;
+            } else if (r === 'safety_stock') {
+                j.innerText = "Safety Stock (SS)";
+                isi.innerHTML = `<b>Standar SS = 2 Hari</b>.`;
+            } else if (r === 'over_stock') {
+                let oh = parseFloat(document.getElementById('m_ohOver').value) || 0, pkm = parseFloat(document.getElementById('m_pkmOver').value) || 0;
+                let over = oh - pkm;
+                j.innerText = "Over Stock Item";
+                isi.innerHTML = `<b>Hasil:</b> <b style="color:${over > 0 ? '#b91c1c' : '#15803d'}; font-size:16px;">${over > 0 ? over + ' Pcs (Over Stock)' : 'Aman (Tidak Over Stock)'}</b>`;
+            } else if (r === 'cos_ratio') {
+                let biaya = parseVal('m_biayaCos'), rev = parseVal('m_pendapatanCos');
+                let ratio = rev > 0 ? (biaya / rev) * 100 : 0;
+                j.innerText = "Cost Ratio (%)";
+                isi.innerHTML = `<b>Cost Ratio =</b> <b style="color:#d92525; font-size:16px;">${ratio.toFixed(2)}%</b>`;
+            } else if (r === 'hk_target') {
+                let hkb = parseFloat(document.getElementById('m_hkbTarget').value) || 0, tot = parseFloat(document.getElementById('m_totHkTarget').value) || 1, target = parseVal('m_totTargetNom');
+                j.innerText = "Target HK Berjalan";
+                isi.innerHTML = `<b>Target Sampai Hari Ini =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum((hkb / tot) * target)}</b>`;
+            } else if (r === 'laba_rugi_full') {
+                let lKotor = parseVal('m_labaKotorFull'), bOpr = parseVal('m_bebanOprFull'), pll = parseVal('m_pllFull'), amort = parseVal('m_amortisasiFull');
+                let opr = lKotor - bOpr, net = opr + pll, cash = net + amort;
+                j.innerText = "Hasil Laba Operasional & Net Profit";
+                isi.innerHTML = `<b>1. Laba Operasional:</b> Rp ${formatNum(opr)}<br><b>2. Net Profit:</b> Rp ${formatNum(net)}<br><b>3. Cash Profit:</b> Rp ${formatNum(cash)}`;
+            } else if (r === 'lembur') {
+                let upah = parseVal('m_upahPokok'), jam = parseFloat(document.getElementById('m_jamLembur').value) || 0;
+                let perJam = (1 / 173) * upah, totLembur = jam > 1 ? (1 * perJam * 1.5) + ((jam - 1) * perJam * 2.0) : (jam * perJam * 1.5);
+                j.innerText = "Upah Lembur Karyawan";
+                isi.innerHTML = `Upah/Jam Dasar: Rp ${formatNum(perJam)}<br><b>Total Upah Lembur:</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(totLembur)}</b>`;
+            }
+        }
+
+        // --- 9. KAMUS ISTILAH ---
+        const dataKamus = {
+            "BISNIS": "Suatu usaha yang menjual barang atau jasa kepada konsumen akhir untuk memenuhi kebutuhan pribadi, keluarga, atau rumah tangga (secara eceran).",
+            "HAKEKAT": "Bisnis efisiensi dan bisnis pelayanan (mengutamakan kepuasan pelanggan dan efisiensi biaya).",
+            "PKM": "Media penyajian kuantitas persediaan maksimum di toko atau limitasi jumlah item terbesar yang harus ada di toko.",
+            "MPKM": "Limitasi jumlah item terkecil yang harus ada di toko untuk mencegah terjadinya Out of Stock (OOS).",
+            "MINOR": "Kelipatan permintaan/order terkecil atas suatu item dari toko ke DC (Distribution Center).",
+            "DSI": "Masa persediaan penjualan atau alat kontrol persediaan / kecukupan stok toko dibanding laju SPD-nya.",
+            "SPD": "Rata-rata pendapatan penjualan harian toko.",
+            "STD": "Rata-rata jumlah transaksi harian toko atau jumlah konsumen yang berbelanja dalam satu hari.",
+            "APC": "Rata-rata nilai belanja per konsumen yang bertransaksi di toko.",
+            "SO": "Suatu proses penghitungan jumlah fisik barang untuk dibandingkan dengan jumlah stock di komputer (Stock On Hand).",
+            "PROMOSI": "Semua kegiatan yang bertujuan menciptakan atau meningkatkan permintaan produk toko.",
+            "ATRIBUT": "Perlengkapan pendukung dalam setiap program promosi yang sedang berjalan di toko.",
+            "LT": "Tenggang waktu mulai dari PB (Permintaan Barang) diproses sampai dengan fisik barang tiba di toko.",
+            "NX": "Digunakan untuk meningkatkan stok dalam usaha mengantisipasi kenaikan sales akibat aktivitas promosi tertentu.",
+            "NT": "Digunakan untuk meningkatkan stok dalam rangka memenuhi fasilitas promosi yang disewa supplier.",
+            "OOS": "Barang kosong atau tidak ada fisik barang di toko / rak pajangan.",
+            "PEL_LANGSUNG": "Seluruh aktivitas personel toko yang menyentuh langsung dan menimbulkan perasaan menyenangkan bagi konsumen.",
+            "PEL_TDK_LANGSUNG": "Penyediaan dan perawatan sarana-prasarana serta fasilitas toko agar konsumen nyaman saat berbelanja.",
+            "BIAYA": "Kebutuhan finansial tertentu yang harus terpenuhi untuk kelangsungan organisasi secara terukur dan terkontrol.",
+            "HOUSE": "Produk dengan menggunakan brand milik retailer sendiri yang lebih mementingkan kualitas.",
+            "PRIVATE": "Produk dengan merek yang hanya diproduksi untuk satu retailer dengan harga bersaing.",
+            "EFISIENSI": "Meminimalkan biaya untuk mencapai hasil tertentu tanpa mengurangi kualitas pencapaian.",
+            "PENGENDALIAN": "Pengukuran dan perbaikan terhadap pelaksanaan kerja agar rencana terselenggara dengan baik.",
+            "ADMIN": "Kegiatan yang berhubungan dengan pencatatan dan pelaporan hasil kerja sesuai prosedur.",
+            "KONTROL_ADMIN": "Pengendalian untuk memastikan sistem dan prosedur di toko dijalankan sebagaimana mestinya.",
+            "PENDAPATAN_LAIN": "Bentuk pemasukan perusahaan selain dari penjualan produk (seperti sewa teras/rak).",
+            "GONDOLA": "Rak dengan posisi ujung dari satu deret rak double yang disewakan untuk display khusus produk promo.",
+            "BLOCK": "Satu jajaran rak reguler yang disewakan khusus kepada supplier untuk mendisplay produknya.",
+            "FRANCHISE": "Strategi marketing mengembangkan jaringan usaha dengan memberikan hak lisensi merek kepada mitra.",
+            "FRANCHISOR": "Individu atau perusahaan pemilik merek dagang waralaba.",
+            "FRANCHISEE": "Mitra usaha yang membeli hak lisensi untuk menjalankan bisnis waralaba.",
+            "AREA": "Luas cakupan area potensi konsumen di sekitar toko (jumlah KK dan daya beli).",
+            "LEADERSHIP": "Kemampuan individu untuk menggerakkan dan mengarahkan tim kerja guna mencapai target bersama.",
+            "ISO": "Standar internasional untuk sistem manajemen mutu perusahaan."
+        };
+
+        function showDefinisiKamus() {
+            let k = document.getElementById('pilihKamus').value;
+            let b = document.getElementById('kamusResultBox');
+            if (k && dataKamus[k]) {
+                document.getElementById('kTitle').innerText = document.getElementById('pilihKamus').selectedOptions[0].text;
+                document.getElementById('kDesc').innerText = dataKamus[k];
+                b.style.display = 'block';
+            } else {
+                b.style.display = 'none';
+            }
+        }
+
+        // --- 10. MEMORY GAME ---
+        let gameCards = ['🛒', '🛒', '💰', '💰', '📦', '📦', '🏷️', '🏷️', '🎯', '🎯', '📱', '📱'];
+        let flipped = [];
+        let matched = 0;
+
+        function initGame() {
+            let b = document.getElementById('gameBoard');
+            b.innerHTML = '';
+            flipped = [];
+            matched = 0;
+            let shuffled = gameCards.sort(() => 0.5 - Math.random());
+            shuffled.forEach((sym, idx) => {
+                let c = document.createElement('div');
+                c.style.height = '65px';
+                c.style.background = 'var(--card-border)';
+                c.style.borderRadius = '8px';
+                c.style.display = 'flex';
+                c.style.alignItems = 'center';
+                c.style.justifyContent = 'center';
+                c.style.fontSize = '24px';
+                c.style.cursor = 'pointer';
+                c.dataset.symbol = sym;
+                c.dataset.index = idx;
+                c.innerText = '❓';
+                c.onclick = () => flipCard(c);
+                b.appendChild(c);
+            });
+        }
+
+        function flipCard(c) {
+            if (flipped.length < 2 && !c.classList.contains('revealed')) {
+                c.innerText = c.dataset.symbol;
+                c.classList.add('revealed');
+                c.style.background = '#ffffff';
+                flipped.push(c);
+                if (flipped.length === 2) {
+                    setTimeout(checkMatch, 600);
+                }
+            }
+        }
+
+        function checkMatch() {
+            if (flipped[0].dataset.symbol === flipped[1].dataset.symbol) {
+                flipped[0].style.background = '#86efac';
+                flipped[1].style.background = '#86efac';
+                matched += 2;
+                if (matched === gameCards.length) alert('🎉 Selamat! Anda menang!');
+            } else {
+                flipped[0].innerText = '❓';
+                flipped[1].innerText = '❓';
+                flipped[0].style.background = 'var(--card-border)';
+                flipped[1].style.background = 'var(--card-border)';
+                flipped[0].classList.remove('revealed');
+                flipped[1].classList.remove('revealed');
+            }
+            flipped = [];
+        }
+
+        // --- 11. PLAN ABSENSI OTOMATIS KALENDER (NAMA BEBAS & HARI FLEKSIBEL) ---
+        function getJumlahHariDalamBulan(bulan, tahun) {
+            return new Date(tahun, parseInt(bulan) + 1, 0).getDate();
+        }
+
+        function gantiPeriodeKalender() {
+            generateAbsensiTable();
+        }
+
+        function getStorageKeyAbsensi() {
+            let b = document.getElementById('selBulanAbsensi').value;
+            let y = document.getElementById('selTahunAbsensi').value;
+            return `qmr_plan_absensi_${y}_${b}`;
+        }
+
+        function generateAbsensiTable() {
+            let bulan = document.getElementById('selBulanAbsensi').value;
+            let tahun = document.getElementById('selTahunAbsensi').value;
+            let totalHari = getJumlahHariDalamBulan(bulan, tahun);
+
+            let headerRow = document.getElementById('rowTanggalHeader');
+            headerRow.innerHTML = '<th class="col-nama">NAMA PERSONEL</th>';
+            for (let t = 1; t <= totalHari; t++) {
+                let th = document.createElement('th');
+                th.innerText = t;
+                headerRow.appendChild(th);
+            }
+
+            let tbody = document.getElementById('bodyPlanAbsensi');
+            tbody.innerHTML = '';
+            
+            let storageKey = getStorageKeyAbsensi();
+            let savedData = JSON.parse(localStorage.getItem(storageKey)) || null;
+
+            // Jika belum ada data sama sekali di bulan ini, tampilkan 3 baris kosong siap isi
+            let listNama = savedData ? Object.keys(savedData) : ['', '', ''];
+
+            listNama.forEach((nama, rIdx) => {
+                let tr = document.createElement('tr');
+                let tdNama = document.createElement('td');
+                tdNama.className = 'col-nama';
+                tdNama.innerHTML = `
+                    <div style="display:flex; align-items:center; justify-content:space-between;">
+                        <input type="text" placeholder="Ketik Nama..." value="${nama}" style="width:85%; border:none; background:transparent; font-weight:bold; font-size:11px;" onchange="saveAbsensiData()">
+                        <button class="btn-del-row" onclick="hapusBarisKaryawan(${rIdx})" title="Hapus Baris">✕</button>
+                    </div>
+                `;
+                tr.appendChild(tdNama);
+
+                for (let t = 1; t <= totalHari; t++) {
+                    let td = document.createElement('td');
+                    let val = (savedData && savedData[nama] && savedData[nama][t]) ? savedData[nama][t] : '';
+                    let inp = document.createElement('input');
+                    inp.className = 'shift-cell';
+                    inp.maxLength = 3;
+                    inp.value = val;
+                    applyShiftColor(td, val);
+
+                    inp.oninput = function() {
+                        this.value = this.value.toUpperCase();
+                        applyShiftColor(td, this.value);
+                        saveAbsensiData();
+                    };
+                    td.appendChild(inp);
+                    tr.appendChild(td);
+                }
+                tbody.appendChild(tr);
+            });
+        }
+
+        function applyShiftColor(tdElement, textVal) {
+            tdElement.className = '';
+            let v = textVal.trim().toUpperCase();
+            if (v === 'OFF' || v === 'O' || v === 'X') {
+                tdElement.classList.add('cell-off');
+            } else if (v === 'SO') {
+                tdElement.classList.add('cell-so');
+            } else if (v === 'P') {
+                tdElement.classList.add('cell-p');
+            } else if (v === 'S') {
+                tdElement.classList.add('cell-s');
+            }
+        }
+
+        function saveAbsensiData() {
+            let data = {};
+            let rows = document.querySelectorAll('#bodyPlanAbsensi tr');
+            rows.forEach(r => {
+                let namaInput = r.querySelector('.col-nama input');
+                let nama = namaInput ? namaInput.value.trim().toUpperCase() : '';
+                if (nama) {
+                    data[nama] = {};
+                    let cells = r.querySelectorAll('.shift-cell');
+                    cells.forEach((inp, idx) => {
+                        data[nama][idx + 1] = inp.value.trim().toUpperCase();
+                    });
+                }
+            });
+            localStorage.setItem(getStorageKeyAbsensi(), JSON.stringify(data));
+        }
+
+        function tambahBarisKaryawan() {
+            let namaBaru = prompt("Masukkan Nama Personel Toko:");
+            if (namaBaru && namaBaru.trim() !== '') {
+                let storageKey = getStorageKeyAbsensi();
+                let savedData = JSON.parse(localStorage.getItem(storageKey)) || {};
+                savedData[namaBaru.trim().toUpperCase()] = {};
+                localStorage.setItem(storageKey, JSON.stringify(savedData));
+                generateAbsensiTable();
+            }
+        }
+
+        function hapusBarisKaryawan(index) {
+            if (confirm("Hapus baris personel ini?")) {
+                let storageKey = getStorageKeyAbsensi();
+                let savedData = JSON.parse(localStorage.getItem(storageKey)) || {};
+                let keys = Object.keys(savedData);
+                if (keys[index]) {
+                    delete savedData[keys[index]];
+                    localStorage.setItem(storageKey, JSON.stringify(savedData));
+                }
+                generateAbsensiTable();
+            }
+        }
+
+        // --- 12. AUTO-SAVE TARGET INPUTS ---
+        const targetIds = ['jhk', 'targetNetSales', 'targetApc', 'targetGm', 'targetPsm', 'targetPwp', 'targetSg', 'iktTApc', 'iktTPwp', 'iktTPsm', 'iktTSg', 'pTargetSales', 'pShiftType'];
+        function autoSaveTargets() {
+            targetIds.forEach(id => {
+                let el = document.getElementById(id);
+                if (el) localStorage.setItem('qmr_target_' + id, el.value);
+            });
+        }
+        function loadAutoTargets() {
+            targetIds.forEach(id => {
+                let v = localStorage.getItem('qmr_target_' + id);
+                let el = document.getElementById(id);
+                if (v && el) el.value = v;
+            });
+            hitungAutoSalesTargets();
+        }
+
+        window.onload = loadIdentitas;
+    </script>
+</body>
+</html>
