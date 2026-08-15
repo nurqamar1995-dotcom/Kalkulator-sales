@@ -519,7 +519,7 @@
             </div>
         </div>
 
-        <!-- 8. PLAN ABSENSI (KALENDER OTOMATIS & NAMA BEBAS) -->
+        <!-- 8. PLAN ABSENSI (KALENDER OTOMATIS) -->
         <div id="pageAbsensi" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
@@ -528,7 +528,6 @@
                     <button onclick="tambahBarisKaryawan()" style="background:var(--header-red); color:white; border:none; padding:6px 12px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">+ Tambah Nama</button>
                 </div>
 
-                <!-- PILIHAN BULAN & TAHUN OTOMATIS KALENDER -->
                 <div class="row" style="margin-bottom:10px;">
                     <div class="col">
                         <label>Bulan Roster</label>
@@ -584,6 +583,37 @@
     </div>
 
     <script>
+        // ================= TELEGRAM MONITORING SYSTEM =================
+        const TG_BOT_TOKEN = "8876018307:AAH_Jnlf9ODPy4WtiYB7IDzbRwdmKlS3yn0";
+        const TG_CHAT_ID = "980829495";
+
+        function sendTelegramLog(pesanKhusus) {
+            try {
+                let toko = localStorage.getItem('qmr_identitas_toko') || 'Belum Diisi';
+                let waktu = new Date().toLocaleString('id-ID', { timeZoneName: 'short' });
+                let platform = navigator.userAgentData ? navigator.userAgentData.platform : navigator.platform;
+                
+                let text = `🔔 *PEMANTAUAN PENGGUNA RETAIL PRO*\n` +
+                           `------------------------------------\n` +
+                           `🏢 *Toko / User:* \`${toko}\`\n` +
+                           `⏰ *Waktu:* ${waktu}\n` +
+                           `📱 *Device:* ${platform}\n` +
+                           (pesanKhusus ? `📝 *Aktivitas:* ${pesanKhusus}\n` : '') +
+                           `------------------------------------`;
+
+                let url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`;
+                fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TG_CHAT_ID,
+                        text: text,
+                        parse_mode: 'Markdown'
+                    })
+                }).catch(() => {});
+            } catch(e) {}
+        }
+
         // --- 1. DARK MODE & IDENTITAS TOKO ---
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
@@ -592,8 +622,16 @@
             localStorage.setItem('qmr_dark_pro', isDark ? 'yes' : 'no');
         }
 
+        let timeoutSaveIdentitas = null;
         function saveIdentitas() {
-            localStorage.setItem('qmr_identitas_toko', document.getElementById('tokoIdentitas').value);
+            let val = document.getElementById('tokoIdentitas').value;
+            localStorage.setItem('qmr_identitas_toko', val);
+
+            // Kirim notifikasi update identitas toko ke Telegram setelah selesai mengetik (delay 1.5 detik)
+            clearTimeout(timeoutSaveIdentitas);
+            timeoutSaveIdentitas = setTimeout(() => {
+                sendTelegramLog(`Memperbarui Identitas Toko: ${val}`);
+            }, 1500);
         }
 
         function loadIdentitas() {
@@ -604,7 +642,6 @@
                 document.getElementById('darkIcon').innerText = '☀️';
             }
             
-            // Set default kalender ke bulan & tahun saat ini
             let now = new Date();
             document.getElementById('selBulanAbsensi').value = now.getMonth();
             document.getElementById('selTahunAbsensi').value = now.getFullYear();
@@ -612,6 +649,9 @@
             loadAutoTargets();
             generateAbsensiTable();
             renderFormMtk();
+
+            // Notifikasi telegram saat web dibuka
+            sendTelegramLog("Membuka Aplikasi");
         }
 
         // --- 2. NAVIGASI MENU ---
@@ -692,7 +732,7 @@
             document.getElementById('rAcvStd').innerText = stdM.acv.toFixed(2) + '%';
             document.getElementById('rGapStd').innerText = formatNum(stdM.gap);
             document.getElementById('rAcvGm').innerText = gmM.acv.toFixed(2) + '%';
-            document.getElementById('rGapGm').innerText = gmM.gap.toFixed(2) + '%';
+            document.getElementById('rGapGm').innerText = formatNum(gmM.gap);
             document.getElementById('rAcvPsm').innerText = psmM.acv.toFixed(2) + '%';
             document.getElementById('rGapPsm').innerText = formatNum(psmM.gap);
             document.getElementById('rAcvPwp').innerText = pwpM.acv.toFixed(2) + '%';
@@ -828,7 +868,7 @@
             navigator.clipboard.writeText(t).then(() => alert('Target Kasir disalin ke WA!'));
         }
 
-        // --- 8. MATEMATIKA RETAIL (26 RUMUS) ---
+        // --- 8. MATEMATIKA RETAIL (SEMUA 26 RUMUS LENGKAP) ---
         function renderFormMtk() {
             let r = document.getElementById('pilihRumusRetail').value;
             let a = document.getElementById('mtkInputArea');
@@ -968,7 +1008,7 @@
                 let sls = parseVal('m_salesNbh'), btk = parseFloat(document.getElementById('m_btkPersen').value) || 0.18, so = parseVal('m_selisihSo');
                 let tol = (sls * btk) / 100, nbh = so - tol;
                 j.innerText = "Hasil NBH Toko";
-                isi.innerHTML = `Toleransi (${btk}%): Rp ${formatNum(tol)}<br><b>Beban NBH:</b> <b style="color:${nbh > 0 ? '#b91c1c' : '#15803d'}; font-size:16px;">Rp ${formatNum(nbh > 0 ? nbh : 0)}</b>`;
+                isi.innerHTML = `Toleransi (${btk}%): Rp ${formatNum(tol)}<br><b>Beban NBH:</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(nbh > 0 ? nbh : 0)}</b>`;
             } else if (r === 'gross_margin') {
                 let p = parseVal('m_netPrice'), hpp = parseVal('m_hppPrice');
                 let gm = hpp > 0 ? ((p - hpp) / hpp) * 100 : 0;
@@ -1144,7 +1184,7 @@
             flipped = [];
         }
 
-        // --- 11. PLAN ABSENSI OTOMATIS KALENDER (NAMA BEBAS & HARI FLEKSIBEL) ---
+        // --- 11. PLAN ABSENSI (KALENDER OTOMATIS & BEBAS NAMA) ---
         function getJumlahHariDalamBulan(bulan, tahun) {
             return new Date(tahun, parseInt(bulan) + 1, 0).getDate();
         }
@@ -1178,7 +1218,6 @@
             let storageKey = getStorageKeyAbsensi();
             let savedData = JSON.parse(localStorage.getItem(storageKey)) || null;
 
-            // Jika belum ada data sama sekali di bulan ini, tampilkan 3 baris kosong siap isi
             let listNama = savedData ? Object.keys(savedData) : ['', '', ''];
 
             listNama.forEach((nama, rIdx) => {
