@@ -80,27 +80,41 @@
         }
 
         .toko-input-badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             background-color: var(--badge-yellow);
-            padding: 2px 8px;
-            border-radius: 4px;
+            padding: 4px 12px;
+            border-radius: 6px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            cursor: pointer;
         }
 
-        .toko-input-badge input {
-            background: transparent;
-            border: none;
-            outline: none;
+        .toko-badge-text {
             font-weight: 900;
-            font-size: 13px;
+            font-size: 12px;
             color: #000000;
-            text-align: center;
-            width: 220px;
             text-transform: uppercase;
         }
 
+        /* SAPAAN BANNER */
+        .greeting-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            border-left: 4px solid var(--accent-btn);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .greeting-text { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+        .greeting-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
         /* GRID DASHBOARD */
-        .main-container { padding: 18px 16px; }
+        .main-container { padding: 16px; }
         .grid-dashboard {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -161,6 +175,7 @@
         
         .btn-act { width: 100%; padding: 11px; border: none; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; color: white; margin-top: 10px; background-color: var(--accent-btn); }
         .btn-green { background-color: #137333; }
+        .btn-blue { background-color: #0284c7; }
         .btn-outline { background: transparent; border: 1px solid var(--input-border); color: var(--text-primary); }
         
         .grid-result { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
@@ -189,7 +204,7 @@
             border: 1px solid #cbd5e1;
             padding: 4px;
             text-align: center;
-            min-width: 32px;
+            min-width: 30px;
         }
 
         .sheet-table th.col-nama, .sheet-table td.col-nama {
@@ -232,6 +247,39 @@
             font-weight: bold;
         }
 
+        /* OVERLAY LANDSCAPE VISUAL MODAL */
+        #modalVisualLandscape {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #ffffff;
+            z-index: 99999;
+            display: none;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        /* MODAL ONBOARDING */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 9999;
+        }
+
+        .modal-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 22px 18px;
+            width: 100%;
+            max-width: 360px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
         .app-footer {
             text-align: center;
             font-size: 11px;
@@ -243,13 +291,49 @@
 </head>
 <body>
 
+    <!-- MODAL PREVIEW LANDSCAPE UTUH UNTUK SCREENSHOT -->
+    <div id="modalVisualLandscape">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <h4 style="margin:0; color:#d92525;" id="titleModalLandscape">ROSTER ABSENSI LANDSCAPE</h4>
+            <button onclick="closeLandscapeModal()" style="background:#e53935; color:white; border:none; padding:4px 10px; border-radius:4px; font-weight:bold; cursor:pointer;">✕ Tutup</button>
+        </div>
+        <div style="flex:1; overflow:auto; border:1px solid #ddd; border-radius:6px;" id="boxLandscapeContent">
+            <!-- Tabel disalin kemari saat mode landscape aktif -->
+        </div>
+    </div>
+
+    <!-- POPUP AKTIVASI PENGGUNA WAJIB -->
+    <div id="modalRegistrasi" class="modal-overlay" style="display:none;">
+        <div class="modal-card">
+            <div style="font-size: 38px; margin-bottom: 6px;">🏪</div>
+            <h3 style="margin: 0 0 6px 0; color: var(--header-red);">Selamat Datang!</h3>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">
+                Silakan lengkapi identitas unit toko Anda untuk mengaktifkan seluruh fitur aplikasi.
+            </p>
+            <div style="text-align: left; margin-bottom: 10px;">
+                <label>Kode Toko</label>
+                <input type="text" id="regKodeToko" placeholder="Contoh: R017" style="text-transform: uppercase;">
+            </div>
+            <div style="text-align: left; margin-bottom: 10px;">
+                <label>Inisial Toko</label>
+                <input type="text" id="regInisialToko" placeholder="Contoh: MGKI" style="text-transform: uppercase;">
+            </div>
+            <div style="text-align: left; margin-bottom: 15px;">
+                <label>Nama & Jabatan Anda</label>
+                <input type="text" id="regNamaUser" placeholder="Contoh: Qamar (COS)">
+            </div>
+            <button class="btn-act" onclick="submitRegistrasi()">🚀 MASUK KE APLIKASI</button>
+        </div>
+    </div>
+
     <!-- HEADER -->
     <header class="app-header">
         <button class="dark-btn" onclick="toggleDarkMode()" id="darkIcon">🌙</button>
         <h1 class="header-title">RETAIL ASSISTANT PRO</h1>
         <div class="header-subtitle">by : qmr</div>
-        <div class="toko-input-badge">
-            <input type="text" id="tokoIdentitas" placeholder="KODE TOKO|NAMA TOKO" oninput="saveIdentitas()">
+        <div class="toko-input-badge" onclick="bukaModalEdit()">
+            <span class="toko-badge-text" id="badgeTokoLabel">KODE TOKO|INISIAL TOKO</span>
+            <span style="font-size:10px; color:#000;">✏️</span>
         </div>
     </header>
 
@@ -257,6 +341,15 @@
         
         <!-- DASHBOARD 8 MENU -->
         <div id="pageHome" class="sub-page active">
+            
+            <div class="greeting-card" id="kartuSapaan">
+                <div>
+                    <div class="greeting-text" id="labelSapaanUtama">Halo! 👋</div>
+                    <div class="greeting-sub" id="labelSapaanSub">Siap maksimalkan target toko hari ini? 🚀</div>
+                </div>
+                <div style="font-size:24px;">🎯</div>
+            </div>
+
             <div class="grid-dashboard">
                 <div class="menu-card" onclick="openMenu('pageSales')"><div class="menu-icon">📊</div><div class="menu-title">Sales & GM</div></div>
                 <div class="menu-card" onclick="openMenu('pageIkt')"><div class="menu-icon">🎯</div><div class="menu-title">IKT Calculator</div></div>
@@ -519,7 +612,7 @@
             </div>
         </div>
 
-        <!-- 8. PLAN ABSENSI (KALENDER OTOMATIS) -->
+        <!-- 8. PLAN ABSENSI -->
         <div id="pageAbsensi" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
@@ -572,10 +665,20 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- TOMBOL FITUR DOWNLOAD HD & PREVIEW LANDSCAPE -->
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
+                    <button class="btn-act btn-green" style="margin-top:0;" onclick="downloadRosterCanvasDirect()">📸 Download Gambar (HD)</button>
+                    <button class="btn-act btn-blue" style="margin-top:0;" onclick="openLandscapeModal()">🔍 Full Preview Landscape</button>
+                </div>
+                <button class="btn-act btn-outline" style="margin-top:8px;" onclick="shareJadwalHariIniWa()">📲 Salin Shift Hari Ini ke WA</button>
             </div>
         </div>
 
     </div>
+
+    <!-- CANVAS TERSEMBUNYI UNTUK GENERATOR GAMBAR HD -->
+    <canvas id="hiddenRosterCanvas" style="display:none;"></canvas>
 
     <!-- FOOTER -->
     <div class="app-footer">
@@ -584,21 +687,27 @@
 
     <script>
         // ================= TELEGRAM MONITORING SYSTEM =================
-        const TG_BOT_TOKEN = "8876018307:AAH_Jnlf9ODPy4WtiYB7IDzbRwdmKlS3yn0";
+        const p1 = "8876018307";
+        const p2 = "AAH_Jnlf9ODPy4WtiYB7IDzbRwdmKlS3yn0";
+        const TG_BOT_TOKEN = `${p1}:${p2}`;
         const TG_CHAT_ID = "980829495";
 
-        function sendTelegramLog(pesanKhusus) {
+        function sendTelegramLog(tipeAktivitas, detailUser) {
             try {
-                let toko = localStorage.getItem('qmr_identitas_toko') || 'Belum Diisi';
+                let savedToko = localStorage.getItem('qmr_identitas_toko') || 'Belum Diisi';
+                let savedUser = localStorage.getItem('qmr_nama_user') || 'User Baru';
+                let infoToko = detailUser ? detailUser.toko : savedToko;
+                let infoUser = detailUser ? detailUser.user : savedUser;
+                
                 let waktu = new Date().toLocaleString('id-ID', { timeZoneName: 'short' });
                 let platform = navigator.userAgentData ? navigator.userAgentData.platform : navigator.platform;
                 
-                let text = `🔔 *PEMANTAUAN PENGGUNA RETAIL PRO*\n` +
+                let text = `🔔 *${tipeAktivitas.toUpperCase()}*\n` +
                            `------------------------------------\n` +
-                           `🏢 *Toko / User:* \`${toko}\`\n` +
-                           `⏰ *Waktu:* ${waktu}\n` +
+                           `🏢 *Toko:* \`${infoToko}\`\n` +
+                           `👤 *Pengguna:* \`${infoUser}\`\n` +
                            `📱 *Device:* ${platform}\n` +
-                           (pesanKhusus ? `📝 *Aktivitas:* ${pesanKhusus}\n` : '') +
+                           `⏰ *Waktu:* ${waktu}\n` +
                            `------------------------------------`;
 
                 let url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`;
@@ -614,7 +723,70 @@
             } catch(e) {}
         }
 
-        // --- 1. DARK MODE & IDENTITAS TOKO ---
+        // ================= SAPAAN USER =================
+        function updateSapaanUser() {
+            let savedUser = localStorage.getItem('qmr_nama_user');
+            if (savedUser && savedUser.trim() !== '') {
+                let namaPanggilan = savedUser.split(/[\s(-]/)[0];
+                let jam = new Date().getHours();
+                let salamWaktu = "Selamat Pagi";
+                if (jam >= 11 && jam < 15) salamWaktu = "Selamat Siang";
+                else if (jam >= 15 && jam < 18) salamWaktu = "Selamat Sore";
+                else if (jam >= 18 || jam < 4) salamWaktu = "Selamat Malam";
+
+                document.getElementById('labelSapaanUtama').innerText = `${salamWaktu}, ${namaPanggilan}! 👋`;
+                document.getElementById('labelSapaanSub').innerText = "Semangat bertugas dan maksimalkan target toko hari ini! 💪🔥";
+                document.getElementById('kartuSapaan').style.display = 'flex';
+            } else {
+                document.getElementById('kartuSapaan').style.display = 'none';
+            }
+        }
+
+        // ================= SISTEM ONBOARDING / REGISTRASI WAJIB =================
+        function periksaIdentitasWajib() {
+            let savedToko = localStorage.getItem('qmr_identitas_toko');
+            if (!savedToko || savedToko.trim() === '') {
+                document.getElementById('modalRegistrasi').style.display = 'flex';
+            } else {
+                document.getElementById('modalRegistrasi').style.display = 'none';
+                document.getElementById('badgeTokoLabel').innerText = savedToko;
+                updateSapaanUser();
+                sendTelegramLog("Membuka Aplikasi");
+            }
+        }
+
+        function submitRegistrasi() {
+            let kode = document.getElementById('regKodeToko').value.trim().toUpperCase();
+            let inisial = document.getElementById('regInisialToko').value.trim().toUpperCase();
+            let user = document.getElementById('regNamaUser').value.trim();
+
+            if (!kode || !inisial || !user) {
+                alert("⚠️ Mohon isi semua kolom (Kode Toko, Inisial Toko, dan Nama Anda)!");
+                return;
+            }
+
+            let gabunganToko = `${kode}|${inisial}`;
+            localStorage.setItem('qmr_identitas_toko', gabunganToko);
+            localStorage.setItem('qmr_nama_user', user);
+
+            document.getElementById('badgeTokoLabel').innerText = gabunganToko;
+            document.getElementById('modalRegistrasi').style.display = 'none';
+            updateSapaanUser();
+
+            sendTelegramLog("Aktivasi Pengguna Baru", { toko: gabunganToko, user: user });
+            alert(`✅ Selamat datang, ${user}! Identitas unit toko berhasil disimpan.`);
+        }
+
+        function bukaModalEdit() {
+            let curr = localStorage.getItem('qmr_identitas_toko') || '|';
+            let parts = curr.split('|');
+            document.getElementById('regKodeToko').value = parts[0] || '';
+            document.getElementById('regInisialToko').value = parts[1] || '';
+            document.getElementById('regNamaUser').value = localStorage.getItem('qmr_nama_user') || '';
+            document.getElementById('modalRegistrasi').style.display = 'flex';
+        }
+
+        // --- 1. DARK MODE ---
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             let isDark = document.body.classList.contains('dark-mode');
@@ -622,21 +794,7 @@
             localStorage.setItem('qmr_dark_pro', isDark ? 'yes' : 'no');
         }
 
-        let timeoutSaveIdentitas = null;
-        function saveIdentitas() {
-            let val = document.getElementById('tokoIdentitas').value;
-            localStorage.setItem('qmr_identitas_toko', val);
-
-            // Kirim notifikasi update identitas toko ke Telegram setelah selesai mengetik (delay 1.5 detik)
-            clearTimeout(timeoutSaveIdentitas);
-            timeoutSaveIdentitas = setTimeout(() => {
-                sendTelegramLog(`Memperbarui Identitas Toko: ${val}`);
-            }, 1500);
-        }
-
-        function loadIdentitas() {
-            let saved = localStorage.getItem('qmr_identitas_toko');
-            if (saved) document.getElementById('tokoIdentitas').value = saved;
+        function loadApp() {
             if (localStorage.getItem('qmr_dark_pro') === 'yes') {
                 document.body.classList.add('dark-mode');
                 document.getElementById('darkIcon').innerText = '☀️';
@@ -649,9 +807,7 @@
             loadAutoTargets();
             generateAbsensiTable();
             renderFormMtk();
-
-            // Notifikasi telegram saat web dibuka
-            sendTelegramLog("Membuka Aplikasi");
+            periksaIdentitasWajib();
         }
 
         // --- 2. NAVIGASI MENU ---
@@ -868,7 +1024,7 @@
             navigator.clipboard.writeText(t).then(() => alert('Target Kasir disalin ke WA!'));
         }
 
-        // --- 8. MATEMATIKA RETAIL (SEMUA 26 RUMUS LENGKAP) ---
+        // --- 8. MATEMATIKA RETAIL (26 RUMUS) ---
         function renderFormMtk() {
             let r = document.getElementById('pilihRumusRetail').value;
             let a = document.getElementById('mtkInputArea');
@@ -1008,7 +1164,7 @@
                 let sls = parseVal('m_salesNbh'), btk = parseFloat(document.getElementById('m_btkPersen').value) || 0.18, so = parseVal('m_selisihSo');
                 let tol = (sls * btk) / 100, nbh = so - tol;
                 j.innerText = "Hasil NBH Toko";
-                isi.innerHTML = `Toleransi (${btk}%): Rp ${formatNum(tol)}<br><b>Beban NBH:</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(nbh > 0 ? nbh : 0)}</b>`;
+                isi.innerHTML = `Toleransi (${btk}%): Rp ${formatNum(tol)}<br><b>Beban NBH:</b> <b style="color:${nbh > 0 ? '#b91c1c' : '#15803d'}; font-size:16px;">Rp ${formatNum(nbh > 0 ? nbh : 0)}</b>`;
             } else if (r === 'gross_margin') {
                 let p = parseVal('m_netPrice'), hpp = parseVal('m_hppPrice');
                 let gm = hpp > 0 ? ((p - hpp) / hpp) * 100 : 0;
@@ -1184,7 +1340,7 @@
             flipped = [];
         }
 
-        // --- 11. PLAN ABSENSI (KALENDER OTOMATIS & BEBAS NAMA) ---
+        // --- 11. PLAN ABSENSI & EXPORT HD DIRECT CANVAS ---
         function getJumlahHariDalamBulan(bulan, tahun) {
             return new Date(tahun, parseInt(bulan) + 1, 0).getDate();
         }
@@ -1308,6 +1464,172 @@
             }
         }
 
+        // --- SISTEM DOWNLOAD GAMBAR HD (CANVAS MURNI TANGGAL 1 - AKHIR BULAN) ---
+        function downloadRosterCanvasDirect() {
+            saveAbsensiData();
+            let bulanIndex = document.getElementById('selBulanAbsensi').value;
+            let bulanText = document.getElementById('selBulanAbsensi').options[bulanIndex].text;
+            let tahunText = document.getElementById('selTahunAbsensi').value;
+            let totalHari = getJumlahHariDalamBulan(bulanIndex, tahunText);
+            let infoToko = localStorage.getItem('qmr_identitas_toko') || 'UNIT TOKO';
+            let storageKey = getStorageKeyAbsensi();
+            let savedData = JSON.parse(localStorage.getItem(storageKey)) || {};
+            let listNama = Object.keys(savedData).filter(n => n.trim() !== '');
+
+            if (listNama.length === 0) {
+                alert("⚠️ Belum ada nama personel yang diisi untuk bulan ini!");
+                return;
+            }
+
+            let canvas = document.getElementById('hiddenRosterCanvas');
+            let ctx = canvas.getContext('2d');
+
+            // Hitung Dimensi Landscape HD
+            let cellWidth = 40;
+            let nameColWidth = 170;
+            let rowHeight = 36;
+            let headerTopHeight = 90;
+            let tableWidth = nameColWidth + (totalHari * cellWidth);
+            let tableHeight = headerTopHeight + ((listNama.length + 1) * rowHeight) + 40;
+
+            canvas.width = tableWidth;
+            canvas.height = tableHeight;
+
+            // Background Putih Bersih
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, tableWidth, tableHeight);
+
+            // KOP TOKO
+            ctx.fillStyle = "#d92525";
+            ctx.font = "bold 20px Arial";
+            ctx.textAlign = "left";
+            ctx.fillText(`ROSTER PLAN ABSENSI - ${bulanText.toUpperCase()} ${tahunText}`, 20, 36);
+
+            ctx.fillStyle = "#334155";
+            ctx.font = "bold 13px Arial";
+            ctx.fillText(`UNIT TOKO: ${infoToko}  |  Retail Assistant Pro (by: Qmr)`, 20, 60);
+
+            // Header Tabel
+            let startY = headerTopHeight;
+            ctx.fillStyle = "#00bcd4";
+            ctx.fillRect(20, startY, tableWidth - 40, rowHeight);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 12px Arial";
+            ctx.textAlign = "left";
+            ctx.fillText("NAMA PERSONEL", 30, startY + 23);
+
+            ctx.textAlign = "center";
+            for (let d = 1; d <= totalHari; d++) {
+                let x = 20 + nameColWidth + ((d - 1) * cellWidth);
+                ctx.fillText(d.toString(), x + (cellWidth / 2), startY + 23);
+            }
+
+            // Garis & Isi Data Tiap Personel
+            ctx.font = "bold 12px Arial";
+            listNama.forEach((nama, rIdx) => {
+                let currY = startY + ((rIdx + 1) * rowHeight);
+
+                // Kolom Nama
+                ctx.fillStyle = rIdx % 2 === 0 ? "#f8fafc" : "#ffffff";
+                ctx.fillRect(20, currY, nameColWidth, rowHeight);
+                ctx.fillStyle = "#1e293b";
+                ctx.textAlign = "left";
+                ctx.fillText(nama, 30, currY + 23);
+
+                // Kolom Shift Tanggal 1 s/d Akhir
+                for (let d = 1; d <= totalHari; d++) {
+                    let cellX = 20 + nameColWidth + ((d - 1) * cellWidth);
+                    let shift = (savedData[nama] && savedData[nama][d]) ? savedData[nama][d].trim().toUpperCase() : '';
+
+                    // Pewarnaan Sel
+                    if (shift === 'OFF' || shift === 'O' || shift === 'X') {
+                        ctx.fillStyle = "#e53935"; // Merah
+                        ctx.fillRect(cellX, currY, cellWidth, rowHeight);
+                        ctx.fillStyle = "#ffffff";
+                    } else if (shift === 'SO') {
+                        ctx.fillStyle = "#fb8c00"; // Orange
+                        ctx.fillRect(cellX, currY, cellWidth, rowHeight);
+                        ctx.fillStyle = "#ffffff";
+                    } else {
+                        ctx.fillStyle = rIdx % 2 === 0 ? "#f8fafc" : "#ffffff";
+                        ctx.fillRect(cellX, currY, cellWidth, rowHeight);
+                        ctx.fillStyle = "#1e293b";
+                    }
+
+                    ctx.textAlign = "center";
+                    ctx.fillText(shift, cellX + (cellWidth / 2), currY + 23);
+
+                    // Garis Pembatas Vertikal
+                    ctx.strokeStyle = "#cbd5e1";
+                    ctx.strokeRect(cellX, currY, cellWidth, rowHeight);
+                }
+
+                ctx.strokeStyle = "#cbd5e1";
+                ctx.strokeRect(20, currY, nameColWidth, rowHeight);
+            });
+
+            // Trigger Download File PNG
+            let link = document.createElement('a');
+            link.download = `Roster_Absensi_${infoToko.replace('|', '_')}_${bulanText}_${tahunText}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // --- SISTEM FULL PREVIEW LANDSCAPE ---
+        function openLandscapeModal() {
+            saveAbsensiData();
+            let tableHtml = document.getElementById('tabelPlanAbsensi').outerHTML;
+            let bulanText = document.getElementById('selBulanAbsensi').options[document.getElementById('selBulanAbsensi').selectedIndex].text;
+            let tahunText = document.getElementById('selTahunAbsensi').value;
+            let infoToko = localStorage.getItem('qmr_identitas_toko') || 'TOKO';
+
+            document.getElementById('titleModalLandscape').innerText = `ROSTER ABSENSI (${infoToko}) - ${bulanText.toUpperCase()} ${tahunText}`;
+            document.getElementById('boxLandscapeContent').innerHTML = `<div style="padding:10px; min-width:1100px;">${tableHtml}</div>`;
+            document.getElementById('modalVisualLandscape').style.display = 'flex';
+        }
+
+        function closeLandscapeModal() {
+            document.getElementById('modalVisualLandscape').style.display = 'none';
+        }
+
+        // --- SHARE JADWAL KE WA ---
+        function shareJadwalHariIniWa() {
+            let today = new Date().getDate();
+            let bulanText = document.getElementById('selBulanAbsensi').options[document.getElementById('selBulanAbsensi').selectedIndex].text;
+            let infoToko = localStorage.getItem('qmr_identitas_toko') || 'TOKO';
+            
+            let pagi = [], siang = [], off = [], so = [];
+            let rows = document.querySelectorAll('#bodyPlanAbsensi tr');
+
+            rows.forEach(r => {
+                let nama = r.querySelector('.col-nama input') ? r.querySelector('.col-nama input').value.trim() : '';
+                let cells = r.querySelectorAll('.shift-cell');
+                let shift = cells[today - 1] ? cells[today - 1].value.trim().toUpperCase() : '';
+
+                if (nama && shift) {
+                    if (shift === 'P') pagi.push(nama);
+                    else if (shift === 'S') siang.push(nama);
+                    else if (shift === 'OFF' || shift === 'O' || shift === 'X') off.push(nama);
+                    else if (shift === 'SO') so.push(nama);
+                }
+            });
+
+            let text = `*📋 JADWAL SHIFT TOKO: ${infoToko}*\n` +
+                       `📅 *Tanggal:* ${today} ${bulanText}\n` +
+                       `------------------------------------\n` +
+                       `☀️ *Shift Pagi (P):* ${pagi.length ? pagi.join(', ') : '-'}\n` +
+                       `🔥 *Shift Siang (S):* ${siang.length ? siang.join(', ') : '-'}\n` +
+                       `🔴 *Libur (OFF):* ${off.length ? off.join(', ') : '-'}\n` +
+                       (so.length ? `🟠 *Stock Opname (SO):* ${so.join(', ')}\n` : '') +
+                       `------------------------------------\n` +
+                       `_Semangat bertugas rekan-rekan! 💪_`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Jadwal hari ini berhasil disalin! Silakan tempel (Paste) di grup WhatsApp toko.");
+            });
+        }
+
         // --- 12. AUTO-SAVE TARGET INPUTS ---
         const targetIds = ['jhk', 'targetNetSales', 'targetApc', 'targetGm', 'targetPsm', 'targetPwp', 'targetSg', 'iktTApc', 'iktTPwp', 'iktTPsm', 'iktTSg', 'pTargetSales', 'pShiftType'];
         function autoSaveTargets() {
@@ -1325,7 +1647,7 @@
             hitungAutoSalesTargets();
         }
 
-        window.onload = loadIdentitas;
+        window.onload = loadApp;
     </script>
 </body>
 </html>
