@@ -97,7 +97,17 @@
             text-transform: uppercase;
         }
 
-        /* SAPAAN BANNER */
+        /* DASHBOARD WIDGETS */
+        .tf-widget {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            border: 1px solid var(--input-border);
+        }
+
         .greeting-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -111,7 +121,7 @@
         }
 
         .greeting-text { font-size: 13px; font-weight: 700; color: var(--text-primary); }
-        .greeting-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+        .greeting-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; }
 
         /* GRID DASHBOARD */
         .main-container { padding: 16px; }
@@ -140,7 +150,7 @@
         .menu-icon { font-size: 32px; margin-bottom: 8px; line-height: 1; }
         .menu-title { font-size: 11.5px; font-weight: 700; color: var(--text-primary); }
 
-        /* SUB PAGES */
+        /* SUB PAGES & COMPONENTS */
         .sub-page { display: none; }
         .sub-page.active { display: block; }
         
@@ -183,144 +193,65 @@
         .res-box.full { grid-column: span 2; }
         .res-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; font-weight: bold; }
         .res-value { font-size: 13px; font-weight: bold; color: var(--text-primary); margin-top: 3px; }
+        .separator-pps { grid-column: span 2; background: var(--header-red); color: white; text-align: center; padding: 4px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-top: 6px; margin-bottom: -2px; }
 
         /* SPREADSHEET ABSENSI */
-        .sheet-wrapper {
-            overflow-x: auto;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            background: #ffffff;
-            max-width: 100%;
-        }
-
-        .sheet-table {
-            border-collapse: collapse;
-            width: 100%;
-            font-size: 11px;
-            white-space: nowrap;
-        }
-
-        .sheet-table th, .sheet-table td {
-            border: 1px solid #cbd5e1;
-            padding: 4px;
-            text-align: center;
-            min-width: 30px;
-        }
-
-        .sheet-table th.col-nama, .sheet-table td.col-nama {
-            position: sticky;
-            left: 0;
-            background: #f8fafc;
-            z-index: 2;
-            min-width: 120px;
-            text-align: left;
-            padding-left: 6px;
-            font-weight: bold;
-        }
-
+        .sheet-wrapper { overflow-x: auto; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; max-width: 100%; }
+        .sheet-table { border-collapse: collapse; width: 100%; font-size: 11px; white-space: nowrap; }
+        .sheet-table th, .sheet-table td { border: 1px solid #cbd5e1; padding: 4px; text-align: center; min-width: 30px; }
+        .sheet-table th.col-nama, .sheet-table td.col-nama { position: sticky; left: 0; background: #f8fafc; z-index: 2; min-width: 120px; text-align: left; padding-left: 6px; font-weight: bold; }
         .sheet-table th { background: #00bcd4; color: white; font-weight: bold; }
-        
-        .shift-cell {
-            width: 100%;
-            border: none;
-            outline: none;
-            text-align: center;
-            font-weight: bold;
-            font-size: 11px;
-            padding: 3px 0;
-            background: transparent;
-            text-transform: uppercase;
-        }
-
+        .shift-cell { width: 100%; border: none; outline: none; text-align: center; font-weight: bold; font-size: 11px; padding: 3px 0; background: transparent; text-transform: uppercase; }
         .cell-off { background-color: #e53935 !important; color: #ffffff !important; font-weight: bold; }
         .cell-so { background-color: #fb8c00 !important; color: #ffffff !important; font-weight: bold; }
-        .cell-p { background-color: #ffffff; color: #1e293b; }
-        .cell-s { background-color: #ffffff; color: #1e293b; }
+        .btn-del-row { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 13px; padding: 0 4px; font-weight: bold; }
 
-        .btn-del-row {
-            background: none;
-            border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 13px;
-            padding: 0 4px;
-            font-weight: bold;
-        }
+        /* MODAL LOGIN Wajib */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999; }
+        .modal-card { background: var(--card-bg); border-radius: 18px; padding: 22px 18px; width: 100%; max-width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: center; }
 
-        /* OVERLAY LANDSCAPE VISUAL MODAL */
-        #modalVisualLandscape {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #ffffff;
-            z-index: 99999;
-            display: none;
-            flex-direction: column;
-            padding: 10px;
-        }
+        /* MODAL LANDSCAPE */
+        #modalVisualLandscape { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ffffff; z-index: 99999; display: none; flex-direction: column; padding: 10px; }
 
-        /* MODAL ONBOARDING */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            z-index: 9999;
-        }
+        .app-footer { text-align: center; font-size: 11px; color: var(--text-secondary); margin-top: 25px; font-weight: 600; padding-bottom: 20px;}
+        .saweria-btn { display: inline-block; margin-top: 10px; background: #f8c102; color: #000000; padding: 6px 14px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 11px; box-shadow: 0 2px 4px rgba(0,0,0,0.15); border: 1px solid #d4a000;}
 
-        .modal-card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 22px 18px;
-            width: 100%;
-            max-width: 360px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-
-        .app-footer {
-            text-align: center;
-            font-size: 11px;
-            color: #d92525;
-            margin-top: 25px;
-            font-weight: 600;
-        }
+        /* GAME STYLES */
+        .quiz-opt { background:var(--bg-color); border:1px solid var(--input-border); padding:10px; border-radius:8px; margin-bottom:8px; text-align:left; font-size:13px; font-weight:bold; cursor:pointer; color:var(--text-primary); }
+        .quiz-opt:hover { background:#e2e8f0; }
+        .quiz-opt.correct { background:#16a34a !important; color:white !important; border-color:#16a34a; }
+        .quiz-opt.wrong { background:#dc2626 !important; color:white !important; border-color:#dc2626; }
+        
+        .ttt-board { display:grid; grid-template-columns:repeat(3, 1fr); gap:6px; max-width:240px; margin:15px auto; }
+        .ttt-cell { height:70px; background:var(--bg-color); border:2px solid var(--input-border); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:32px; font-weight:bold; cursor:pointer; color:var(--text-primary); }
     </style>
 </head>
 <body>
 
-    <!-- MODAL PREVIEW LANDSCAPE UTUH UNTUK SCREENSHOT -->
+    <!-- MODAL PREVIEW LANDSCAPE -->
     <div id="modalVisualLandscape">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
             <h4 style="margin:0; color:#d92525;" id="titleModalLandscape">ROSTER ABSENSI LANDSCAPE</h4>
             <button onclick="closeLandscapeModal()" style="background:#e53935; color:white; border:none; padding:4px 10px; border-radius:4px; font-weight:bold; cursor:pointer;">✕ Tutup</button>
         </div>
-        <div style="flex:1; overflow:auto; border:1px solid #ddd; border-radius:6px;" id="boxLandscapeContent">
-            <!-- Tabel disalin kemari saat mode landscape aktif -->
-        </div>
+        <div style="flex:1; overflow:auto; border:1px solid #ddd; border-radius:6px;" id="boxLandscapeContent"></div>
     </div>
 
-    <!-- POPUP AKTIVASI PENGGUNA WAJIB -->
+    <!-- POPUP LOGIN (WAJIB RE-LOGIN & KODE R) -->
     <div id="modalRegistrasi" class="modal-overlay" style="display:none;">
         <div class="modal-card">
             <div style="font-size: 38px; margin-bottom: 6px;">🏪</div>
-            <h3 style="margin: 0 0 6px 0; color: var(--header-red);">Selamat Datang!</h3>
+            <h3 style="margin: 0 0 6px 0; color: var(--header-red);">Validasi Identitas Toko</h3>
             <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">
-                Silakan lengkapi identitas unit toko Anda untuk mengaktifkan seluruh fitur aplikasi.
+                Sistem diperbarui. Silakan lengkapi identitas untuk mengaktifkan fitur operasional.
             </p>
             <div style="text-align: left; margin-bottom: 10px;">
-                <label>Kode Toko</label>
+                <label>Kode Toko Wajib</label>
                 <input type="text" id="regKodeToko" placeholder="Contoh: R017" style="text-transform: uppercase;">
             </div>
-            <div style="text-align: left; margin-bottom: 10px;">
-                <label>Inisial Toko</label>
-                <input type="text" id="regInisialToko" placeholder="Contoh: MGKI" style="text-transform: uppercase;">
-            </div>
             <div style="text-align: left; margin-bottom: 15px;">
-                <label>Nama & Jabatan Anda</label>
-                <input type="text" id="regNamaUser" placeholder="Contoh: Qamar (COS)">
+                <label>Nama Panggilan Anda</label>
+                <input type="text" id="regNamaUser" placeholder="Contoh: Qamar">
             </div>
             <button class="btn-act" onclick="submitRegistrasi()">🚀 MASUK KE APLIKASI</button>
         </div>
@@ -332,20 +263,25 @@
         <h1 class="header-title">RETAIL ASSISTANT PRO</h1>
         <div class="header-subtitle">by : qmr</div>
         <div class="toko-input-badge" onclick="bukaModalEdit()">
-            <span class="toko-badge-text" id="badgeTokoLabel">KODE TOKO|INISIAL TOKO</span>
+            <span class="toko-badge-text" id="badgeTokoLabel">KODE TOKO</span>
             <span style="font-size:10px; color:#000;">✏️</span>
         </div>
     </header>
 
     <div class="main-container">
         
-        <!-- DASHBOARD 8 MENU -->
+        <!-- DASHBOARD MENU -->
         <div id="pageHome" class="sub-page active">
             
+            <div class="tf-widget">
+                <div id="tfDate" style="font-size:12px; color:var(--text-secondary); margin-bottom:4px; font-weight:bold;">📅 Memuat Tanggal...</div>
+                <div id="tfValue" style="color:var(--header-red); font-weight:900; font-size:15px; letter-spacing:0.5px;">⏳ TIME FACTOR : 0%</div>
+            </div>
+
             <div class="greeting-card" id="kartuSapaan">
                 <div>
                     <div class="greeting-text" id="labelSapaanUtama">Halo! 👋</div>
-                    <div class="greeting-sub" id="labelSapaanSub">Siap maksimalkan target toko hari ini? 🚀</div>
+                    <div class="greeting-sub" id="labelSapaanSub">Teman-teman aplikasi ini bisa digunakan offline ya, jadi jangan khawatir.</div>
                 </div>
                 <div style="font-size:24px;">🎯</div>
             </div>
@@ -357,8 +293,9 @@
                 <div class="menu-card" onclick="openMenu('pageKasir')"><div class="menu-icon">👥</div><div class="menu-title">Target Kasir</div></div>
                 <div class="menu-card" onclick="openMenu('pageMath')"><div class="menu-icon">📐</div><div class="menu-title">MTK Retail</div></div>
                 <div class="menu-card" onclick="openMenu('pageDict')"><div class="menu-icon">📖</div><div class="menu-title">Kamus</div></div>
-                <div class="menu-card" onclick="openMenu('pageGame')"><div class="menu-icon">🎮</div><div class="menu-title">Memory Game</div></div>
+                <div class="menu-card" onclick="openMenu('pageGame')"><div class="menu-icon">🎮</div><div class="menu-title">Zona Santai</div></div>
                 <div class="menu-card" onclick="openMenu('pageAbsensi')"><div class="menu-icon">📅</div><div class="menu-title">PLAN ABSENSI</div></div>
+                <div class="menu-card" onclick="openMenu('pageDokumen')"><div class="menu-icon">🗂️</div><div class="menu-title">Pusat Dokumen</div></div>
             </div>
         </div>
 
@@ -367,20 +304,21 @@
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
                 <h3 style="margin-top:0; color:var(--header-red);">Laporan Sales & Gross Margin</h3>
-                <div style="margin-bottom: 8px;">
-                    <label>Jumlah Hari Kerja (JHK)</label>
-                    <input type="number" id="jhk" placeholder="Contoh: 30" oninput="formatRupiahInput(this); hitungAutoSalesTargets(); autoSaveTargets();">
+                <div class="row">
+                    <div class="col"><label>JHK (Bulan Ini)</label><input type="number" id="jhk" value="30" oninput="hitungShkSales()"></div>
+                    <div class="col"><label>HK Berjalan</label><input type="number" id="hkbSales" value="1" oninput="hitungShkSales()"></div>
+                    <div class="col"><label>Sisa Hari (SHK)</label><input type="number" id="shkSales" readonly></div>
                 </div>
                 <div class="row">
-                    <div class="col"><label>Net Sales Target</label><input type="text" id="targetNetSales" placeholder="0" oninput="formatRupiahInput(this); hitungAutoSalesTargets(); autoSaveTargets();"></div>
-                    <div class="col"><label>Net Sales Actual (SPD x JHK)</label><input type="text" id="actualNetSales" placeholder="Otomatis" readonly></div>
+                    <div class="col"><label>Net Sales Target</label><input type="text" id="targetNetSales" placeholder="0" oninput="formatRupiahInput(this); hitungAutoSalesTargets();"></div>
+                    <div class="col"><label>Net Sales Actual (SPD x HKB)</label><input type="text" id="actualNetSales" placeholder="Otomatis" readonly></div>
                 </div>
                 <div class="row">
                     <div class="col"><label>SPD Target (Sales/JHK)</label><input type="text" id="targetSpd" placeholder="Otomatis" readonly></div>
                     <div class="col"><label>SPD Actual</label><input type="text" id="actualSpd" placeholder="0" oninput="formatRupiahInput(this); hitungAutoSalesTargets();"></div>
                 </div>
                 <div class="row">
-                    <div class="col"><label>APC Target</label><input type="text" id="targetApc" placeholder="0" oninput="formatRupiahInput(this); hitungAutoSalesTargets(); autoSaveTargets();"></div>
+                    <div class="col"><label>APC Target</label><input type="text" id="targetApc" placeholder="0" oninput="formatRupiahInput(this); hitungAutoSalesTargets();"></div>
                     <div class="col"><label>APC Actual</label><input type="text" id="actualApc" placeholder="0" oninput="formatRupiahInput(this)"></div>
                 </div>
                 <div class="row">
@@ -388,19 +326,21 @@
                     <div class="col"><label>STD Actual</label><input type="text" id="actualStd" placeholder="0" oninput="formatRupiahInput(this)"></div>
                 </div>
                 <div class="row">
-                    <div class="col"><label>Target GM (%)</label><input type="number" step="0.01" id="targetGm" placeholder="21.50" oninput="autoSaveTargets()"></div>
+                    <div class="col"><label>Target GM (%)</label><input type="number" step="0.01" id="targetGm" placeholder="21.50"></div>
                     <div class="col"><label>Actual GM (%)</label><input type="number" step="0.01" id="actualGm" placeholder="20.80"></div>
                 </div>
+                
+                <h4 style="margin:15px 0 5px 0; font-size:12px; color:var(--header-red);">Target Promosi Kasir</h4>
                 <div class="row">
-                    <div class="col"><label>PSM Target</label><input type="text" id="targetPsm" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div>
+                    <div class="col"><label>PSM Target</label><input type="text" id="targetPsm" placeholder="0" oninput="formatRupiahInput(this)"></div>
                     <div class="col"><label>PSM Actual</label><input type="text" id="actualPsm" placeholder="0" oninput="formatRupiahInput(this)"></div>
                 </div>
                 <div class="row">
-                    <div class="col"><label>PWP Target</label><input type="text" id="targetPwp" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div>
+                    <div class="col"><label>PWP Target</label><input type="text" id="targetPwp" placeholder="0" oninput="formatRupiahInput(this)"></div>
                     <div class="col"><label>PWP Actual</label><input type="text" id="actualPwp" placeholder="0" oninput="formatRupiahInput(this)"></div>
                 </div>
                 <div class="row">
-                    <div class="col"><label>Serba Target</label><input type="text" id="targetSg" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div>
+                    <div class="col"><label>Serba Target</label><input type="text" id="targetSg" placeholder="0" oninput="formatRupiahInput(this)"></div>
                     <div class="col"><label>Serba Actual</label><input type="text" id="actualSg" placeholder="0" oninput="formatRupiahInput(this)"></div>
                 </div>
 
@@ -412,7 +352,7 @@
 
             <div class="card-view" id="hasilSalesBox" style="display:none;">
                 <h4 style="margin-top:0;">Hasil Analisis Sales & Margin</h4>
-                <div class="grid-result">
+                <div class="grid-result" id="gridHasilSales">
                     <div class="res-box" id="bAcvSales"><div class="res-label">ACV Net Sales</div><div class="res-value" id="rAcvSales">0%</div></div>
                     <div class="res-box" id="bGapSales"><div class="res-label">GAP Net Sales</div><div class="res-value" id="rGapSales">0</div></div>
                     <div class="res-box" id="bAcvSpd"><div class="res-label">ACV SPD</div><div class="res-value" id="rAcvSpd">0%</div></div>
@@ -423,6 +363,9 @@
                     <div class="res-box" id="bGapStd"><div class="res-label">GAP STD</div><div class="res-value" id="rGapStd">0</div></div>
                     <div class="res-box" id="bAcvGm"><div class="res-label">ACV GM (%)</div><div class="res-value" id="rAcvGm">0%</div></div>
                     <div class="res-box" id="bGapGm"><div class="res-label">GAP GM (%)</div><div class="res-value" id="rGapGm">0</div></div>
+                    
+                    <div class="separator-pps">HASIL PROGRAM PROMOSI (PPS)</div>
+                    
                     <div class="res-box" id="bAcvPsm"><div class="res-label">ACV PSM</div><div class="res-value" id="rAcvPsm">0%</div></div>
                     <div class="res-box" id="bGapPsm"><div class="res-label">GAP PSM</div><div class="res-value" id="rGapPsm">0</div></div>
                     <div class="res-box" id="bAcvPwp"><div class="res-label">ACV PWP</div><div class="res-value" id="rAcvPwp">0%</div></div>
@@ -439,49 +382,104 @@
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
                 <h3 style="margin-top:0; color:var(--header-red);">Persentase Pencapaian IKT</h3>
-                <div class="row"><div class="col"><label>APC Target</label><input type="text" id="iktTApc" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div><div class="col"><label>APC Actual</label><input type="text" id="iktAApc" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
-                <div class="row"><div class="col"><label>PWP Target</label><input type="text" id="iktTPwp" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div><div class="col"><label>PWP Actual</label><input type="text" id="iktAPwp" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
-                <div class="row"><div class="col"><label>PSM Target</label><input type="text" id="iktTPsm" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div><div class="col"><label>PSM Actual</label><input type="text" id="iktAPsm" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
-                <div class="row"><div class="col"><label>Serba Target</label><input type="text" id="iktTSg" placeholder="0" oninput="formatRupiahInput(this); autoSaveTargets();"></div><div class="col"><label>Serba Actual</label><input type="text" id="iktASg" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
-                <button class="btn-act" onclick="kalkulasiIkt()">HITUNG IKT</button>
+                
+                <div class="row">
+                    <div class="col"><label>JHK (Bulan Ini)</label><input type="number" id="iktJhk" value="30" oninput="hitungShkIkt()"></div>
+                    <div class="col"><label>HK Berjalan</label><input type="number" id="iktHkb" value="1" oninput="hitungShkIkt()"></div>
+                    <div class="col"><label>Sisa HK (SHK)</label><input type="number" id="iktShk" readonly></div>
+                </div>
+
+                <div class="row"><div class="col"><label>APC Target</label><input type="text" id="iktTApc" placeholder="0" oninput="formatRupiahInput(this)"></div><div class="col"><label>APC Actual</label><input type="text" id="iktAApc" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
+                <div class="row"><div class="col"><label>PWP Target (Bulan)</label><input type="text" id="iktTPwp" placeholder="0" oninput="formatRupiahInput(this)"></div><div class="col"><label>PWP Actual</label><input type="text" id="iktAPwp" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
+                <div class="row"><div class="col"><label>PSM Target (Bulan)</label><input type="text" id="iktTPsm" placeholder="0" oninput="formatRupiahInput(this)"></div><div class="col"><label>PSM Actual</label><input type="text" id="iktAPsm" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
+                <div class="row"><div class="col"><label>Serba Target (Bulan)</label><input type="text" id="iktTSg" placeholder="0" oninput="formatRupiahInput(this)"></div><div class="col"><label>Serba Actual</label><input type="text" id="iktASg" placeholder="0" oninput="formatRupiahInput(this)"></div></div>
+                
+                <div style="display:flex; gap:6px;">
+                    <button class="btn-act" onclick="kalkulasiIkt()">HITUNG IKT</button>
+                    <button class="btn-act btn-outline" style="width:80px;" onclick="resetIkt()">RESET</button>
+                </div>
             </div>
             <div class="card-view" id="hasilIktBox" style="display:none;">
-                <div class="res-box full" id="bTotIkt" style="text-align:center;"><div class="res-label">TOTAL ACHIEVE IKT</div><div class="res-value" id="rTotIkt" style="font-size:22px;">0%</div></div>
+                <div class="res-box full" id="bTotIkt" style="text-align:center;"><div class="res-label">TOTAL ACHIEVE IKT</div><div class="res-value" id="rTotIkt" style="font-size:24px;">0%</div></div>
                 <div class="grid-result">
-                    <div class="res-box"><div class="res-label">APC (% ACV)</div><div class="res-value" id="rIktAcvApc">0%</div></div>
-                    <div class="res-box"><div class="res-label">APC (BOBOT %)</div><div class="res-value" id="rIktBobotApc">0%</div></div>
-                    <div class="res-box"><div class="res-label">PWP (% ACV)</div><div class="res-value" id="rIktAcvPwp">0%</div></div>
-                    <div class="res-box"><div class="res-label">PWP (BOBOT %)</div><div class="res-value" id="rIktBobotPwp">0%</div></div>
-                    <div class="res-box"><div class="res-label">PSM (% ACV)</div><div class="res-value" id="rIktAcvPsm">0%</div></div>
-                    <div class="res-box"><div class="res-label">PSM (BOBOT %)</div><div class="res-value" id="rIktBobotPsm">0%</div></div>
-                    <div class="res-box"><div class="res-label">SERBA (% ACV)</div><div class="res-value" id="rIktAcvSg">0%</div></div>
-                    <div class="res-box"><div class="res-label">SERBA (BOBOT %)</div><div class="res-value" id="rIktBobotSg">0%</div></div>
+                    <div class="res-box" id="bIktAcvApc"><div class="res-label">APC (% ACV)</div><div class="res-value" id="rIktAcvApc">0%</div></div>
+                    <div class="res-box" id="bIktBobotApc"><div class="res-label">APC (BOBOT)</div><div class="res-value" id="rIktBobotApc">0%</div></div>
+                    <div class="res-box" id="bIktAcvPwp"><div class="res-label">PWP (% ACV)</div><div class="res-value" id="rIktAcvPwp">0%</div></div>
+                    <div class="res-box" id="bIktBobotPwp"><div class="res-label">PWP (BOBOT)</div><div class="res-value" id="rIktBobotPwp">0%</div></div>
+                    <div class="res-box" id="bIktAcvPsm"><div class="res-label">PSM (% ACV)</div><div class="res-value" id="rIktAcvPsm">0%</div></div>
+                    <div class="res-box" id="bIktBobotPsm"><div class="res-label">PSM (BOBOT)</div><div class="res-value" id="rIktBobotPsm">0%</div></div>
+                    <div class="res-box" id="bIktAcvSg"><div class="res-label">SERBA (% ACV)</div><div class="res-value" id="rIktAcvSg">0%</div></div>
+                    <div class="res-box" id="bIktBobotSg"><div class="res-label">SERBA (BOBOT)</div><div class="res-value" id="rIktBobotSg">0%</div></div>
                 </div>
+
+                <!-- KOMPENSASI AREA -->
+                <div id="iktKompensasiArea" style="display:none; margin-top:15px; padding:12px; border:1px dashed var(--header-red); border-radius:8px; background:rgba(217, 37, 37, 0.05);">
+                    <p style="font-size:12px; font-weight:bold; color:var(--header-red); margin-top:0;">⚠️ Target IKT Belum Aman!</p>
+                    <p style="font-size:11px; margin-bottom:10px;">Kamu mau push apa agar bisa menang IKT dengan sisa <b><span id="lblShkIkt">0</span> hari</b> kerja?</p>
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn-act btn-blue" style="margin:0; font-size:11px;" onclick="hitungKompensasiIkt('serba')">Serba (30%)</button>
+                        <button class="btn-act btn-blue" style="margin:0; font-size:11px;" onclick="hitungKompensasiIkt('pwp')">PWP (25%)</button>
+                        <button class="btn-act btn-blue" style="margin:0; font-size:11px;" onclick="hitungKompensasiIkt('psm')">PSM (20%)</button>
+                    </div>
+                    <div id="hasilKompensasiIkt" style="margin-top:12px; font-size:12px; display:none; background:#ffffff; padding:10px; border-radius:6px; border-left:4px solid #0284c7; color:#1f2937;"></div>
+                </div>
+
                 <div id="notifIktArea" style="margin-top:10px;"></div>
                 <button class="btn-act btn-green" onclick="copyIktWa()">📲 SALIN IKT KE WHATSAPP</button>
             </div>
         </div>
 
-        <!-- 3. KEJAR SPD -->
+        <!-- 3. KEJAR SPD & AMUNISI -->
         <div id="pageProyeksi" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
-                <h3 style="margin-top:0; color:var(--header-red);">Kejar SPD & Target Shift</h3>
-                <div class="row"><div class="col"><label>HK Berjalan (HKB)</label><input type="number" id="hkb" placeholder="15" oninput="hitungSpdShift()"></div><div class="col"><label>Sisa HK (SHK)</label><input type="number" id="shk" placeholder="15" oninput="hitungSpdShift()"></div></div>
-                <div class="row"><div class="col"><label>Net Sales Target</label><input type="text" id="pTargetSales" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift(); autoSaveTargets();"></div><div class="col"><label>Total Realisasi Sales</label><input type="text" id="pRealSales" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift();"></div></div>
-                <div style="margin-bottom:8px;">
+                <h3 style="margin-top:0; color:var(--header-red);">Kejar SPD & Amunisi Tambahan</h3>
+                
+                <div class="row">
+                    <div class="col"><label>JHK</label><input type="number" id="pSpdJhk" value="30" oninput="hitungShkSpd()"></div>
+                    <div class="col"><label>HK Berjalan</label><input type="number" id="pSpdHkb" value="1" oninput="hitungShkSpd()"></div>
+                    <div class="col"><label>Sisa HK (SHK)</label><input type="number" id="pSpdShk" readonly></div>
+                </div>
+
+                <div class="row">
+                    <div class="col"><label>Net Sales Target (Bulan)</label><input type="text" id="pTargetSales" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift();"></div>
+                    <div class="col"><label>Total Realisasi Sales</label><input type="text" id="pRealSales" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift();"></div>
+                </div>
+                <div style="margin-bottom:10px;">
                     <label>Pola Shift Toko</label>
-                    <select id="pShiftType" onchange="hitungSpdShift(); autoSaveTargets();">
-                        <option value="2">2 Shift (S2: 55% | S1: 45%)</option>
-                        <option value="3">3 Shift (S2: 45% | S1: 35% | S3: 20%)</option>
+                    <select id="pShiftType" onchange="hitungSpdShift();">
+                        <option value="2">2 Shift (S1: 45% | S2: 55%)</option>
+                        <option value="3">3 Shift (S1: 35% | S2: 45% | S3: 20%)</option>
                     </select>
                 </div>
+                
+                <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0;">
+                <h4 style="margin:0 0 10px 0; font-size:12px; color:#0284c7;">🔥 Amunisi Tambahan (Hitung Otomatis Rupiah)</h4>
+                
+                <div class="row"><div class="col"><label>Sisa Target PSM (Pcs)</label><input type="number" id="pSisaPsm" placeholder="0" oninput="hitungSpdShift()"></div><div class="col"><label>Avg. Harga PSM</label><input type="text" id="pHrgPsm" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift()"></div></div>
+                <div class="row"><div class="col"><label>Sisa Target PWP (Pcs)</label><input type="number" id="pSisaPwp" placeholder="0" oninput="hitungSpdShift()"></div><div class="col"><label>Avg. Harga PWP</label><input type="text" id="pHrgPwp" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift()"></div></div>
+                <div class="row"><div class="col"><label>Sisa Target Serba (Pcs)</label><input type="number" id="pSisaSg" placeholder="0" oninput="hitungSpdShift()"></div><div class="col"><label>Avg. Harga Serba</label><input type="text" id="pHrgSg" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift()"></div></div>
+            
+                <div style="display:flex; gap:6px; margin-top:10px;">
+                    <button class="btn-act btn-outline" style="width:100%;" onclick="resetSpd()">RESET</button>
+                </div>
             </div>
+
             <div class="card-view" id="hasilSpdBox" style="display:none;">
-                <div class="res-box full"><div class="res-label">SPD Wajib / Hari (Sisa Hari)</div><div class="res-value" id="rSpdKejar" style="font-size:18px; color:#d92525;">Rp 0</div></div>
-                <div style="margin-top:10px; font-size:13px; line-height:1.8;">
-                    <div>🔥 <b>Shift 2:</b> <span id="rSpdS2" style="font-weight:bold; color:#1e40af;">Rp 0</span></div>
+                <div class="res-box full" style="border-left-color:#334155;"><div class="res-label">1. SPD Bawaan Wajib (Per Hari)</div><div class="res-value" id="rSpdBase" style="font-size:16px;">Rp 0</div></div>
+                
+                <div class="res-box full" style="border-left-color:#0284c7; margin-top:8px;">
+                    <div class="res-label">2. Potensi Tambahan Promo (PPS)</div>
+                    <div class="res-value" id="rSpdPromo" style="font-size:16px; color:#0284c7;">Rp 0</div>
+                    <div id="rSpdAmunisiList" style="font-size:11px; margin-top:6px; color:#475569; font-weight:normal;"></div>
+                </div>
+
+                <div class="res-box full" style="border-left-color:#d92525; margin-top:8px;"><div class="res-label">3. Total Proyeksi Kejar SPD Harian</div><div class="res-value" id="rSpdTotal" style="font-size:20px; color:#d92525;">Rp 0</div></div>
+                
+                <div style="margin-top:14px; font-size:13px; line-height:1.8; background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #e2e8f0;">
+                    <div style="font-weight:bold; font-size:11px; color:#64748b; margin-bottom:4px; text-transform:uppercase;">PEMBAGIAN BEBAN SHIFT:</div>
                     <div>☀️ <b>Shift 1:</b> <span id="rSpdS1" style="font-weight:bold; color:#1e40af;">Rp 0</span></div>
+                    <div>🔥 <b>Shift 2:</b> <span id="rSpdS2" style="font-weight:bold; color:#1e40af;">Rp 0</span></div>
                     <div id="rowS3" style="display:none;">🌙 <b>Shift 3:</b> <span id="rSpdS3" style="font-weight:bold; color:#1e40af;">Rp 0</span></div>
                 </div>
                 <button class="btn-act btn-green" onclick="copySpdWa()">📲 SALIN TARGET SHIFT KE WA</button>
@@ -492,27 +490,64 @@
         <div id="pageKasir" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
-                <h3 style="margin-top:0; color:var(--header-red);">Target Kasir / Shift (PPS)</h3>
-                <div class="row"><div class="col"><label>Sisa Hari Kerja (SHK)</label><input type="number" id="kShk" placeholder="10"></div><div class="col"><label>Jumlah Kasir / Shift</label><input type="number" id="kKasir" placeholder="2"></div></div>
-                <div class="row"><div class="col"><label>GAP PSM (Pcs)</label><input type="number" id="kPsm" placeholder="0"></div><div class="col"><label>GAP PWP (Pcs)</label><input type="number" id="kPwp" placeholder="0"></div></div>
-                <div class="row"><div class="col"><label>GAP Serba (Pcs)</label><input type="number" id="kSg" placeholder="0"></div></div>
-                <button class="btn-act" onclick="hitungTargetKasir()">BAGI TARGET KASIR</button>
-            </div>
-            <div class="card-view" id="hasilKasirBox" style="display:none;">
-                <div class="grid-result">
-                    <div class="res-box"><div class="res-label">PSM / Kasir / Shift</div><div class="res-value" id="rPsmK">0 pcs</div></div>
-                    <div class="res-box"><div class="res-label">PWP / Kasir / Shift</div><div class="res-value" id="rPwpK">0 pcs</div></div>
-                    <div class="res-box full"><div class="res-label">Serba / Kasir / Shift</div><div class="res-value" id="rSgK">0 pcs</div></div>
+                <h3 style="margin-top:0; color:var(--header-red);">Briefing Target Kasir (Pcs)</h3>
+                
+                <div class="row">
+                    <div class="col"><label>JHK</label><input type="number" id="kKasirJhk" value="30" oninput="hitungShkKasir()"></div>
+                    <div class="col"><label>HK Berjalan</label><input type="number" id="kKasirHkb" value="1" oninput="hitungShkKasir()"></div>
+                    <div class="col"><label>Sisa Hari Kerja (SHK)</label><input type="number" id="kKasirShk" readonly></div>
                 </div>
-                <button class="btn-act btn-green" onclick="copyKasirWa()">📲 SALIN KE WA BRIEFING</button>
+
+                <div class="row">
+                    <div class="col">
+                        <label>Pola Shift Operasional</label>
+                        <select id="kPola"><option value="2">2 Shift Toko</option><option value="3">3 Shift (24 Jam)</option></select>
+                    </div>
+                </div>
+
+                <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0;">
+
+                <div class="row"><div class="col"><label>Sisa Target PSM (Bulan Ini)</label><input type="number" id="kSisaPsm" placeholder="0"></div></div>
+                <div class="row"><div class="col"><label>Sisa Target PWP (Bulan Ini)</label><input type="number" id="kSisaPwp" placeholder="0"></div></div>
+                <div class="row"><div class="col"><label>Sisa Target Serba (Bulan Ini)</label><input type="number" id="kSisaSg" placeholder="0"></div></div>
+                
+                <div style="display:flex; gap:6px;">
+                    <button class="btn-act" onclick="hitungTargetKasir()">HITUNG TARGET HARIAN</button>
+                    <button class="btn-act btn-outline" style="width:80px;" onclick="resetKasir()">RESET</button>
+                </div>
+            </div>
+            
+            <div class="card-view" id="hasilKasirBox" style="display:none;">
+                <h4 style="margin-top:0; color:#0284c7; margin-bottom:8px;">Pembagian Porsi Shift Harian</h4>
+                <div style="margin-bottom:10px; font-size:12px; background:#fffbdd; border-left:3px solid #f8c102; padding:8px;">
+                    <b>Target Harian Toko Murni:</b><br>
+                    PSM: <span id="rTokoPsm">0</span> | PWP: <span id="rTokoPwp">0</span> | Serba: <span id="rTokoSg">0</span>
+                </div>
+                
+                <div class="grid-result">
+                    <div class="res-box full" style="border-left-color:#1e40af;"><div class="res-label">☀️ Target Shift 1 (Pagi)</div>
+                        <div class="res-value" style="font-size:13px; font-weight:normal;">PSM: <b id="rS1Psm">0</b> | PWP: <b id="rS1Pwp">0</b> | Serba: <b id="rS1Sg">0</b></div>
+                    </div>
+                    <div class="res-box full" style="border-left-color:#d92525;"><div class="res-label">🔥 Target Shift 2 (Siang)</div>
+                        <div class="res-value" style="font-size:13px; font-weight:normal;">PSM: <b id="rS2Psm">0</b> | PWP: <b id="rS2Pwp">0</b> | Serba: <b id="rS2Sg">0</b></div>
+                    </div>
+                    <div class="res-box full" id="bKasirS3" style="display:none; border-left-color:#334155;"><div class="res-label">🌙 Target Shift 3 (Malam)</div>
+                        <div class="res-value" style="font-size:13px; font-weight:normal;">PSM: <b id="rS3Psm">0</b> | PWP: <b id="rS3Pwp">0</b> | Serba: <b id="rS3Sg">0</b></div>
+                    </div>
+                </div>
+                <div style="margin-top:10px;">
+                    <label>Ketik Nama Kasir S1 / S2 untuk disalin ke WA:</label>
+                    <input type="text" id="kNamaKasir" placeholder="Contoh: Qamar / Salsa">
+                </div>
+                <button class="btn-act btn-green" onclick="copyKasirWa()">📲 SALIN TARGET KE WA</button>
             </div>
         </div>
 
-        <!-- 5. MATEMATIKA RETAIL (26 RUMUS) -->
+        <!-- 5. MATEMATIKA RETAIL -->
         <div id="pageMath" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
-                <h3 style="margin-top:0; color:var(--header-red);">📐 Matematika Retail (26 Rumus)</h3>
+                <h3 style="margin-top:0; color:var(--header-red);">📐 Matematika Retail</h3>
                 <label>Pilih Rumus Retail:</label>
                 <select id="pilihRumusRetail" onchange="renderFormMtk()">
                     <option value="pkm">1. PKM = AVG_SLS x (LT + SS) + Minor</option>
@@ -551,48 +586,36 @@
             </div>
         </div>
 
-        <!-- 6. KAMUS ISTILAH (34 ISTILAH) -->
+        <!-- 6. KAMUS ISTILAH -->
         <div id="pageDict" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
-                <h3 style="margin-top:0; color:var(--header-red);">📖 Kamus Istilah Retail (34 Istilah)</h3>
+                <h3 style="margin-top:0; color:var(--header-red);">📖 Kamus Istilah Retail</h3>
                 <label>Pilih Singkatan / Istilah:</label>
                 <select id="pilihKamus" onchange="showDefinisiKamus()">
                     <option value="">-- Pilih Istilah --</option>
-                    <option value="BISNIS">1. Bisnis Retail</option>
-                    <option value="HAKEKAT">2. Hakekat Bisnis Retail</option>
-                    <option value="PKM">3. PKM (Penetapan Kuantitas Maksimum)</option>
-                    <option value="MPKM">4. MPKM (Minimum PKM)</option>
-                    <option value="MINOR">5. MINOR (Minimum Order)</option>
-                    <option value="DSI">6. DSI (Day Sales Inventory)</option>
-                    <option value="SPD">7. SPD (Sales Per Day)</option>
-                    <option value="STD">8. STD (Struk Per Day)</option>
-                    <option value="APC">9. APC (Average Purchase Customer)</option>
-                    <option value="SO">10. Stock Opname (SO)</option>
-                    <option value="PROMOSI">11. Promosi</option>
-                    <option value="ATRIBUT">12. Atribut Promosi</option>
-                    <option value="LT">13. Lead Time (LT)</option>
-                    <option value="NX">14. N X (N Kali)</option>
-                    <option value="NT">15. N + (N Tambah)</option>
-                    <option value="OOS">16. Stock Out (OOS)</option>
-                    <option value="PEL_LANGSUNG">17. Pelayanan Langsung</option>
-                    <option value="PEL_TDK_LANGSUNG">18. Pelayanan Tidak Langsung</option>
-                    <option value="BIAYA">19. Biaya</option>
-                    <option value="HOUSE">20. House Brand</option>
-                    <option value="PRIVATE">21. Private Label</option>
-                    <option value="EFISIENSI">22. Efisiensi</option>
-                    <option value="PENGENDALIAN">23. Pengendalian</option>
-                    <option value="ADMIN">24. Administrasi</option>
-                    <option value="KONTROL_ADMIN">25. Pengendalian Administrasi</option>
-                    <option value="PENDAPATAN_LAIN">26. Pendapatan Lain-lain (PLL)</option>
-                    <option value="GONDOLA">27. Gondola Depan (Endcap)</option>
-                    <option value="BLOCK">28. Block Shelfing</option>
-                    <option value="FRANCHISE">29. Waralaba / Franchise</option>
-                    <option value="FRANCHISOR">30. Franchisor</option>
-                    <option value="FRANCHISEE">31. Franchisee</option>
-                    <option value="AREA">32. Area Coverage</option>
-                    <option value="LEADERSHIP">33. Leadership (Kepemimpinan)</option>
-                    <option value="ISO">34. ISO</option>
+                    <option value="PLANOGRAM">Planogram</option>
+                    <option value="NO_RAK">Nomor Rak</option>
+                    <option value="SHELVE">Shelve / Shelving</option>
+                    <option value="LUBANG">Lubang Rak</option>
+                    <option value="POSISI">Posisi Display (KK, AB, DB)</option>
+                    <option value="NO_URUT">Nomor Urut</option>
+                    <option value="PLU">PLU (Price Label Unit)</option>
+                    <option value="BARCODE">Barcode</option>
+                    <option value="DESC">Description</option>
+                    <option value="OOS">OOS (Out of Stock)</option>
+                    <option value="MAX_DISP">Max Display</option>
+                    <option value="PENERIMAAN">Penerimaan Barang</option>
+                    <option value="SO_PARSIAL">SO Parsial</option>
+                    <option value="FEFO">FEFO (First Expired First Out)</option>
+                    <option value="E_TRANS">E-Trans</option>
+                    <option value="SPD">SPD (Sales Per Day)</option>
+                    <option value="STD">STD (Struk Per Day)</option>
+                    <option value="APC">APC (Average Purchase Customer)</option>
+                    <option value="GM">Gross Margin</option>
+                    <option value="PKM">PKM (Penetapan Kuantitas Maksimum)</option>
+                    <option value="DSI">DSI (Day Sales Inventory)</option>
+                    <option value="NBH">NBH (Nota Barang Hilang)</option>
                 </select>
                 <div id="kamusResultBox" style="display:none; margin-top:12px; padding:12px; background:var(--bg-color); border-left:4px solid var(--header-red); border-radius:6px;">
                     <h4 id="kTitle" style="margin:0 0 6px 0; color:var(--header-red);"></h4>
@@ -601,14 +624,39 @@
             </div>
         </div>
 
-        <!-- 7. MEMORY GAME -->
+        <!-- 7. ZONA SANTAI (GAME CENTER) -->
         <div id="pageGame" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view" style="text-align:center;">
-                <h3 style="margin-top:0; color:var(--header-red);">🎮 Memory Game</h3>
-                <p style="font-size:12px; color:var(--text-secondary);">Cocokkan 2 kartu simbol retail yang sama!</p>
-                <div id="gameBoard" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-top:15px;"></div>
-                <button class="btn-act btn-green" onclick="initGame()" style="margin-top:15px;">🔄 Mulai Ulang Game</button>
+                <h3 style="margin-top:0; color:var(--header-red);">🎮 Zona Santai</h3>
+                <p style="font-size:12px; color:var(--text-secondary);">Pilih game untuk penyegaran atau asah otak!</p>
+                <div style="display:flex; gap:10px; margin-top:15px;">
+                    <button class="btn-act btn-blue" style="margin:0;" onclick="showGame('ticTacToe')">⭕ Tic-Tac-Toe ❌</button>
+                    <button class="btn-act btn-green" style="margin:0;" onclick="showGame('kuisRetail')">🧠 Kuis Retail</button>
+                </div>
+            </div>
+
+            <!-- Area Tic-Tac-Toe -->
+            <div class="card-view" id="areaTicTacToe" style="display:none; text-align:center;">
+                <h4 style="margin-top:0; color:var(--header-red);">Tic-Tac-Toe (X dan O)</h4>
+                <div id="tttStatus" style="font-size:14px; font-weight:bold; margin-bottom:10px;">Giliran Pemain: X</div>
+                <div class="ttt-board" id="tttBoard"></div>
+                <button class="btn-act btn-outline" style="max-width:200px;" onclick="resetTtt()">🔄 Ulangi Game</button>
+            </div>
+
+            <!-- Area Kuis Pintar -->
+            <div class="card-view" id="areaKuis" style="display:none;">
+                <h4 style="margin-top:0; color:var(--header-red); text-align:center;">Kuis Pintar Retail 🧠</h4>
+                <div id="kuisContainer">
+                    <div id="kuisSoal" style="font-size:14px; font-weight:bold; margin-bottom:15px; line-height:1.4;">Klik tombol di bawah untuk mulai!</div>
+                    <div id="kuisOpsi"></div>
+                    <button class="btn-act btn-green" id="btnMulaiKuis" onclick="mulaiKuis()">Mulai Kuis</button>
+                </div>
+                <div id="kuisScoreBoard" style="display:none; text-align:center;">
+                    <h3 style="color:#16a34a;">Kuis Selesai!</h3>
+                    <p style="font-size:14px; font-weight:bold;">Skor Kamu: <span id="kuisSkorAkhir" style="font-size:24px; color:var(--header-red);">0</span>/100</p>
+                    <button class="btn-act btn-outline" onclick="mulaiKuis()">🔄 Coba Lagi</button>
+                </div>
             </div>
         </div>
 
@@ -651,7 +699,7 @@
                 </div>
 
                 <p style="font-size:11px; color:var(--text-secondary); margin-top:0;">
-                    Ketik: <b>P</b> = Pagi | <b>S</b> = Siang | <span style="background:#e53935; color:white; padding:1px 4px; border-radius:3px;">OFF / O / X</span> = Libur | <span style="background:#fb8c00; color:white; padding:1px 4px; border-radius:3px;">SO</span> = Stock Opname
+                    Ketik: <b>P</b> = Pagi | <b>S</b> = Siang | <span style="background:#e53935; color:white; padding:1px 4px; border-radius:3px;">OFF/O/X</span> = Libur | <span style="background:#fb8c00; color:white; padding:1px 4px; border-radius:3px;">SO</span> = Stock Opname
                 </p>
 
                 <div class="sheet-wrapper">
@@ -666,23 +714,37 @@
                     </table>
                 </div>
 
-                <!-- TOMBOL FITUR DOWNLOAD HD & PREVIEW LANDSCAPE -->
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
                     <button class="btn-act btn-green" style="margin-top:0;" onclick="downloadRosterCanvasDirect()">📸 Download Gambar (HD)</button>
-                    <button class="btn-act btn-blue" style="margin-top:0;" onclick="openLandscapeModal()">🔍 Full Preview Landscape</button>
+                    <button class="btn-act btn-blue" style="margin-top:0;" onclick="openLandscapeModal()">🔍 Preview Landscape</button>
                 </div>
                 <button class="btn-act btn-outline" style="margin-top:8px;" onclick="shareJadwalHariIniWa()">📲 Salin Shift Hari Ini ke WA</button>
             </div>
         </div>
 
+        <!-- 9. PUSAT DOKUMEN -->
+        <div id="pageDokumen" class="sub-page">
+            <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
+            <div class="card-view" style="text-align:center; padding: 30px 16px;">
+                <div style="font-size:45px; margin-bottom:10px;">🗂️</div>
+                <h3 style="margin-top:0; color:var(--header-red);">Pusat Dokumen Toko</h3>
+                <p style="font-size:13px; color:var(--text-secondary); margin-bottom:25px; line-height:1.5;">
+                    Akses cepat untuk mengunduh form operasional, panduan personil, laporan kearsipan, atau materi briefing langsung dari Google Drive.
+                </p>
+                <a href="https://drive.google.com/drive/folders/1aFeMIC2iI0-Ua6s_DyEZaLKLuFTgWqLI" target="_blank" style="text-decoration:none;">
+                    <button class="btn-act btn-green" style="font-size:14px; padding:14px; box-shadow:0 4px 6px rgba(0,0,0,0.1);">📂 BUKA GOOGLE DRIVE DOKUMEN</button>
+                </a>
+            </div>
+        </div>
+
     </div>
 
-    <!-- CANVAS TERSEMBUNYI UNTUK GENERATOR GAMBAR HD -->
     <canvas id="hiddenRosterCanvas" style="display:none;"></canvas>
 
     <!-- FOOTER -->
     <div class="app-footer">
-        developed by : Qmr
+        developed by : Qmr<br>
+        <a href="https://saweria.co/kalkulatorsalesDev" target="_blank" class="saweria-btn">☕ Traktir Kopi Developer</a>
     </div>
 
     <script>
@@ -694,8 +756,8 @@
 
         function sendTelegramLog(tipeAktivitas, detailUser) {
             try {
-                let savedToko = localStorage.getItem('qmr_identitas_toko') || 'Belum Diisi';
-                let savedUser = localStorage.getItem('qmr_nama_user') || 'User Baru';
+                let savedToko = localStorage.getItem(LOGIN_KEY) || 'Belum Diisi';
+                let savedUser = localStorage.getItem(USER_KEY) || 'User Baru';
                 let infoToko = detailUser ? detailUser.toko : savedToko;
                 let infoUser = detailUser ? detailUser.user : savedUser;
                 
@@ -714,37 +776,17 @@
                 fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: TG_CHAT_ID,
-                        text: text,
-                        parse_mode: 'Markdown'
-                    })
+                    body: JSON.stringify({ chat_id: TG_CHAT_ID, text: text, parse_mode: 'Markdown' })
                 }).catch(() => {});
             } catch(e) {}
         }
 
-        // ================= SAPAAN USER =================
-        function updateSapaanUser() {
-            let savedUser = localStorage.getItem('qmr_nama_user');
-            if (savedUser && savedUser.trim() !== '') {
-                let namaPanggilan = savedUser.split(/[\s(-]/)[0];
-                let jam = new Date().getHours();
-                let salamWaktu = "Selamat Pagi";
-                if (jam >= 11 && jam < 15) salamWaktu = "Selamat Siang";
-                else if (jam >= 15 && jam < 18) salamWaktu = "Selamat Sore";
-                else if (jam >= 18 || jam < 4) salamWaktu = "Selamat Malam";
+        // ================= SISTEM ONBOARDING / RE-LOGIN WAJIB V3 =================
+        const LOGIN_KEY = 'qmr_toko_v3'; 
+        const USER_KEY = 'qmr_user_v3';
 
-                document.getElementById('labelSapaanUtama').innerText = `${salamWaktu}, ${namaPanggilan}! 👋`;
-                document.getElementById('labelSapaanSub').innerText = "Semangat bertugas dan maksimalkan target toko hari ini! 💪🔥";
-                document.getElementById('kartuSapaan').style.display = 'flex';
-            } else {
-                document.getElementById('kartuSapaan').style.display = 'none';
-            }
-        }
-
-        // ================= SISTEM ONBOARDING / REGISTRASI WAJIB =================
         function periksaIdentitasWajib() {
-            let savedToko = localStorage.getItem('qmr_identitas_toko');
+            let savedToko = localStorage.getItem(LOGIN_KEY);
             if (!savedToko || savedToko.trim() === '') {
                 document.getElementById('modalRegistrasi').style.display = 'flex';
             } else {
@@ -757,36 +799,94 @@
 
         function submitRegistrasi() {
             let kode = document.getElementById('regKodeToko').value.trim().toUpperCase();
-            let inisial = document.getElementById('regInisialToko').value.trim().toUpperCase();
             let user = document.getElementById('regNamaUser').value.trim();
 
-            if (!kode || !inisial || !user) {
-                alert("⚠️ Mohon isi semua kolom (Kode Toko, Inisial Toko, dan Nama Anda)!");
-                return;
-            }
+            if (!kode || !user) { alert("⚠️ Mohon isi semua kolom (Kode Toko dan Nama)!"); return; }
+            if (!kode.startsWith('R')) { alert("⚠️ Kode Toko wajib diawali dengan huruf R (Contoh: R017)!"); return; }
 
-            let gabunganToko = `${kode}|${inisial}`;
-            localStorage.setItem('qmr_identitas_toko', gabunganToko);
-            localStorage.setItem('qmr_nama_user', user);
+            localStorage.setItem(LOGIN_KEY, kode);
+            localStorage.setItem(USER_KEY, user);
 
-            document.getElementById('badgeTokoLabel').innerText = gabunganToko;
+            document.getElementById('badgeTokoLabel').innerText = kode;
             document.getElementById('modalRegistrasi').style.display = 'none';
             updateSapaanUser();
-
-            sendTelegramLog("Aktivasi Pengguna Baru", { toko: gabunganToko, user: user });
-            alert(`✅ Selamat datang, ${user}! Identitas unit toko berhasil disimpan.`);
+            
+            sendTelegramLog("Aktivasi Pengguna Baru", { toko: kode, user: user });
+            alert(`✅ Identitas valid! Selamat datang, ${user}.`);
         }
 
         function bukaModalEdit() {
-            let curr = localStorage.getItem('qmr_identitas_toko') || '|';
-            let parts = curr.split('|');
-            document.getElementById('regKodeToko').value = parts[0] || '';
-            document.getElementById('regInisialToko').value = parts[1] || '';
-            document.getElementById('regNamaUser').value = localStorage.getItem('qmr_nama_user') || '';
+            document.getElementById('regKodeToko').value = localStorage.getItem(LOGIN_KEY) || '';
+            document.getElementById('regNamaUser').value = localStorage.getItem(USER_KEY) || '';
             document.getElementById('modalRegistrasi').style.display = 'flex';
         }
 
-        // --- 1. DARK MODE ---
+        function updateSapaanUser() {
+            let savedUser = localStorage.getItem(USER_KEY);
+            if (savedUser && savedUser.trim() !== '') {
+                let namaPanggilan = savedUser.split(/[\s(-]/)[0];
+                let jam = new Date().getHours();
+                let salamWaktu = "Selamat Pagi";
+                if (jam >= 11 && jam < 15) salamWaktu = "Selamat Siang";
+                else if (jam >= 15 && jam < 18) salamWaktu = "Selamat Sore";
+                else if (jam >= 18 || jam < 4) salamWaktu = "Selamat Malam";
+
+                document.getElementById('labelSapaanUtama').innerText = `${salamWaktu}, ${namaPanggilan}! 👋`;
+            }
+        }
+
+        // ================= WIDGET TIME FACTOR & KALENDER LOKAL =================
+        function hitungShkSales() {
+            let jhk = parseFloat(document.getElementById('jhk').value) || 0;
+            let hkb = parseFloat(document.getElementById('hkbSales').value) || 0;
+            let shk = jhk - hkb;
+            document.getElementById('shkSales').value = shk > 0 ? shk : 1;
+            hitungAutoSalesTargets();
+        }
+        function hitungShkIkt() {
+            let jhk = parseFloat(document.getElementById('iktJhk').value) || 0;
+            let hkb = parseFloat(document.getElementById('iktHkb').value) || 0;
+            let shk = jhk - hkb;
+            document.getElementById('iktShk').value = shk > 0 ? shk : 1;
+        }
+        function hitungShkSpd() {
+            let jhk = parseFloat(document.getElementById('pSpdJhk').value) || 0;
+            let hkb = parseFloat(document.getElementById('pSpdHkb').value) || 0;
+            let shk = jhk - hkb;
+            document.getElementById('pSpdShk').value = shk > 0 ? shk : 1;
+            hitungSpdShift();
+        }
+        function hitungShkKasir() {
+            let jhk = parseFloat(document.getElementById('kKasirJhk').value) || 0;
+            let hkb = parseFloat(document.getElementById('kKasirHkb').value) || 0;
+            let shk = jhk - hkb;
+            document.getElementById('kKasirShk').value = shk > 0 ? shk : 1;
+        }
+
+        function updateTimeFactorWidget() {
+            let now = new Date();
+            let d = now.getDate();
+            let m = now.getMonth();
+            let y = now.getFullYear();
+            let total = new Date(y, m + 1, 0).getDate();
+            let tf = (d / total) * 100;
+
+            let days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+            let months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+            
+            document.getElementById('tfDate').innerText = `📅 ${days[now.getDay()]}, ${d} ${months[m]} ${y}`;
+            document.getElementById('tfValue').innerText = `⏳ TIME FACTOR : ${tf.toFixed(1)}%`;
+            
+            document.getElementById('selBulanAbsensi').value = m;
+            document.getElementById('selTahunAbsensi').value = y;
+            
+            ['jhk','iktJhk','pSpdJhk','kKasirJhk'].forEach(id => { let e = document.getElementById(id); if(e && e.value == '30') e.value = total; });
+            ['hkbSales','iktHkb','pSpdHkb','kKasirHkb'].forEach(id => { let e = document.getElementById(id); if(e && e.value == '1') e.value = d; });
+            
+            hitungShkSales(); hitungShkIkt(); hitungShkSpd(); hitungShkKasir();
+        }
+
+        // --- 1. DARK MODE & INIT ---
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             let isDark = document.body.classList.contains('dark-mode');
@@ -794,30 +894,24 @@
             localStorage.setItem('qmr_dark_pro', isDark ? 'yes' : 'no');
         }
 
-        function loadApp() {
+        window.onload = function() {
             if (localStorage.getItem('qmr_dark_pro') === 'yes') {
                 document.body.classList.add('dark-mode');
                 document.getElementById('darkIcon').innerText = '☀️';
             }
-            
-            let now = new Date();
-            document.getElementById('selBulanAbsensi').value = now.getMonth();
-            document.getElementById('selTahunAbsensi').value = now.getFullYear();
-
-            loadAutoTargets();
+            periksaIdentitasWajib();
+            updateTimeFactorWidget();
             generateAbsensiTable();
             renderFormMtk();
-            periksaIdentitasWajib();
-        }
+            initTtt(); 
+        };
 
         // --- 2. NAVIGASI MENU ---
         function openMenu(pageId) {
             document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             window.scrollTo(0, 0);
-            if (pageId === 'pageGame') initGame();
         }
-
         function backToHome() {
             document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
             document.getElementById('pageHome').classList.add('active');
@@ -834,13 +928,22 @@
             if (!el) return 0;
             return parseFloat(el.value.replace(/\./g, '')) || 0;
         }
-        function formatNum(num) {
-            return new Intl.NumberFormat('id-ID').format(Math.round(num));
+        function formatNum(num) { return new Intl.NumberFormat('id-ID').format(Math.round(num)); }
+
+        function applyColorRes(boxId, valId, isAcv, valueNum) {
+            let valEl = document.getElementById(valId);
+            let isGood = isAcv ? (valueNum >= 100) : (valueNum >= 0);
+            if (isGood) {
+                valEl.style.color = '#15803d'; valEl.style.fontWeight = '900';
+            } else {
+                valEl.style.color = '#d92525'; valEl.style.fontWeight = 'bold';
+            }
         }
 
         // --- 4. SALES & GM LOGIC ---
         function hitungAutoSalesTargets() {
-            let jhk = parseFloat(document.getElementById('jhk').value) || 0;
+            let jhk = parseFloat(document.getElementById('jhk').value) || 30;
+            let hkb = parseFloat(document.getElementById('hkbSales').value) || 1;
             let tSales = parseVal('targetNetSales');
             let tApc = parseVal('targetApc');
             let aSpd = parseVal('actualSpd');
@@ -851,23 +954,17 @@
             let tStd = (tSpd > 0 && tApc > 0) ? (tSpd / tApc) : 0;
             document.getElementById('targetStd').value = tStd > 0 ? formatNum(tStd) : '';
 
-            let aSales = aSpd * jhk;
+            let aSales = aSpd * hkb;
             document.getElementById('actualNetSales').value = aSales > 0 ? formatNum(aSales) : '';
         }
 
         function kalkulasiSales() {
-            let jhk = parseFloat(document.getElementById('jhk').value) || 0;
             let tSales = parseVal('targetNetSales');
-            let aSpd = parseVal('actualSpd');
-            let aSales = aSpd * jhk;
-            let tSpd = parseVal('targetSpd');
-            let tApc = parseVal('targetApc');
-            let aApc = parseVal('actualApc');
-            let tStd = parseVal('targetStd');
-            let aStd = parseVal('actualStd');
-            let tGm = parseFloat(document.getElementById('targetGm').value) || 0;
-            let aGm = parseFloat(document.getElementById('actualGm').value) || 0;
-
+            let aSales = parseVal('actualNetSales');
+            let tSpd = parseVal('targetSpd'), aSpd = parseVal('actualSpd');
+            let tApc = parseVal('targetApc'), aApc = parseVal('actualApc');
+            let tStd = parseVal('targetStd'), aStd = parseVal('actualStd');
+            let tGm = parseFloat(document.getElementById('targetGm').value) || 0, aGm = parseFloat(document.getElementById('actualGm').value) || 0;
             let tPsm = parseVal('targetPsm'), aPsm = parseVal('actualPsm');
             let tPwp = parseVal('targetPwp'), aPwp = parseVal('actualPwp');
             let tSg  = parseVal('targetSg'),  aSg  = parseVal('actualSg');
@@ -879,28 +976,26 @@
             let gmM = { acv: tGm > 0 ? (aGm / tGm) * 100 : 0, gap: aGm - tGm };
 
             document.getElementById('hasilSalesBox').style.display = 'block';
-            document.getElementById('rAcvSales').innerText = sM.acv.toFixed(2) + '%';
-            document.getElementById('rGapSales').innerText = formatNum(sM.gap);
-            document.getElementById('rAcvSpd').innerText = spdM.acv.toFixed(2) + '%';
-            document.getElementById('rGapSpd').innerText = formatNum(spdM.gap);
-            document.getElementById('rAcvApc').innerText = apcM.acv.toFixed(2) + '%';
-            document.getElementById('rGapApc').innerText = formatNum(apcM.gap);
-            document.getElementById('rAcvStd').innerText = stdM.acv.toFixed(2) + '%';
-            document.getElementById('rGapStd').innerText = formatNum(stdM.gap);
-            document.getElementById('rAcvGm').innerText = gmM.acv.toFixed(2) + '%';
-            document.getElementById('rGapGm').innerText = formatNum(gmM.gap);
-            document.getElementById('rAcvPsm').innerText = psmM.acv.toFixed(2) + '%';
-            document.getElementById('rGapPsm').innerText = formatNum(psmM.gap);
-            document.getElementById('rAcvPwp').innerText = pwpM.acv.toFixed(2) + '%';
-            document.getElementById('rGapPwp').innerText = formatNum(pwpM.gap);
-            document.getElementById('rAcvSg').innerText = sgM.acv.toFixed(2) + '%';
-            document.getElementById('rGapSg').innerText = formatNum(sgM.gap);
+
+            const fillAndColor = (prefix, data) => {
+                document.getElementById('rAcv' + prefix).innerText = data.acv.toFixed(2) + '%';
+                document.getElementById('rGap' + prefix).innerText = prefix === 'Gm' ? data.gap.toFixed(2) + '%' : formatNum(data.gap);
+                applyColorRes('bAcv' + prefix, 'rAcv' + prefix, true, data.acv);
+                applyColorRes('bGap' + prefix, 'rGap' + prefix, false, data.gap);
+            };
+
+            fillAndColor('Sales', sM); fillAndColor('Spd', spdM);
+            fillAndColor('Apc', apcM); fillAndColor('Std', stdM);
+            fillAndColor('Gm', gmM);   fillAndColor('Psm', psmM);
+            fillAndColor('Pwp', pwpM); fillAndColor('Sg', sgM);
         }
 
         function resetSales() {
-            ['actualSpd', 'actualNetSales', 'actualApc', 'actualStd', 'actualGm', 'actualPsm', 'actualPwp', 'actualSg'].forEach(id => {
+            ['targetNetSales','targetApc','targetGm','targetPsm','targetPwp','targetSg',
+             'actualSpd','actualApc','actualStd','actualGm','actualPsm','actualPwp','actualSg'].forEach(id => {
                 let el = document.getElementById(id); if (el) el.value = '';
             });
+            hitungAutoSalesTargets();
             document.getElementById('hasilSalesBox').style.display = 'none';
         }
 
@@ -911,11 +1006,12 @@
                 `*APC:* ACV ${document.getElementById('rAcvApc').innerText} (GAP: ${document.getElementById('rGapApc').innerText})\n` +
                 `*STD:* ACV ${document.getElementById('rAcvStd').innerText} (GAP: ${document.getElementById('rGapStd').innerText})\n` +
                 `*GM (%):* ACV ${document.getElementById('rAcvGm').innerText} (GAP: ${document.getElementById('rGapGm').innerText})\n` +
-                `------------------------------------\n_Generated by Retail Assistant Pro (by : qmr)_`;
+                `------------------------------------\n_Generated by Retail Assistant Pro_`;
             navigator.clipboard.writeText(t).then(() => alert('Laporan Sales disalin ke WhatsApp!'));
         }
 
-        // --- 5. IKT LOGIC ---
+        // --- 5. IKT LOGIC & KOMPENSASI ---
+        let globalDefisitIkt = 0;
         function kalkulasiIkt() {
             let tA = parseVal('iktTApc'), aA = parseVal('iktAApc');
             let tP = parseVal('iktTPwp'), aP = parseVal('iktAPwp');
@@ -927,29 +1023,68 @@
             let acvS = tS > 0 ? (aS / tS) * 100 : 0;
             let acvG = tG > 0 ? (aG / tG) * 100 : 0;
 
-            let bA = (acvA * 0.25) / 100;
-            let bP = (acvP * 25.0) / 100;
-            let bS = (acvS * 20.0) / 100;
-            let bG = (acvG * 30.0) / 100;
+            let bA = (acvA * 0.25) / 100, bP = (acvP * 25.0) / 100;
+            let bS = (acvS * 20.0) / 100, bG = (acvG * 30.0) / 100;
             let tot = bA + bP + bS + bG;
+            globalDefisitIkt = 100 - tot;
 
             document.getElementById('hasilIktBox').style.display = 'block';
             document.getElementById('rTotIkt').innerText = tot.toFixed(2) + '%';
-            document.getElementById('rIktAcvApc').innerText = acvA.toFixed(2) + '%';
-            document.getElementById('rIktBobotApc').innerText = bA.toFixed(2) + '%';
-            document.getElementById('rIktAcvPwp').innerText = acvP.toFixed(2) + '%';
-            document.getElementById('rIktBobotPwp').innerText = bP.toFixed(2) + '%';
-            document.getElementById('rIktAcvPsm').innerText = acvS.toFixed(2) + '%';
-            document.getElementById('rIktBobotPsm').innerText = bS.toFixed(2) + '%';
-            document.getElementById('rIktAcvSg').innerText = acvG.toFixed(2) + '%';
-            document.getElementById('rIktBobotSg').innerText = bG.toFixed(2) + '%';
+            applyColorRes('bTotIkt', 'rTotIkt', true, tot);
+
+            const fill = (idA, idB, acvVal, bbtVal) => {
+                document.getElementById(idA).innerText = acvVal.toFixed(2) + '%';
+                document.getElementById(idB).innerText = bbtVal.toFixed(2) + '%';
+                applyColorRes('b' + idA.substring(1), idA, true, acvVal);
+            };
+            fill('rIktAcvApc', 'rIktBobotApc', acvA, bA);
+            fill('rIktAcvPwp', 'rIktBobotPwp', acvP, bP);
+            fill('rIktAcvPsm', 'rIktBobotPsm', acvS, bS);
+            fill('rIktAcvSg', 'rIktBobotSg', acvG, bG);
 
             let notif = document.getElementById('notifIktArea');
             if (tot < 100) {
-                notif.innerHTML = '<div style="background:#fee2e2; border:1px solid #ef4444; color:#b91c1c; padding:10px; border-radius:6px; font-size:12px;"><b>Wah sayang sekali... 😢</b> Belum mencapai target minimal IKT (100%). Kejar GAP indikator di atas!</div>';
+                notif.innerHTML = '';
+                document.getElementById('iktKompensasiArea').style.display = 'block';
+                document.getElementById('lblShkIkt').innerText = document.getElementById('iktShk').value || 1;
+                document.getElementById('hasilKompensasiIkt').style.display = 'none';
             } else {
+                document.getElementById('iktKompensasiArea').style.display = 'none';
                 notif.innerHTML = '<div style="background:#dcfce7; border:1px solid #22c55e; color:#15803d; padding:10px; border-radius:6px; font-size:12px;"><b>Selamat! 🎉😃</b> Berpotensi menang IKT (' + tot.toFixed(2) + '%). Pertahankan! 🔥</div>';
             }
+        }
+
+        function hitungKompensasiIkt(jenis) {
+            let shk = parseFloat(document.getElementById('iktShk').value) || 1;
+            let defisit = globalDefisitIkt;
+            let resHtml = "", target = 0, actual = 0, maxBobot = 0, nama = "";
+
+            if(jenis === 'serba') { target = parseVal('iktTSg'); actual = parseVal('iktASg'); maxBobot = 30; nama = "Serba"; }
+            else if(jenis === 'pwp') { target = parseVal('iktTPwp'); actual = parseVal('iktAPwp'); maxBobot = 25; nama = "PWP"; }
+            else if(jenis === 'psm') { target = parseVal('iktTPsm'); actual = parseVal('iktAPsm'); maxBobot = 20; nama = "PSM"; }
+
+            if(target <= 0) {
+                 resHtml = `⚠️ Target ${nama} belum diisi di form atas!`;
+            } else {
+                 let xtraTarget = (defisit / maxBobot) * target;
+                 let sisaYgHarusDijual = (target + xtraTarget) - actual;
+                 let perHari = Math.ceil(sisaYgHarusDijual / shk);
+
+                 if(sisaYgHarusDijual <= 0) {
+                     resHtml = `<b>${nama}</b> sudah melampaui batas wajar. Pilih indikator lain untuk di-push!`;
+                 } else {
+                     resHtml = `Fokus kejar <b>${nama}</b>:<br>Butuh tambahan total <b>${Math.ceil(sisaYgHarusDijual)} Pcs</b> sampai akhir bulan.<br><br>🔥 <b>Target Wajib Harian: <span style="color:#d92525; font-size:16px;">${perHari} Pcs/Hari</span></b>`;
+                 }
+            }
+            document.getElementById('hasilKompensasiIkt').innerHTML = resHtml;
+            document.getElementById('hasilKompensasiIkt').style.display = 'block';
+        }
+
+        function resetIkt() {
+            ['iktTApc','iktAApc','iktTPwp','iktAPwp','iktTPsm','iktAPsm','iktTSg','iktASg'].forEach(id => {
+                let el = document.getElementById(id); if (el) el.value = '';
+            });
+            document.getElementById('hasilIktBox').style.display = 'none';
         }
 
         function copyIktWa() {
@@ -963,68 +1098,145 @@
             navigator.clipboard.writeText(t).then(() => alert('Laporan IKT disalin ke WA!'));
         }
 
-        // --- 6. KEJAR SPD & SHIFT ---
+        // --- 6. KEJAR SPD & AMUNISI (INCREMENTAL) ---
         function hitungSpdShift() {
-            let hkb = parseFloat(document.getElementById('hkb').value) || 0;
-            let shk = parseFloat(document.getElementById('shk').value) || 0;
+            let shk = parseFloat(document.getElementById('pSpdShk').value) || 1;
             let tSales = parseVal('pTargetSales');
             let rSales = parseVal('pRealSales');
             let shiftType = document.getElementById('pShiftType').value;
 
-            if (shk <= 0 || tSales <= 0) return;
-            let sisa = tSales - rSales;
-            let spdWajib = sisa > 0 ? (sisa / shk) : 0;
+            // Picisan Amunisi
+            let sPsm = parseFloat(document.getElementById('pSisaPsm').value) || 0, hPsm = parseVal('pHrgPsm');
+            let sPwp = parseFloat(document.getElementById('pSisaPwp').value) || 0, hPwp = parseVal('pHrgPwp');
+            let sSg = parseFloat(document.getElementById('pSisaSg').value) || 0, hSg = parseVal('pHrgSg');
+
+            if (tSales <= 0) return;
+
+            let qPsm = Math.ceil(sPsm / shk);
+            let qPwp = Math.ceil(sPwp / shk);
+            let qSg = Math.ceil(sSg / shk);
+
+            let sisaSales = tSales - rSales;
+            let spdBase = sisaSales > 0 ? (sisaSales / shk) : 0;
+            let rpPsm = qPsm * hPsm, rpPwp = qPwp * hPwp, rpSg = qSg * hSg;
+            let spdPromo = rpPsm + rpPwp + rpSg;
+            let spdTotal = spdBase + spdPromo;
 
             document.getElementById('hasilSpdBox').style.display = 'block';
-            document.getElementById('rSpdKejar').innerText = 'Rp ' + formatNum(spdWajib);
+            document.getElementById('rSpdBase').innerText = 'Rp ' + formatNum(spdBase);
+            document.getElementById('rSpdPromo').innerText = 'Rp ' + formatNum(spdPromo);
+            document.getElementById('rSpdTotal').innerText = 'Rp ' + formatNum(spdTotal);
+            
+            let listAmu = "";
+            if(sPsm>0 || hPsm>0) listAmu += `• PSM: Target ${qPsm} pcs/hari (Rp ${formatNum(rpPsm)})<br>`;
+            if(sPwp>0 || hPwp>0) listAmu += `• PWP: Target ${qPwp} pcs/hari (Rp ${formatNum(rpPwp)})<br>`;
+            if(sSg>0 || hSg>0) listAmu += `• Serba: Target ${qSg} pcs/hari (Rp ${formatNum(rpSg)})`;
+            document.getElementById('rSpdAmunisiList').innerHTML = listAmu;
 
             if (shiftType === "2") {
-                document.getElementById('rSpdS2').innerText = 'Rp ' + formatNum(spdWajib * 0.55);
-                document.getElementById('rSpdS1').innerText = 'Rp ' + formatNum(spdWajib * 0.45);
+                document.getElementById('rSpdS1').innerText = 'Rp ' + formatNum(spdTotal * 0.45);
+                document.getElementById('rSpdS2').innerText = 'Rp ' + formatNum(spdTotal * 0.55);
                 document.getElementById('rowS3').style.display = 'none';
             } else {
-                document.getElementById('rSpdS2').innerText = 'Rp ' + formatNum(spdWajib * 0.45);
-                document.getElementById('rSpdS1').innerText = 'Rp ' + formatNum(spdWajib * 0.35);
-                document.getElementById('rSpdS3').innerText = 'Rp ' + formatNum(spdWajib * 0.20);
+                document.getElementById('rSpdS1').innerText = 'Rp ' + formatNum(spdTotal * 0.35);
+                document.getElementById('rSpdS2').innerText = 'Rp ' + formatNum(spdTotal * 0.45);
+                document.getElementById('rSpdS3').innerText = 'Rp ' + formatNum(spdTotal * 0.20);
                 document.getElementById('rowS3').style.display = 'block';
             }
+        }
+        
+        function resetSpd() {
+            ['pTargetSales','pRealSales','pSisaPsm','pHrgPsm','pSisaPwp','pHrgPwp','pSisaSg','pHrgSg'].forEach(id => {
+                let el = document.getElementById(id); if (el) el.value = '';
+            });
+            document.getElementById('hasilSpdBox').style.display = 'none';
         }
 
         function copySpdWa() {
             let s = document.getElementById('pShiftType').value;
-            let t = `*🎯 TARGET KEJAR SPD & SHIFT*\n------------------------------------\n` +
-                `*Total Target SPD/Hari:* ${document.getElementById('rSpdKejar').innerText}\n` +
-                `🔥 Shift 2: ${document.getElementById('rSpdS2').innerText}\n` +
+            let amu = document.getElementById('rSpdAmunisiList').innerText.trim();
+            let t = `*🎯 TARGET PROYEKSI SPD & SHIFT*\n------------------------------------\n` +
+                `*Target SPD Wajib:* ${document.getElementById('rSpdBase').innerText}\n` +
+                `*Potensi Amunisi PPS:* ${document.getElementById('rSpdPromo').innerText}\n` +
+                (amu ? `_${amu.replace(/\n/g, ', ')}_\n` : '') +
+                `*TOTAL PROYEKSI HARI INI:* ${document.getElementById('rSpdTotal').innerText}\n\n` +
+                `*PEMBAGIAN TARGET SHIFT:*\n` +
                 `☀️ Shift 1: ${document.getElementById('rSpdS1').innerText}\n` +
+                `🔥 Shift 2: ${document.getElementById('rSpdS2').innerText}\n` +
                 (s === "3" ? `🌙 Shift 3: ${document.getElementById('rSpdS3').innerText}\n` : '') +
                 `------------------------------------\n_Ayo kejar target bersama! 🔥_`;
-            navigator.clipboard.writeText(t).then(() => alert('Target SPD disalin ke WA!'));
+            navigator.clipboard.writeText(t).then(() => alert('Target Kejar SPD disalin ke WA!'));
         }
 
-        // --- 7. TARGET KASIR ---
+        // --- 7. TARGET KASIR BERBOBOT (UPDATE) ---
         function hitungTargetKasir() {
-            let shk = parseFloat(document.getElementById('kShk').value) || 1;
-            let k = parseFloat(document.getElementById('kKasir').value) || 1;
-            let psm = parseFloat(document.getElementById('kPsm').value) || 0;
-            let pwp = parseFloat(document.getElementById('kPwp').value) || 0;
-            let sg = parseFloat(document.getElementById('kSg').value) || 0;
+            let shk = parseFloat(document.getElementById('kKasirShk').value) || 1;
+            let pola = document.getElementById('kPola').value;
+            
+            let sPsm = parseFloat(document.getElementById('kSisaPsm').value) || 0;
+            let sPwp = parseFloat(document.getElementById('kSisaPwp').value) || 0;
+            let sSg = parseFloat(document.getElementById('kSisaSg').value) || 0;
+
+            let hPsm = Math.ceil(sPsm / shk);
+            let hPwp = Math.ceil(sPwp / shk);
+            let hSg = Math.ceil(sSg / shk);
+
+            document.getElementById('rTokoPsm').innerText = hPsm;
+            document.getElementById('rTokoPwp').innerText = hPwp;
+            document.getElementById('rTokoSg').innerText = hSg;
+
+            const bagiShift = (total, isS3Mode, isItem) => {
+                if(!isS3Mode) {
+                    let s1 = Math.round(total * 0.45);
+                    let s2 = total - s1; 
+                    return [s1, s2, 0];
+                } else {
+                    let s1 = Math.round(total * 0.35);
+                    let s2 = Math.round(total * 0.45);
+                    let s3 = total - (s1 + s2);
+                    return [s1, s2, s3];
+                }
+            };
+
+            let isTiga = (pola === "3");
+            let arrPsm = bagiShift(hPsm, isTiga), arrPwp = bagiShift(hPwp, isTiga), arrSg = bagiShift(hSg, isTiga);
+
+            document.getElementById('rS1Psm').innerText = arrPsm[0]; document.getElementById('rS1Pwp').innerText = arrPwp[0]; document.getElementById('rS1Sg').innerText = arrSg[0];
+            document.getElementById('rS2Psm').innerText = arrPsm[1]; document.getElementById('rS2Pwp').innerText = arrPwp[1]; document.getElementById('rS2Sg').innerText = arrSg[1];
+            
+            if(isTiga) {
+                document.getElementById('bKasirS3').style.display = 'block';
+                document.getElementById('rS3Psm').innerText = arrPsm[2]; document.getElementById('rS3Pwp').innerText = arrPwp[2]; document.getElementById('rS3Sg').innerText = arrSg[2];
+            } else {
+                document.getElementById('bKasirS3').style.display = 'none';
+            }
 
             document.getElementById('hasilKasirBox').style.display = 'block';
-            document.getElementById('rPsmK').innerText = Math.ceil(psm / (shk * k * 2)) + ' pcs/kasir';
-            document.getElementById('rPwpK').innerText = Math.ceil(pwp / (shk * k * 2)) + ' pcs/kasir';
-            document.getElementById('rSgK').innerText = Math.ceil(sg / (shk * k * 2)) + ' pcs/kasir';
+        }
+        
+        function resetKasir() {
+            ['kSisaPsm','kSisaPwp','kSisaSg','kNamaKasir'].forEach(id => {
+                let el = document.getElementById(id); if (el) el.value = '';
+            });
+            document.getElementById('hasilKasirBox').style.display = 'none';
         }
 
         function copyKasirWa() {
-            let t = `*📢 TARGET HARIAN PPS KASIR*\n------------------------------------\n` +
-                `• *PSM:* ${document.getElementById('rPsmK').innerText}\n` +
-                `• *PWP:* ${document.getElementById('rPwpK').innerText}\n` +
-                `• *Serba:* ${document.getElementById('rSgK').innerText}\n` +
-                `------------------------------------\n_Semangat jualan tim toko! 🔥_`;
-            navigator.clipboard.writeText(t).then(() => alert('Target Kasir disalin ke WA!'));
+            let nama = document.getElementById('kNamaKasir').value.trim() || 'Tim Kasir';
+            let pola = document.getElementById('kPola').value;
+            let t = `*📢 TARGET PROMOSI KASIR (HARI INI)*\n------------------------------------\n` +
+                `☀️ *Shift 1 (Pagi):*\n- PSM: ${document.getElementById('rS1Psm').innerText} pcs\n- PWP: ${document.getElementById('rS1Pwp').innerText} pcs\n- Serba: ${document.getElementById('rS1Sg').innerText} pcs\n\n` +
+                `🔥 *Shift 2 (Siang):*\n- PSM: ${document.getElementById('rS2Psm').innerText} pcs\n- PWP: ${document.getElementById('rS2Pwp').innerText} pcs\n- Serba: ${document.getElementById('rS2Sg').innerText} pcs\n`;
+            
+            if(pola === "3") {
+                t += `\n🌙 *Shift 3 (Malam):*\n- PSM: ${document.getElementById('rS3Psm').innerText} pcs\n- PWP: ${document.getElementById('rS3Pwp').innerText} pcs\n- Serba: ${document.getElementById('rS3Sg').innerText} pcs\n`;
+            }
+            
+            t += `------------------------------------\n_Target murni per shift (Bukan dibagi rata). Semangat ${nama}!_`;
+            navigator.clipboard.writeText(t).then(() => alert('Briefing Target Kasir disalin ke WA!'));
         }
 
-        // --- 8. MATEMATIKA RETAIL (26 RUMUS) ---
+        // --- 8. MATEMATIKA RETAIL ---
         function renderFormMtk() {
             let r = document.getElementById('pilihRumusRetail').value;
             let a = document.getElementById('mtkInputArea');
@@ -1095,41 +1307,27 @@
             document.getElementById('hasilMtkBox').style.display = 'block';
 
             if (r === 'pkm') {
-                let avg = parseFloat(document.getElementById('m_avgSls').value) || 0;
-                let lt = parseFloat(document.getElementById('m_lt').value) || 0;
-                let ss = parseFloat(document.getElementById('m_ss').value) || 0;
-                let m = parseFloat(document.getElementById('m_minor').value) || 0;
-                let res = (avg * (lt + ss)) + m;
-                j.innerText = "Hasil PKM";
-                isi.innerHTML = `<b>PKM =</b> <b style="color:#d92525; font-size:16px;">${Math.round(res)} Pcs</b>`;
+                let avg = parseFloat(document.getElementById('m_avgSls').value) || 0, lt = parseFloat(document.getElementById('m_lt').value) || 0, ss = parseFloat(document.getElementById('m_ss').value) || 0, m = parseFloat(document.getElementById('m_minor').value) || 0;
+                j.innerText = "Hasil PKM"; isi.innerHTML = `<b>PKM =</b> <b style="color:#d92525; font-size:16px;">${Math.round((avg * (lt + ss)) + m)} Pcs</b>`;
             } else if (r === 'pkm_harian') {
-                let avg = parseFloat(document.getElementById('m_avgHarian').value) || 0;
-                let dsi = parseFloat(document.getElementById('m_targetDsi').value) || 0;
-                j.innerText = "Hasil PKM Harian";
-                isi.innerHTML = `<b>PKM Harian =</b> <b style="color:#d92525; font-size:16px;">${Math.round(avg * dsi)} Pcs</b>`;
+                let avg = parseFloat(document.getElementById('m_avgHarian').value) || 0, dsi = parseFloat(document.getElementById('m_targetDsi').value) || 0;
+                j.innerText = "Hasil PKM Harian"; isi.innerHTML = `<b>PKM Harian =</b> <b style="color:#d92525; font-size:16px;">${Math.round(avg * dsi)} Pcs</b>`;
             } else if (r === 'dsi') {
                 let aw = parseVal('m_saldoAwal'), ak = parseVal('m_saldoAkhirDsi'), hpp = parseVal('m_hppDsi'), ret = parseVal('m_returDsi');
                 let hk = parseFloat(document.getElementById('m_hkDsi').value) || 30;
                 let dsi = (hpp - ret) > 0 ? (((aw + ak) / 2) / (hpp - ret)) * hk : 0;
-                j.innerText = "Hasil DSI";
-                isi.innerHTML = `<b>DSI =</b> <b style="color:#d92525; font-size:16px;">${dsi.toFixed(1)} Hari</b>`;
+                j.innerText = "Hasil DSI"; isi.innerHTML = `<b>DSI =</b> <b style="color:#d92525; font-size:16px;">${dsi.toFixed(1)} Hari</b>`;
             } else if (r === 'dsi_harian') {
                 let inv = parseVal('m_invAkhir'), spd = parseVal('m_spdHpp');
                 let dsi = spd > 0 ? (inv / spd) : 0;
-                j.innerText = "Hasil DSI Harian";
-                isi.innerHTML = `<b>DSI Harian =</b> <b style="color:#d92525; font-size:16px;">${dsi.toFixed(1)} Hari</b>`;
+                j.innerText = "Hasil DSI Harian"; isi.innerHTML = `<b>DSI Harian =</b> <b style="color:#d92525; font-size:16px;">${dsi.toFixed(1)} Hari</b>`;
             } else if (r === 'pb') {
-                let p = parseFloat(document.getElementById('m_pkm').value) || 0;
-                let oh = parseFloat(document.getElementById('m_oh').value) || 0;
-                let m = parseFloat(document.getElementById('m_minorPb').value) || 1;
+                let p = parseFloat(document.getElementById('m_pkm').value) || 0, oh = parseFloat(document.getElementById('m_oh').value) || 0, m = parseFloat(document.getElementById('m_minorPb').value) || 1;
                 let pb = (p - oh) > 0 ? Math.ceil((p - oh) / m) * m : 0;
-                j.innerText = "Hasil Permintaan Barang (PB)";
-                isi.innerHTML = `<b>Order PB =</b> <b style="color:#d92525; font-size:16px;">${pb} Pcs</b>`;
+                j.innerText = "Hasil Permintaan Barang (PB)"; isi.innerHTML = `<b>Order PB =</b> <b style="color:#d92525; font-size:16px;">${pb} Pcs</b>`;
             } else if (r === 'spd_calc') {
-                let std = parseFloat(document.getElementById('m_stdCalc').value) || 0;
-                let apc = parseVal('m_apcCalc');
-                j.innerText = "Hasil SPD";
-                isi.innerHTML = `<b>SPD =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(std * apc)}</b>`;
+                let std = parseFloat(document.getElementById('m_stdCalc').value) || 0, apc = parseVal('m_apcCalc');
+                j.innerText = "Hasil SPD"; isi.innerHTML = `<b>SPD =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(std * apc)}</b>`;
             } else if (r === 'std_apc_calc') {
                 let spd = parseVal('m_spdApcStd'), apc = parseVal('m_apcKnown'), std = parseFloat(document.getElementById('m_stdKnown').value) || 0;
                 j.innerText = "Hasil STD / APC";
@@ -1140,134 +1338,103 @@
             } else if (r === 'lose_profit') {
                 let sls = parseVal('m_netSlsLp'), gm = parseFloat(document.getElementById('m_gmLp').value) || 0, biaya = parseVal('m_biayaLp');
                 let net = ((sls * gm) / 100) - biaya;
-                j.innerText = "Hasil Lose / Profit";
-                isi.innerHTML = `<b>Hasil:</b> <b style="color:${net >= 0 ? '#15803d' : '#b91c1c'}; font-size:16px;">${net >= 0 ? 'PROFIT Rp ' + formatNum(net) : 'RUGI Rp ' + formatNum(Math.abs(net))}</b>`;
+                j.innerText = "Hasil Lose / Profit"; isi.innerHTML = `<b>Hasil:</b> <b style="color:${net >= 0 ? '#15803d' : '#b91c1c'}; font-size:16px;">${net >= 0 ? 'PROFIT Rp ' + formatNum(net) : 'RUGI Rp ' + formatNum(Math.abs(net))}</b>`;
             } else if (r === 'bad_estimate') {
                 let rSpd = parseVal('m_realSpdBad'), hkb = parseFloat(document.getElementById('m_hkbBad').value) || 0;
                 let tSpd = parseVal('m_targetSpdBad'), shk = parseFloat(document.getElementById('m_shkBad').value) || 0;
                 let tot = parseFloat(document.getElementById('m_totHkBad').value) || 30;
                 let bad = ((rSpd * hkb) + (tSpd * shk)) / tot;
-                j.innerText = "Hasil Bad Estimate";
-                isi.innerHTML = `<b>Estimasi SPD Minimal =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(bad)} / Hari</b>`;
+                j.innerText = "Hasil Bad Estimate"; isi.innerHTML = `<b>Estimasi SPD Minimal =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(bad)} / Hari</b>`;
             } else if (r === 'best_estimate') {
                 let sel = parseVal('m_selisihTargetBest'), hkb = parseFloat(document.getElementById('m_hkbBest').value) || 0;
                 let shk = parseFloat(document.getElementById('m_shkBest').value) || 1, tAwal = parseVal('m_targetAwalBest');
                 let best = ((sel * hkb) / shk) + tAwal;
-                j.innerText = "Hasil Best Estimate";
-                isi.innerHTML = `<b>Proyeksi Best Estimate =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(best)}</b>`;
+                j.innerText = "Hasil Best Estimate"; isi.innerHTML = `<b>Proyeksi Best Estimate =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(best)}</b>`;
             } else if (r === 'spd_vs_biaya') {
                 let val = parseVal('m_valBiaya'), tBiaya = parseFloat(document.getElementById('m_targetBiayaPersen').value) || 1, hk = parseFloat(document.getElementById('m_hkSpdBiaya').value) || 30;
                 let spd = val / ((tBiaya / 100) * hk);
-                j.innerText = "Target SPD Vs Biaya";
-                isi.innerHTML = `<b>Target SPD Wajib =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(spd)} / Hari</b>`;
+                j.innerText = "Target SPD Vs Biaya"; isi.innerHTML = `<b>Target SPD Wajib =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(spd)} / Hari</b>`;
             } else if (r === 'nbh') {
                 let sls = parseVal('m_salesNbh'), btk = parseFloat(document.getElementById('m_btkPersen').value) || 0.18, so = parseVal('m_selisihSo');
                 let tol = (sls * btk) / 100, nbh = so - tol;
-                j.innerText = "Hasil NBH Toko";
-                isi.innerHTML = `Toleransi (${btk}%): Rp ${formatNum(tol)}<br><b>Beban NBH:</b> <b style="color:${nbh > 0 ? '#b91c1c' : '#15803d'}; font-size:16px;">Rp ${formatNum(nbh > 0 ? nbh : 0)}</b>`;
+                j.innerText = "Hasil NBH Toko"; isi.innerHTML = `Toleransi (${btk}%): Rp ${formatNum(tol)}<br><b>Beban NBH:</b> <b style="color:${nbh > 0 ? '#b91c1c' : '#15803d'}; font-size:16px;">Rp ${formatNum(nbh > 0 ? nbh : 0)}</b>`;
             } else if (r === 'gross_margin') {
                 let p = parseVal('m_netPrice'), hpp = parseVal('m_hppPrice');
                 let gm = hpp > 0 ? ((p - hpp) / hpp) * 100 : 0;
-                j.innerText = "Hasil Gross Margin Item";
-                isi.innerHTML = `<b>Gross Margin =</b> <b style="color:#d92525; font-size:16px;">${gm.toFixed(2)}%</b>`;
+                j.innerText = "Hasil Gross Margin Item"; isi.innerHTML = `<b>Gross Margin =</b> <b style="color:#d92525; font-size:16px;">${gm.toFixed(2)}%</b>`;
             } else if (r === 'acv_spd') {
                 let rSpd = parseVal('m_realAcvSpd'), tSpd = parseVal('m_targetAcvSpd');
                 let acv = tSpd > 0 ? (rSpd / tSpd) * 100 : 0;
-                j.innerText = "Achievement SPD";
-                isi.innerHTML = `<b>ACV SPD =</b> <b style="color:#d92525; font-size:16px;">${acv.toFixed(2)}%</b>`;
+                j.innerText = "Achievement SPD"; isi.innerHTML = `<b>ACV SPD =</b> <b style="color:#d92525; font-size:16px;">${acv.toFixed(2)}%</b>`;
             } else if (r === 'acv_nbh') {
                 let t = parseVal('m_tNbh'), real = parseVal('m_rNbh');
                 let acv = real > 0 ? (t / real) * 100 : 100;
-                j.innerText = "Achievement NBH";
-                isi.innerHTML = `<b>ACV NBH =</b> <b style="color:#d92525; font-size:16px;">${acv.toFixed(2)}%</b>`;
+                j.innerText = "Achievement NBH"; isi.innerHTML = `<b>ACV NBH =</b> <b style="color:#d92525; font-size:16px;">${acv.toFixed(2)}%</b>`;
             } else if (r === 'acv_oos') {
                 let t = parseFloat(document.getElementById('m_tOos').value) || 0, real = parseFloat(document.getElementById('m_rOos').value) || 1;
-                j.innerText = "Achievement OOS";
-                isi.innerHTML = `<b>ACV OOS =</b> <b style="color:#d92525; font-size:16px;">${((t / real) * 100).toFixed(2)}%</b>`;
+                j.innerText = "Achievement OOS"; isi.innerHTML = `<b>ACV OOS =</b> <b style="color:#d92525; font-size:16px;">${((t / real) * 100).toFixed(2)}%</b>`;
             } else if (r === 'acv_dsi') {
                 let t = parseFloat(document.getElementById('m_tDsi').value) || 0, real = parseFloat(document.getElementById('m_rDsi').value) || 1;
-                j.innerText = "Achievement DSI";
-                isi.innerHTML = `<b>ACV DSI =</b> <b style="color:#d92525; font-size:16px;">${((t / real) * 100).toFixed(2)}%</b>`;
+                j.innerText = "Achievement DSI"; isi.innerHTML = `<b>ACV DSI =</b> <b style="color:#d92525; font-size:16px;">${((t / real) * 100).toFixed(2)}%</b>`;
             } else if (r === 'growth') {
                 let ini = parseVal('m_spdIni'), lalu = parseVal('m_spdLalu');
                 let g = lalu > 0 ? ((ini - lalu) / lalu) * 100 : 0;
-                j.innerText = "Growth Sales";
-                isi.innerHTML = `<b>Growth =</b> <b style="color:${g >= 0 ? '#15803d' : '#b91c1c'}; font-size:16px;">${g.toFixed(2)}%</b>`;
+                j.innerText = "Growth Sales"; isi.innerHTML = `<b>Growth =</b> <b style="color:${g >= 0 ? '#15803d' : '#b91c1c'}; font-size:16px;">${g.toFixed(2)}%</b>`;
             } else if (r === 'to') {
                 let s = parseVal('m_saldoAkhir'), avg = parseVal('m_avgQtyDay');
                 let to = avg > 0 ? (s / avg) : 0;
-                j.innerText = "Turn Over (TO)";
-                isi.innerHTML = `<b>TO =</b> <b style="color:#d92525; font-size:16px;">${to.toFixed(1)} Hari</b>`;
+                j.innerText = "Turn Over (TO)"; isi.innerHTML = `<b>TO =</b> <b style="color:#d92525; font-size:16px;">${to.toFixed(1)} Hari</b>`;
             } else if (r === 'lt') {
                 let h = parseFloat(document.getElementById('m_hariKirim').value) || 0, f = parseFloat(document.getElementById('m_frekKirim').value) || 1;
-                j.innerText = "Lead Time (LT)";
-                isi.innerHTML = `<b>Lead Time =</b> <b style="color:#d92525; font-size:16px;">${((h + 1) / f).toFixed(1)} Hari</b>`;
+                j.innerText = "Lead Time (LT)"; isi.innerHTML = `<b>Lead Time =</b> <b style="color:#d92525; font-size:16px;">${((h + 1) / f).toFixed(1)} Hari</b>`;
             } else if (r === 'safety_stock') {
-                j.innerText = "Safety Stock (SS)";
-                isi.innerHTML = `<b>Standar SS = 2 Hari</b>.`;
+                j.innerText = "Safety Stock (SS)"; isi.innerHTML = `<b>Standar SS = 2 Hari</b>.`;
             } else if (r === 'over_stock') {
                 let oh = parseFloat(document.getElementById('m_ohOver').value) || 0, pkm = parseFloat(document.getElementById('m_pkmOver').value) || 0;
                 let over = oh - pkm;
-                j.innerText = "Over Stock Item";
-                isi.innerHTML = `<b>Hasil:</b> <b style="color:${over > 0 ? '#b91c1c' : '#15803d'}; font-size:16px;">${over > 0 ? over + ' Pcs (Over Stock)' : 'Aman (Tidak Over Stock)'}</b>`;
+                j.innerText = "Over Stock Item"; isi.innerHTML = `<b>Hasil:</b> <b style="color:${over > 0 ? '#b91c1c' : '#15803d'}; font-size:16px;">${over > 0 ? over + ' Pcs (Over Stock)' : 'Aman (Tidak Over Stock)'}</b>`;
             } else if (r === 'cos_ratio') {
                 let biaya = parseVal('m_biayaCos'), rev = parseVal('m_pendapatanCos');
                 let ratio = rev > 0 ? (biaya / rev) * 100 : 0;
-                j.innerText = "Cost Ratio (%)";
-                isi.innerHTML = `<b>Cost Ratio =</b> <b style="color:#d92525; font-size:16px;">${ratio.toFixed(2)}%</b>`;
+                j.innerText = "Cost Ratio (%)"; isi.innerHTML = `<b>Cost Ratio =</b> <b style="color:#d92525; font-size:16px;">${ratio.toFixed(2)}%</b>`;
             } else if (r === 'hk_target') {
                 let hkb = parseFloat(document.getElementById('m_hkbTarget').value) || 0, tot = parseFloat(document.getElementById('m_totHkTarget').value) || 1, target = parseVal('m_totTargetNom');
-                j.innerText = "Target HK Berjalan";
-                isi.innerHTML = `<b>Target Sampai Hari Ini =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum((hkb / tot) * target)}</b>`;
+                j.innerText = "Target HK Berjalan"; isi.innerHTML = `<b>Target Sampai Hari Ini =</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum((hkb / tot) * target)}</b>`;
             } else if (r === 'laba_rugi_full') {
                 let lKotor = parseVal('m_labaKotorFull'), bOpr = parseVal('m_bebanOprFull'), pll = parseVal('m_pllFull'), amort = parseVal('m_amortisasiFull');
                 let opr = lKotor - bOpr, net = opr + pll, cash = net + amort;
-                j.innerText = "Hasil Laba Operasional & Net Profit";
-                isi.innerHTML = `<b>1. Laba Operasional:</b> Rp ${formatNum(opr)}<br><b>2. Net Profit:</b> Rp ${formatNum(net)}<br><b>3. Cash Profit:</b> Rp ${formatNum(cash)}`;
+                j.innerText = "Hasil Laba Operasional & Net Profit"; isi.innerHTML = `<b>1. Laba Operasional:</b> Rp ${formatNum(opr)}<br><b>2. Net Profit:</b> Rp ${formatNum(net)}<br><b>3. Cash Profit:</b> Rp ${formatNum(cash)}`;
             } else if (r === 'lembur') {
                 let upah = parseVal('m_upahPokok'), jam = parseFloat(document.getElementById('m_jamLembur').value) || 0;
                 let perJam = (1 / 173) * upah, totLembur = jam > 1 ? (1 * perJam * 1.5) + ((jam - 1) * perJam * 2.0) : (jam * perJam * 1.5);
-                j.innerText = "Upah Lembur Karyawan";
-                isi.innerHTML = `Upah/Jam Dasar: Rp ${formatNum(perJam)}<br><b>Total Upah Lembur:</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(totLembur)}</b>`;
+                j.innerText = "Upah Lembur Karyawan"; isi.innerHTML = `Upah/Jam Dasar: Rp ${formatNum(perJam)}<br><b>Total Upah Lembur:</b> <b style="color:#d92525; font-size:16px;">Rp ${formatNum(totLembur)}</b>`;
             }
         }
 
-        // --- 9. KAMUS ISTILAH ---
+        // --- 9. KAMUS ISTILAH (DIPERBARUI) ---
         const dataKamus = {
-            "BISNIS": "Suatu usaha yang menjual barang atau jasa kepada konsumen akhir untuk memenuhi kebutuhan pribadi, keluarga, atau rumah tangga (secara eceran).",
-            "HAKEKAT": "Bisnis efisiensi dan bisnis pelayanan (mengutamakan kepuasan pelanggan dan efisiensi biaya).",
-            "PKM": "Media penyajian kuantitas persediaan maksimum di toko atau limitasi jumlah item terbesar yang harus ada di toko.",
-            "MPKM": "Limitasi jumlah item terkecil yang harus ada di toko untuk mencegah terjadinya Out of Stock (OOS).",
-            "MINOR": "Kelipatan permintaan/order terkecil atas suatu item dari toko ke DC (Distribution Center).",
-            "DSI": "Masa persediaan penjualan atau alat kontrol persediaan / kecukupan stok toko dibanding laju SPD-nya.",
-            "SPD": "Rata-rata pendapatan penjualan harian toko.",
-            "STD": "Rata-rata jumlah transaksi harian toko atau jumlah konsumen yang berbelanja dalam satu hari.",
-            "APC": "Rata-rata nilai belanja per konsumen yang bertransaksi di toko.",
-            "SO": "Suatu proses penghitungan jumlah fisik barang untuk dibandingkan dengan jumlah stock di komputer (Stock On Hand).",
-            "PROMOSI": "Semua kegiatan yang bertujuan menciptakan atau meningkatkan permintaan produk toko.",
-            "ATRIBUT": "Perlengkapan pendukung dalam setiap program promosi yang sedang berjalan di toko.",
-            "LT": "Tenggang waktu mulai dari PB (Permintaan Barang) diproses sampai dengan fisik barang tiba di toko.",
-            "NX": "Digunakan untuk meningkatkan stok dalam usaha mengantisipasi kenaikan sales akibat aktivitas promosi tertentu.",
-            "NT": "Digunakan untuk meningkatkan stok dalam rangka memenuhi fasilitas promosi yang disewa supplier.",
-            "OOS": "Barang kosong atau tidak ada fisik barang di toko / rak pajangan.",
-            "PEL_LANGSUNG": "Seluruh aktivitas personel toko yang menyentuh langsung dan menimbulkan perasaan menyenangkan bagi konsumen.",
-            "PEL_TDK_LANGSUNG": "Penyediaan dan perawatan sarana-prasarana serta fasilitas toko agar konsumen nyaman saat berbelanja.",
-            "BIAYA": "Kebutuhan finansial tertentu yang harus terpenuhi untuk kelangsungan organisasi secara terukur dan terkontrol.",
-            "HOUSE": "Produk dengan menggunakan brand milik retailer sendiri yang lebih mementingkan kualitas.",
-            "PRIVATE": "Produk dengan merek yang hanya diproduksi untuk satu retailer dengan harga bersaing.",
-            "EFISIENSI": "Meminimalkan biaya untuk mencapai hasil tertentu tanpa mengurangi kualitas pencapaian.",
-            "PENGENDALIAN": "Pengukuran dan perbaikan terhadap pelaksanaan kerja agar rencana terselenggara dengan baik.",
-            "ADMIN": "Kegiatan yang berhubungan dengan pencatatan dan pelaporan hasil kerja sesuai prosedur.",
-            "KONTROL_ADMIN": "Pengendalian untuk memastikan sistem dan prosedur di toko dijalankan sebagaimana mestinya.",
-            "PENDAPATAN_LAIN": "Bentuk pemasukan perusahaan selain dari penjualan produk (seperti sewa teras/rak).",
-            "GONDOLA": "Rak dengan posisi ujung dari satu deret rak double yang disewakan untuk display khusus produk promo.",
-            "BLOCK": "Satu jajaran rak reguler yang disewakan khusus kepada supplier untuk mendisplay produknya.",
-            "FRANCHISE": "Strategi marketing mengembangkan jaringan usaha dengan memberikan hak lisensi merek kepada mitra.",
-            "FRANCHISOR": "Individu atau perusahaan pemilik merek dagang waralaba.",
-            "FRANCHISEE": "Mitra usaha yang membeli hak lisensi untuk menjalankan bisnis waralaba.",
-            "AREA": "Luas cakupan area potensi konsumen di sekitar toko (jumlah KK dan daya beli).",
-            "LEADERSHIP": "Kemampuan individu untuk menggerakkan dan mengarahkan tim kerja guna mencapai target bersama.",
-            "ISO": "Standar internasional untuk sistem manajemen mutu perusahaan."
+            "PLANOGRAM": "Panduan mendisplay barang dagangan di toko dengan tujuan memaksimalkan penjualan dan memudahkan pencarian barang.",
+            "NO_RAK": "Nomor urut yang ditentukan untuk menandai posisi urutan rak display di area sales.",
+            "SHELVE": "Bagian dari rak yang berfungsi untuk menyimpan/mendisplay item barang dagangan sesuai ukuran dan komposisinya.",
+            "LUBANG": "Bagian yang terdapat pada rak display yang berfungsi untuk menyimpan shelving sesuai dengan urutannya.",
+            "POSISI": "Panduan arah barang display. KK: Kiri Kanan, AB: Atas Bawah, DB: Depan Belakang.",
+            "NO_URUT": "Urutan nomor untuk setiap barang yang didisplay dalam setiap shelving.",
+            "PLU": "Price Label Unit, atau kode urut identitas suatu barang/produk yang dijual.",
+            "BARCODE": "Kode garis dari produk yang dibuat oleh pabrik/supplier untuk pemindaian scanner.",
+            "DESC": "Penjelasan atau identitas nama produk dagangan.",
+            "OOS": "Out Of Stock, kondisi di mana barang kosong di toko secara sistem (OH) maupun fisik di rak.",
+            "MAX_DISP": "Aplikasi personil toko untuk melakukan pemenuhan (transfer) barang dari gudang ke rak area sales.",
+            "PENERIMAAN": "Proses pencocokan fisik barang dari DC/BKL terhadap faktur (QTY & Kelayakan), lalu diproses receipt (terima) di aplikasi SIS.",
+            "SO_PARSIAL": "Proses menghitung item fisik di rak & gudang menggunakan cetak KKSO, lalu diproses (Adjust) di aplikasi SO.",
+            "FEFO": "First Expired First Out. Barang yang mendekati Retur Hari (RH) harus didisplay paling depan/awal agar laku lebih dulu.",
+            "E_TRANS": "Aplikasi layanan transaksi elektronik/pembayaran tagihan bagi konsumen.",
+            "SPD": "Sales Per Day, total penghasilan kotor (Rupiah) per hari. (SPD = APC x STD)",
+            "STD": "Struk Transaction Day, jumlah konsumen yang datang berbelanja per hari. (STD = SPD / APC)",
+            "APC": "Average Purchase Customer, rata-rata nominal jumlah belanja konsumen (keranjang). (APC = SPD / STD)",
+            "GM": "Gross Margin, selisih harga beli (HPP) dan harga jual. Laba kotor barang.",
+            "PKM": "Penetapan Kuantitas Maksimum. Limitasi jumlah persediaan ideal untuk dipajang di toko.",
+            "DSI": "Day Sales Inventory, umur kecukupan stok di toko jika tidak ada pengiriman lagi.",
+            "NBH": "Nota Barang Hilang, toleransi kerugian batas wajar untuk selisih SO toko."
         };
 
         function showDefinisiKamus() {
@@ -1277,78 +1444,135 @@
                 document.getElementById('kTitle').innerText = document.getElementById('pilihKamus').selectedOptions[0].text;
                 document.getElementById('kDesc').innerText = dataKamus[k];
                 b.style.display = 'block';
-            } else {
-                b.style.display = 'none';
-            }
+            } else { b.style.display = 'none'; }
         }
 
-        // --- 10. MEMORY GAME ---
-        let gameCards = ['🛒', '🛒', '💰', '💰', '📦', '📦', '🏷️', '🏷️', '🎯', '🎯', '📱', '📱'];
-        let flipped = [];
-        let matched = 0;
+        // --- 10. GAME CENTER (TIC-TAC-TOE & KUIS RETAIL) ---
+        function showGame(tipe) {
+            document.getElementById('areaTicTacToe').style.display = tipe === 'ticTacToe' ? 'block' : 'none';
+            document.getElementById('areaKuis').style.display = tipe === 'kuisRetail' ? 'block' : 'none';
+            if(tipe === 'ticTacToe') resetTtt();
+        }
 
-        function initGame() {
-            let b = document.getElementById('gameBoard');
-            b.innerHTML = '';
-            flipped = [];
-            matched = 0;
-            let shuffled = gameCards.sort(() => 0.5 - Math.random());
-            shuffled.forEach((sym, idx) => {
-                let c = document.createElement('div');
-                c.style.height = '65px';
-                c.style.background = 'var(--card-border)';
-                c.style.borderRadius = '8px';
-                c.style.display = 'flex';
-                c.style.alignItems = 'center';
-                c.style.justifyContent = 'center';
-                c.style.fontSize = '24px';
-                c.style.cursor = 'pointer';
-                c.dataset.symbol = sym;
-                c.dataset.index = idx;
-                c.innerText = '❓';
-                c.onclick = () => flipCard(c);
-                b.appendChild(c);
+        // --- Tic-Tac-Toe Logic ---
+        let tttBoard = ["", "", "", "", "", "", "", "", ""];
+        let currentPlayer = "X";
+        let isGameActive = true;
+
+        function initTtt() {
+            let container = document.getElementById('tttBoard');
+            container.innerHTML = '';
+            for(let i=0; i<9; i++) {
+                let cell = document.createElement('div');
+                cell.classList.add('ttt-cell');
+                cell.setAttribute('data-index', i);
+                cell.addEventListener('click', handleTttClick);
+                container.appendChild(cell);
+            }
+        }
+        function handleTttClick(e) {
+            let idx = e.target.getAttribute('data-index');
+            if(tttBoard[idx] !== "" || !isGameActive) return;
+            tttBoard[idx] = currentPlayer;
+            e.target.innerText = currentPlayer;
+            e.target.style.color = currentPlayer === "X" ? "#d92525" : "#0284c7";
+            checkTttWin();
+        }
+        function checkTttWin() {
+            const winCond = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            let won = false;
+            for(let i=0; i<winCond.length; i++) {
+                let [a, b, c] = winCond[i];
+                if(tttBoard[a] && tttBoard[a] === tttBoard[b] && tttBoard[a] === tttBoard[c]) { won = true; break; }
+            }
+            if(won) {
+                document.getElementById('tttStatus').innerHTML = `<span style="color:#16a34a;">🎉 PEMAIN ${currentPlayer} MENANG!</span>`;
+                isGameActive = false;
+                return;
+            }
+            if(!tttBoard.includes("")) {
+                document.getElementById('tttStatus').innerText = "SERI!";
+                isGameActive = false;
+                return;
+            }
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
+            document.getElementById('tttStatus').innerText = `Giliran Pemain: ${currentPlayer}`;
+        }
+        function resetTtt() {
+            tttBoard = ["", "", "", "", "", "", "", "", ""];
+            currentPlayer = "X";
+            isGameActive = true;
+            document.getElementById('tttStatus').innerText = "Giliran Pemain: X";
+            document.querySelectorAll('.ttt-cell').forEach(c => { c.innerText = ""; });
+        }
+
+        // --- Kuis Retail Logic ---
+        const bankSoal = [
+            {q: "Apa kepanjangan dari FEFO dalam aturan display barang?", opt: ["First Entry First Out", "Fast Expired Fast Out", "First Expired First Out", "First Empty First Out"], ans: 2},
+            {q: "Rumus untuk mendapatkan nilai SPD harian adalah...", opt: ["JHK x HKB", "APC x STD", "PKM x Minor", "Sales x GM"], ans: 1},
+            {q: "Jika barang di rak habis (kosong), tetapi di komputer stok ada, maka ini disebut...", opt: ["PB (Permintaan Barang)", "Retur", "Overstock", "OOS (Out Of Stock)"], ans: 3},
+            {q: "Apa yang harus dilakukan saat barang mendekati Retur Hari (RH)?", opt: ["Dibuang langsung", "Didisplay di gudang", "Didisplay paling depan (FEFO)", "Dikembalikan ke suplier langsung"], ans: 2},
+            {q: "Aplikasi yang digunakan untuk memindahkan stok barang dari gudang ke area sales disebut...", opt: ["E-Trans", "Max Display", "SO Parsial", "Planogram"], ans: 1},
+            {q: "Untuk menaikkan SPD, jika jumlah pengunjung (STD) sepi, strategi apa yang harus difokuskan?", opt: ["Menaikkan APC lewat penawaran PWP/PSM", "Membersihkan rak gudang", "Menurunkan harga", "Menutup toko lebih cepat"], ans: 0},
+            {q: "Apa fungsi dari Planogram?", opt: ["Mengecek jadwal karyawan", "Panduan mendisplay posisi barang di rak", "Menghitung selisih uang clerek", "Menghitung target IKT bulanan"], ans: 1},
+            {q: "Batas wajar (persentase toleransi) kerugian selisih SO toko disebut...", opt: ["DSI", "NBH", "GM", "PKM"], ans: 1},
+            {q: "Jika ada barang Perishable rusak sebelum expired, dokumen yang dibuat adalah...", opt: ["Faktur BKL", "Nota Retur BKL", "BAP / FURBRP", "Buku Ekspedisi"], ans: 2},
+            {q: "Dalam alur logistik, jarak waktu dari order hingga fisik barang tiba di toko disebut...", opt: ["Time Factor", "DSI", "Turn Over", "Lead Time (LT)"], ans: 3},
+            {q: "Kepanjangan dari PLU adalah...", opt: ["Price Label Unit", "Product Line Unit", "Product Listing Utility", "Price Listing Unit"], ans: 0},
+            {q: "Di menu E-Trans, apa yang diinput saat melayani pembelian Token Listrik?", opt: ["NIK Kasir", "Nomor Meter Pelanggan", "Kode PLU Barang", "Nomor KTP Pelanggan"], ans: 1}
+        ];
+        
+        let soalAktif = [], indexSoal = 0, skorKuis = 0;
+        
+        function mulaiKuis() {
+            document.getElementById('btnMulaiKuis').style.display = 'none';
+            document.getElementById('kuisScoreBoard').style.display = 'none';
+            soalAktif = bankSoal.sort(() => 0.5 - Math.random()).slice(0, 5);
+            indexSoal = 0;
+            skorKuis = 0;
+            tampilSoalKuis();
+        }
+        function tampilSoalKuis() {
+            if(indexSoal >= soalAktif.length) {
+                document.getElementById('kuisSoal').innerHTML = "";
+                document.getElementById('kuisOpsi').innerHTML = "";
+                document.getElementById('kuisScoreBoard').style.display = 'block';
+                document.getElementById('kuisSkorAkhir').innerText = skorKuis;
+                document.getElementById('btnMulaiKuis').innerText = "Main Lagi";
+                document.getElementById('btnMulaiKuis').style.display = 'block';
+                return;
+            }
+            let item = soalAktif[indexSoal];
+            document.getElementById('kuisSoal').innerText = `[${indexSoal+1}/5] ${item.q}`;
+            let htmlOpsi = '';
+            item.opt.forEach((o, i) => {
+                htmlOpsi += `<div class="quiz-opt" onclick="cekJawabanKuis(${i})">${['A', 'B', 'C', 'D'][i]}. ${o}</div>`;
             });
+            document.getElementById('kuisOpsi').innerHTML = htmlOpsi;
         }
-
-        function flipCard(c) {
-            if (flipped.length < 2 && !c.classList.contains('revealed')) {
-                c.innerText = c.dataset.symbol;
-                c.classList.add('revealed');
-                c.style.background = '#ffffff';
-                flipped.push(c);
-                if (flipped.length === 2) {
-                    setTimeout(checkMatch, 600);
-                }
-            }
-        }
-
-        function checkMatch() {
-            if (flipped[0].dataset.symbol === flipped[1].dataset.symbol) {
-                flipped[0].style.background = '#86efac';
-                flipped[1].style.background = '#86efac';
-                matched += 2;
-                if (matched === gameCards.length) alert('🎉 Selamat! Anda menang!');
+        function cekJawabanKuis(idxPilih) {
+            let item = soalAktif[indexSoal];
+            let opsiElements = document.querySelectorAll('.quiz-opt');
+            
+            opsiElements.forEach(el => el.style.pointerEvents = 'none');
+            
+            if(idxPilih === item.ans) {
+                opsiElements[idxPilih].classList.add('correct');
+                skorKuis += 20; 
             } else {
-                flipped[0].innerText = '❓';
-                flipped[1].innerText = '❓';
-                flipped[0].style.background = 'var(--card-border)';
-                flipped[1].style.background = 'var(--card-border)';
-                flipped[0].classList.remove('revealed');
-                flipped[1].classList.remove('revealed');
+                opsiElements[idxPilih].classList.add('wrong');
+                opsiElements[item.ans].classList.add('correct');
             }
-            flipped = [];
+            
+            setTimeout(() => {
+                indexSoal++;
+                tampilSoalKuis();
+            }, 1200);
         }
 
-        // --- 11. PLAN ABSENSI & EXPORT HD DIRECT CANVAS ---
-        function getJumlahHariDalamBulan(bulan, tahun) {
-            return new Date(tahun, parseInt(bulan) + 1, 0).getDate();
-        }
-
-        function gantiPeriodeKalender() {
-            generateAbsensiTable();
-        }
-
+        // --- 11. PLAN ABSENSI & EXPORT GAMBAR ---
+        function getJumlahHariDalamBulan(bulan, tahun) { return new Date(tahun, parseInt(bulan) + 1, 0).getDate(); }
+        function gantiPeriodeKalender() { generateAbsensiTable(); }
         function getStorageKeyAbsensi() {
             let b = document.getElementById('selBulanAbsensi').value;
             let y = document.getElementById('selTahunAbsensi').value;
@@ -1373,7 +1597,6 @@
             
             let storageKey = getStorageKeyAbsensi();
             let savedData = JSON.parse(localStorage.getItem(storageKey)) || null;
-
             let listNama = savedData ? Object.keys(savedData) : ['', '', ''];
 
             listNama.forEach((nama, rIdx) => {
@@ -1412,15 +1635,8 @@
         function applyShiftColor(tdElement, textVal) {
             tdElement.className = '';
             let v = textVal.trim().toUpperCase();
-            if (v === 'OFF' || v === 'O' || v === 'X') {
-                tdElement.classList.add('cell-off');
-            } else if (v === 'SO') {
-                tdElement.classList.add('cell-so');
-            } else if (v === 'P') {
-                tdElement.classList.add('cell-p');
-            } else if (v === 'S') {
-                tdElement.classList.add('cell-s');
-            }
+            if (v === 'OFF' || v === 'O' || v === 'X') tdElement.classList.add('cell-off');
+            else if (v === 'SO') tdElement.classList.add('cell-so');
         }
 
         function saveAbsensiData() {
@@ -1464,59 +1680,37 @@
             }
         }
 
-        // --- SISTEM DOWNLOAD GAMBAR HD (CANVAS MURNI TANGGAL 1 - AKHIR BULAN) ---
+        // --- DOWNLOAD GAMBAR HD ---
         function downloadRosterCanvasDirect() {
             saveAbsensiData();
             let bulanIndex = document.getElementById('selBulanAbsensi').value;
             let bulanText = document.getElementById('selBulanAbsensi').options[bulanIndex].text;
             let tahunText = document.getElementById('selTahunAbsensi').value;
             let totalHari = getJumlahHariDalamBulan(bulanIndex, tahunText);
-            let infoToko = localStorage.getItem('qmr_identitas_toko') || 'UNIT TOKO';
+            let infoToko = localStorage.getItem(LOGIN_KEY) || 'UNIT TOKO';
             let storageKey = getStorageKeyAbsensi();
             let savedData = JSON.parse(localStorage.getItem(storageKey)) || {};
             let listNama = Object.keys(savedData).filter(n => n.trim() !== '');
 
-            if (listNama.length === 0) {
-                alert("⚠️ Belum ada nama personel yang diisi untuk bulan ini!");
-                return;
-            }
+            if (listNama.length === 0) { alert("⚠️ Belum ada nama personel yang diisi untuk bulan ini!"); return; }
 
             let canvas = document.getElementById('hiddenRosterCanvas');
             let ctx = canvas.getContext('2d');
-
-            // Hitung Dimensi Landscape HD
-            let cellWidth = 40;
-            let nameColWidth = 170;
-            let rowHeight = 36;
-            let headerTopHeight = 90;
+            let cellWidth = 40, nameColWidth = 170, rowHeight = 36, headerTopHeight = 90;
             let tableWidth = nameColWidth + (totalHari * cellWidth);
             let tableHeight = headerTopHeight + ((listNama.length + 1) * rowHeight) + 40;
 
-            canvas.width = tableWidth;
-            canvas.height = tableHeight;
+            canvas.width = tableWidth; canvas.height = tableHeight;
+            ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, tableWidth, tableHeight);
 
-            // Background Putih Bersih
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(0, 0, tableWidth, tableHeight);
-
-            // KOP TOKO
-            ctx.fillStyle = "#d92525";
-            ctx.font = "bold 20px Arial";
-            ctx.textAlign = "left";
+            ctx.fillStyle = "#d92525"; ctx.font = "bold 20px Arial"; ctx.textAlign = "left";
             ctx.fillText(`ROSTER PLAN ABSENSI - ${bulanText.toUpperCase()} ${tahunText}`, 20, 36);
-
-            ctx.fillStyle = "#334155";
-            ctx.font = "bold 13px Arial";
+            ctx.fillStyle = "#334155"; ctx.font = "bold 13px Arial";
             ctx.fillText(`UNIT TOKO: ${infoToko}  |  Retail Assistant Pro (by: Qmr)`, 20, 60);
 
-            // Header Tabel
             let startY = headerTopHeight;
-            ctx.fillStyle = "#00bcd4";
-            ctx.fillRect(20, startY, tableWidth - 40, rowHeight);
-
-            ctx.fillStyle = "#ffffff";
-            ctx.font = "bold 12px Arial";
-            ctx.textAlign = "left";
+            ctx.fillStyle = "#00bcd4"; ctx.fillRect(20, startY, tableWidth - 40, rowHeight);
+            ctx.fillStyle = "#ffffff"; ctx.font = "bold 12px Arial"; ctx.textAlign = "left";
             ctx.fillText("NAMA PERSONEL", 30, startY + 23);
 
             ctx.textAlign = "center";
@@ -1525,79 +1719,52 @@
                 ctx.fillText(d.toString(), x + (cellWidth / 2), startY + 23);
             }
 
-            // Garis & Isi Data Tiap Personel
             ctx.font = "bold 12px Arial";
             listNama.forEach((nama, rIdx) => {
                 let currY = startY + ((rIdx + 1) * rowHeight);
-
-                // Kolom Nama
                 ctx.fillStyle = rIdx % 2 === 0 ? "#f8fafc" : "#ffffff";
                 ctx.fillRect(20, currY, nameColWidth, rowHeight);
-                ctx.fillStyle = "#1e293b";
-                ctx.textAlign = "left";
-                ctx.fillText(nama, 30, currY + 23);
+                ctx.fillStyle = "#1e293b"; ctx.textAlign = "left"; ctx.fillText(nama, 30, currY + 23);
 
-                // Kolom Shift Tanggal 1 s/d Akhir
                 for (let d = 1; d <= totalHari; d++) {
                     let cellX = 20 + nameColWidth + ((d - 1) * cellWidth);
                     let shift = (savedData[nama] && savedData[nama][d]) ? savedData[nama][d].trim().toUpperCase() : '';
 
-                    // Pewarnaan Sel
-                    if (shift === 'OFF' || shift === 'O' || shift === 'X') {
-                        ctx.fillStyle = "#e53935"; // Merah
-                        ctx.fillRect(cellX, currY, cellWidth, rowHeight);
-                        ctx.fillStyle = "#ffffff";
-                    } else if (shift === 'SO') {
-                        ctx.fillStyle = "#fb8c00"; // Orange
-                        ctx.fillRect(cellX, currY, cellWidth, rowHeight);
-                        ctx.fillStyle = "#ffffff";
-                    } else {
-                        ctx.fillStyle = rIdx % 2 === 0 ? "#f8fafc" : "#ffffff";
-                        ctx.fillRect(cellX, currY, cellWidth, rowHeight);
-                        ctx.fillStyle = "#1e293b";
-                    }
+                    if (shift === 'OFF' || shift === 'O' || shift === 'X') { ctx.fillStyle = "#e53935"; ctx.fillRect(cellX, currY, cellWidth, rowHeight); ctx.fillStyle = "#ffffff"; }
+                    else if (shift === 'SO') { ctx.fillStyle = "#fb8c00"; ctx.fillRect(cellX, currY, cellWidth, rowHeight); ctx.fillStyle = "#ffffff"; }
+                    else { ctx.fillStyle = rIdx % 2 === 0 ? "#f8fafc" : "#ffffff"; ctx.fillRect(cellX, currY, cellWidth, rowHeight); ctx.fillStyle = "#1e293b"; }
 
-                    ctx.textAlign = "center";
-                    ctx.fillText(shift, cellX + (cellWidth / 2), currY + 23);
-
-                    // Garis Pembatas Vertikal
-                    ctx.strokeStyle = "#cbd5e1";
-                    ctx.strokeRect(cellX, currY, cellWidth, rowHeight);
+                    ctx.textAlign = "center"; ctx.fillText(shift, cellX + (cellWidth / 2), currY + 23);
+                    ctx.strokeStyle = "#cbd5e1"; ctx.strokeRect(cellX, currY, cellWidth, rowHeight);
                 }
-
-                ctx.strokeStyle = "#cbd5e1";
-                ctx.strokeRect(20, currY, nameColWidth, rowHeight);
+                ctx.strokeStyle = "#cbd5e1"; ctx.strokeRect(20, currY, nameColWidth, rowHeight);
             });
 
-            // Trigger Download File PNG
             let link = document.createElement('a');
-            link.download = `Roster_Absensi_${infoToko.replace('|', '_')}_${bulanText}_${tahunText}.png`;
+            link.download = `Roster_Absensi_${infoToko}_${bulanText}_${tahunText}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
         }
 
-        // --- SISTEM FULL PREVIEW LANDSCAPE ---
+        // --- FULL PREVIEW LANDSCAPE ---
         function openLandscapeModal() {
             saveAbsensiData();
             let tableHtml = document.getElementById('tabelPlanAbsensi').outerHTML;
             let bulanText = document.getElementById('selBulanAbsensi').options[document.getElementById('selBulanAbsensi').selectedIndex].text;
             let tahunText = document.getElementById('selTahunAbsensi').value;
-            let infoToko = localStorage.getItem('qmr_identitas_toko') || 'TOKO';
+            let infoToko = localStorage.getItem(LOGIN_KEY) || 'TOKO';
 
             document.getElementById('titleModalLandscape').innerText = `ROSTER ABSENSI (${infoToko}) - ${bulanText.toUpperCase()} ${tahunText}`;
             document.getElementById('boxLandscapeContent').innerHTML = `<div style="padding:10px; min-width:1100px;">${tableHtml}</div>`;
             document.getElementById('modalVisualLandscape').style.display = 'flex';
         }
-
-        function closeLandscapeModal() {
-            document.getElementById('modalVisualLandscape').style.display = 'none';
-        }
+        function closeLandscapeModal() { document.getElementById('modalVisualLandscape').style.display = 'none'; }
 
         // --- SHARE JADWAL KE WA ---
         function shareJadwalHariIniWa() {
             let today = new Date().getDate();
             let bulanText = document.getElementById('selBulanAbsensi').options[document.getElementById('selBulanAbsensi').selectedIndex].text;
-            let infoToko = localStorage.getItem('qmr_identitas_toko') || 'TOKO';
+            let infoToko = localStorage.getItem(LOGIN_KEY) || 'TOKO';
             
             let pagi = [], siang = [], off = [], so = [];
             let rows = document.querySelectorAll('#bodyPlanAbsensi tr');
@@ -1629,25 +1796,6 @@
                 alert("Jadwal hari ini berhasil disalin! Silakan tempel (Paste) di grup WhatsApp toko.");
             });
         }
-
-        // --- 12. AUTO-SAVE TARGET INPUTS ---
-        const targetIds = ['jhk', 'targetNetSales', 'targetApc', 'targetGm', 'targetPsm', 'targetPwp', 'targetSg', 'iktTApc', 'iktTPwp', 'iktTPsm', 'iktTSg', 'pTargetSales', 'pShiftType'];
-        function autoSaveTargets() {
-            targetIds.forEach(id => {
-                let el = document.getElementById(id);
-                if (el) localStorage.setItem('qmr_target_' + id, el.value);
-            });
-        }
-        function loadAutoTargets() {
-            targetIds.forEach(id => {
-                let v = localStorage.getItem('qmr_target_' + id);
-                let el = document.getElementById(id);
-                if (v && el) el.value = v;
-            });
-            hitungAutoSalesTargets();
-        }
-
-        window.onload = loadApp;
     </script>
 </body>
 </html>
