@@ -1,8 +1,9 @@
-const CACHE_NAME = 'retail-assistant-v2';
+const CACHE_NAME = 'retail-assistant-v3';
 const urlsToCache = [
     'index.html',
     'manifest.json',
-    'kalkulator_sales.png'
+    'kalkulator_sales.png',
+    'qris_toko.png'
 ];
 
 self.addEventListener('install', event => {
