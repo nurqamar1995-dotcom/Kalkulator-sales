@@ -1,0 +1,15 @@
+{
+    "name": "Retail Assistant Pro",
+    "short_name": "RetailPro",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#f6f7fb",
+    "theme_color": "#d92525",
+    "icons": [
+        {
+            "src": "kalkulator_sales.png",
+            "sizes": "192x192 512x512",
+            "type": "image/png"
+        }
+    ]
+}
