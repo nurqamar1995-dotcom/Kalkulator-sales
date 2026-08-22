@@ -1,4 +1,4 @@
-const CACHE_NAME = 'retail-assistant-v1';
+const CACHE_NAME = 'retail-assistant-v2';
 const urlsToCache = [
     'index.html',
     'manifest.json',
