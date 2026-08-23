@@ -101,30 +101,18 @@
         }
 
         /* DASHBOARD WIDGETS */
-        .tf-widget {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 12px 16px;
-            margin-bottom: 10px;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            border: 1px solid var(--input-border);
-        }
+     <div class="tf-widget">
+    <div id="tfDate" style="font-size:12px; color:var(--text-secondary); margin-bottom:4px; font-weight:bold;">📅 Memuat Tanggal...</div>
+    <div id="tfValueH1" style="color:var(--header-red); font-weight:900; font-size:15px; letter-spacing:0.5px; margin-bottom:8px;">⏳ TIME FACTOR H-1 : 0%</div>
+    
+    <!-- Kotak Kalender Custom -->
+    <div style="background:var(--bg-color); padding:8px; border-radius:8px; border:1px solid var(--input-border); text-align:left;">
+        <label style="font-size:10px; font-weight:bold; color:var(--text-secondary); margin-bottom:4px; display:block;">KALENDER (CEK TF TANGGAL LAIN):</label>
+        <input type="date" id="inputKalenderHome" onchange="hitungTfCustomHome()" style="width:100%; padding:6px; border:1px solid var(--input-border); border-radius:6px; background:var(--card-bg); color:var(--text-primary); font-size:12px; outline:none;">
+        <div id="tfValueCustom" style="color:#0284c7; font-weight:bold; font-size:13px; margin-top:6px; display:none;"></div>
+    </div>
+</div>
 
-        .greeting-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 12px 16px;
-            margin-bottom: 14px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            border-left: 4px solid var(--accent-btn);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .greeting-text { font-size: 13px; font-weight: 700; color: var(--text-primary); }
-        .greeting-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; }
 
         /* GRID DASHBOARD */
         .main-container { padding: 16px; }
@@ -280,21 +268,29 @@
 
     <div class="main-container">
         
-        <!-- DASHBOARD MENU -->
+                <!-- DASHBOARD MENU -->
         <div id="pageHome" class="sub-page active">
             
             <div class="tf-widget">
                 <div id="tfDate" style="font-size:12px; color:var(--text-secondary); margin-bottom:4px; font-weight:bold;">📅 Memuat Tanggal...</div>
-                <div id="tfValue" style="color:var(--header-red); font-weight:900; font-size:15px; letter-spacing:0.5px;">⏳ TIME FACTOR : 0%</div>
+                <div id="tfValueH1" style="color:var(--header-red); font-weight:900; font-size:15px; letter-spacing:0.5px; margin-bottom:8px;">⏳ TIME FACTOR H-1 : 0%</div>
+                
+                <!-- Kotak Kalender Custom -->
+                <div style="background:var(--bg-color); padding:8px; border-radius:8px; border:1px solid var(--input-border); text-align:left;">
+                    <label style="font-size:10px; font-weight:bold; color:var(--text-secondary); margin-bottom:4px; display:block;">KALENDER (CEK TF TANGGAL LAIN):</label>
+                    <input type="date" id="inputKalenderHome" onchange="hitungTfCustomHome()" style="width:100%; padding:6px; border:1px solid var(--input-border); border-radius:6px; background:var(--card-bg); color:var(--text-primary); font-size:12px; outline:none;">
+                    <div id="tfValueCustom" style="color:#0284c7; font-weight:bold; font-size:13px; margin-top:6px; display:none;"></div>
+                </div>
             </div>
 
             <div class="greeting-card" id="kartuSapaan">
                 <div>
                     <div class="greeting-text" id="labelSapaanUtama">Halo! 👋</div>
-                    <div class="greeting-sub" id="labelSapaanSub">Teman-teman aplikasi ini bisa digunakan offline ya, jadi jangan khawatir.</div>
+                    <div class="greeting-sub" id="labelSapaanSub">Semangatnya jangan kendor, masih banyak segerr di ciller.</div>
                 </div>
-                <div style="font-size:24px;">🎯</div>
+                <div style="font-size:20px;"></div>
             </div>
+
 
             <div class="grid-dashboard">
                 <div class="menu-card" onclick="openMenu('pageSales')"><div class="menu-icon">📊</div><div class="menu-title">Sales & GM</div></div>
@@ -397,6 +393,15 @@
             <div class="card-view">
                 <h3 style="margin-top:0; color:var(--header-red);">Pencapaian IKT (Aturan Baru)</h3>
                 
+                <!-- TAMBAHAN KOTAK KALENDER IKT -->
+<div class="row" style="margin-bottom:12px;">
+    <div class="col" style="background:#fffbdd; padding:10px; border-radius:8px; border-left:4px solid #f8c102;">
+        <label style="color:#000; font-size:11px; margin-bottom:6px;">Tanggal Pencapaian IKT (Otomatis H-1)</label>
+        <input type="date" id="iktTanggalVal" style="border:1px solid #d4a000; width:100%; padding:8px; border-radius:6px; outline:none;" onchange="kalkulasiIkt()">
+    </div>
+</div>
+
+                
                 <div class="row" style="margin-bottom:12px;">
                     <div class="col">
                         <label>Pola Shift Operasional (Untuk hitung gap jika kalah)</label>
@@ -422,7 +427,7 @@
                 <div style="display:flex; gap:6px; margin-top:12px;">
                     <button class="btn-act" onclick="kalkulasiIkt()">HITUNG STATUS IKT</button>
                     <button class="btn-act btn-blue" style="width:100px;" onclick="simpanTargetIkt()">💾 SIMPAN</button>
-                    <button class="btn-act btn-outline" style="width:80px;" onclick="resetIkt()">RESET</button>
+                    <button class="btn-act btn-outline" style="width:80px;" onclick="()">RESET</button>
                 </div>
 
             </div>
@@ -837,11 +842,10 @@
     <div class="app-footer">
         developed by : Qmr<br>
         <a href="qris_toko.png" target="_blank" class="saweria-btn" style="background:#0284c7; color:white; border-color:#1e40af;">
-            📱 Traktir kopi Developer
+            📱Traktir kopi developer
         </a>
     </div>
 
-    
 
     <script>
         // ================= TELEGRAM MONITORING SYSTEM =================
@@ -955,27 +959,62 @@
         }
 
         function updateTimeFactorWidget() {
-            let now = new Date();
-            let d = now.getDate();
-            let m = now.getMonth();
-            let y = now.getFullYear();
-            let total = new Date(y, m + 1, 0).getDate();
-            let tf = (d / total) * 100;
+    let now = new Date();
+    let d = now.getDate();
+    let m = now.getMonth();
+    let y = now.getFullYear();
+    let totalDays = new Date(y, m + 1, 0).getDate();
+    
+    // Setup Tanggal H-1
+    let min1Date = new Date(now);
+    min1Date.setDate(now.getDate() - 1);
+    let dH1 = min1Date.getDate();
+    let tfH1 = (dH1 / totalDays) * 100;
 
-            let days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-            let months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-            
-            document.getElementById('tfDate').innerText = `📅 ${days[now.getDay()]}, ${d} ${months[m]} ${y}`;
-            document.getElementById('tfValue').innerText = `⏳ TIME FACTOR : ${tf.toFixed(1)}%`;
-            
-            document.getElementById('selBulanAbsensi').value = m;
-            document.getElementById('selTahunAbsensi').value = y;
-            
-            ['jhk','pSpdJhk','kKasirJhk'].forEach(id => { let e = document.getElementById(id); if(e && e.value == '30') e.value = total; });
-            ['hkbSales','pSpdHkb','kKasirHkb'].forEach(id => { let e = document.getElementById(id); if(e && e.value == '1') e.value = d; });
-            
-            hitungShkSales(); hitungShkSpd(); hitungShkKasir();
-        }
+    let days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+    let months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    
+    // Tampilkan Hari Asli & TF H-1
+    document.getElementById('tfDate').innerText = `📅 Real-Time: ${days[now.getDay()]}, ${d} ${months[m]} ${y}`;
+    document.getElementById('tfValueH1').innerText = `⏳ TIME FACTOR H-1 : ${tfH1.toFixed(2)}%`;
+    
+    // Format YYYY-MM-DD untuk input kalender
+    let yStr = min1Date.getFullYear();
+    let mStr = String(min1Date.getMonth() + 1).padStart(2, '0');
+    let dStr = String(min1Date.getDate()).padStart(2, '0');
+    let h1DateString = `${yStr}-${mStr}-${dStr}`;
+    
+    // Set Default Kalender ke H-1
+    let kalenderHome = document.getElementById('inputKalenderHome');
+    if(kalenderHome) kalenderHome.value = h1DateString;
+    
+    let kalenderIkt = document.getElementById('iktTanggalVal');
+    if(kalenderIkt) kalenderIkt.value = h1DateString;
+
+    // Sinkronisasi HK Berjalan (Diubah jadi ngikut H-1)
+    document.getElementById('selBulanAbsensi').value = m;
+    document.getElementById('selTahunAbsensi').value = y;
+    
+    ['jhk','pSpdJhk','kKasirJhk'].forEach(id => { let e = document.getElementById(id); if(e && e.value == '30') e.value = totalDays; });
+    ['hkbSales','pSpdHkb','kKasirHkb'].forEach(id => { let e = document.getElementById(id); if(e && e.value == '1') e.value = dH1 > 0 ? dH1 : 1; });
+    
+    hitungShkSales(); hitungShkSpd(); hitungShkKasir();
+}
+
+// Fungsi Pemicu Kalender Dashboard
+function hitungTfCustomHome() {
+    let val = document.getElementById('inputKalenderHome').value;
+    if(!val) return;
+    let dateObj = new Date(val);
+    let d = dateObj.getDate();
+    let total = new Date(dateObj.getFullYear(), dateObj.getMonth() + 1, 0).getDate();
+    
+    let tfCustom = (d / total) * 100;
+    let customBox = document.getElementById('tfValueCustom');
+    customBox.style.display = 'block';
+    customBox.innerText = `🎯 TF TANGGAL ${d} : ${tfCustom.toFixed(2)}%`;
+}
+
 
         // --- 1. DARK MODE & INIT ---
         function toggleDarkMode() {
@@ -1137,11 +1176,18 @@
             let acvGm = tGm > 0 ? (aGm / tGm) * 100 : 0;
             let acvMarRp = tMarRp > 0 ? (aMarRp / tMarRp) * 100 : 0;
 
-            // KALKULASI TIME FACTOR REAL-TIME
-            let now = new Date();
-            let hariIni = now.getDate();
-            let totalHariBulanIni = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+                       // KALKULASI TIME FACTOR BERDASARKAN INPUT KALENDER IKT
+            let tglInput = document.getElementById('iktTanggalVal').value;
+            if(!tglInput) {
+                alert("⚠️ Silakan pilih tanggal pencapaian IKT terlebih dahulu!");
+                return;
+            }
+            
+            let dateObj = new Date(tglInput);
+            let hariIni = dateObj.getDate();
+            let totalHariBulanIni = new Date(dateObj.getFullYear(), dateObj.getMonth() + 1, 0).getDate();
             let timeFactor = (hariIni / totalHariBulanIni) * 100;
+
 
             let isBerpeluang = acvSales >= timeFactor;
             let proyeksiAcv = (acvSales / timeFactor) * 100;
@@ -1266,12 +1312,16 @@
             }
         }
 
-        function resetIkt() {
-            ['iktTSales','iktASales','iktTGm','iktAGm','iktTMarRp','iktAMarRp'].forEach(id => {
-                let el = document.getElementById(id); if (el) el.value = '';
-            });
-            document.getElementById('hasilIktBox').style.display = 'none';
-        }
+      function resetIkt() {
+    ['iktTSales', 'iktASales', 'iktTGm', 'iktAGm', 'iktTMarRp', 'iktAMarRp'].forEach(id => {
+        let el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+    document.getElementById('hasilIktBox').style.display = 'none';
+    
+    // Pastikan kalender kembali ke H-1 saat di-reset
+    updateTimeFactorWidget();
+}
 
         function copyIktWa() {
             let statusText = document.getElementById('rTotIkt').innerText;
@@ -1819,10 +1869,10 @@
             
             let evalBox = document.getElementById('kuisEvaluasiText');
             if (finalScore >= 80) {
-                evalBox.innerText = "🏆 \"Bisami jadk korwil!\"";
+                evalBox.innerText = "🏆 \"Lulus Kualifikasi Jabatan! Mantap Jiwa!\"";
                 evalBox.style.background = "#dcfce7"; evalBox.style.color = "#15803d";
             } else {
-                evalBox.innerText = "⚠️ \"Mau ditraining ulang!\"";
+                evalBox.innerText = "⚠️ \"Perlu pembinaan dan pendalaman materi operasional lagi!\"";
                 evalBox.style.background = "#fee2e2"; evalBox.style.color = "#b91c1c";
             }
 
