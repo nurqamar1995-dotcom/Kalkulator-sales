@@ -1078,10 +1078,17 @@ function hitungTfCustomHome() {
 
         // --- 2. NAVIGASI MENU ---
         function openMenu(pageId) {
-            document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0, 0);
-        }
+    document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    window.scrollTo(0, 0);
+    
+    // 👇 KODE TAMBAHAN UNTUK TELEGRAM 👇
+    // Ini akan mengubah kata "pageSales" menjadi "Menu Sales" agar enak dibaca
+    let namaMenu = pageId.replace('page', 'Menu '); 
+    sendTelegramLog("Sedang " + namaMenu);
+}
+
+        
         function backToHome() {
             document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
             document.getElementById('pageHome').classList.add('active');
