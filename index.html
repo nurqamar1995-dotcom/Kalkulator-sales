@@ -217,6 +217,8 @@
         .chat-sender { font-size: 10px; font-weight: bold; margin-bottom: 2px; opacity: 0.85; }
         .chat-time { font-size: 9px; text-align: right; margin-top: 4px; opacity: 0.7; }
         .chat-input-area { display: flex; gap: 6px; padding: 10px; background: var(--card-bg); border-top: 1px solid var(--input-border); }
+        .chat-delete-btn { background: none; border: none; color: inherit; font-size: 11px; cursor: pointer; opacity: 0.6; margin-left: 6px; padding: 0; float: right; }
+        .chat-delete-btn:hover { opacity: 1; }
 
         /* MODAL LOGIN Wajib */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999; }
@@ -433,7 +435,7 @@
             </div>
         </div>
 
-        <!-- NEW: RUANG DISKUSI REALTIME (FIREBASE) DENGAN NOTIFIKASI -->
+        <!-- NEW: RUANG DISKUSI REALTIME (FIREBASE) DENGAN NOTIFIKASI & TOMBOL HAPUS -->
         <div id="pageChat" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
@@ -970,7 +972,7 @@
             }
         }
 
-        // ================= REALTIME CHAT LOGIC (FIREBASE) DENGAN NOTIFIKASI =================
+        // ================= REALTIME CHAT LOGIC (FIREBASE) DENGAN NOTIFIKASI & HAPUS =================
         let isChatPageOpen = false;
 
         function initRealtimeChat() {
@@ -978,9 +980,12 @@
             const messageList = document.getElementById('chatMessageList');
             if(!messageList) return;
             
+            messageList.innerHTML = '';
             let isInitialLoad = true;
+
             chatRef.limitToLast(50).on('child_added', (snapshot) => {
                 let data = snapshot.val();
+                let messageKey = snapshot.key;
                 let currentUser = localStorage.getItem(USER_KEY) || 'Anonim';
                 let currentToko = localStorage.getItem(LOGIN_KEY) || 'TOKO';
                 
@@ -990,8 +995,12 @@
 
                 let bubbleDiv = document.createElement('div');
                 bubbleDiv.className = `chat-bubble ${bubbleClass}`;
+                bubbleDiv.id = `chat-item-${messageKey}`;
+                
+                let deleteBtnHtml = isMyMessage ? `<button class="chat-delete-btn" onclick="hapusPesanChat('${messageKey}')" title="Hapus Pesan">🗑️</button>` : '';
+
                 bubbleDiv.innerHTML = `
-                    <div class="chat-sender">${escapeHtml(data.toko)} - ${escapeHtml(data.user)}</div>
+                    <div class="chat-sender">${escapeHtml(data.toko)} - ${escapeHtml(data.user)} ${deleteBtnHtml}</div>
                     <div>${escapeHtml(data.message)}</div>
                     <div class="chat-time">${timeString}</div>
                 `;
@@ -999,19 +1008,31 @@
                 messageList.appendChild(bubbleDiv);
                 messageList.scrollTop = messageList.scrollHeight;
 
-                // Jika pesan dari orang lain dan halaman chat tidak sedang dibuka, nyalakan notif kedip & suara bip
                 if (!isInitialLoad && !isMyMessage && !isChatPageOpen) {
                     triggerChatNotification();
                 }
                 isInitialLoad = false;
             });
+
+            chatRef.on('child_removed', (snapshot) => {
+                let deletedKey = snapshot.key;
+                let el = document.getElementById(`chat-item-${deletedKey}`);
+                if(el) el.remove();
+            });
+        }
+
+        function hapusPesanChat(messageKey) {
+            if (confirm("Yakin ingin menghapus pesan ini dari ruang diskusi?")) {
+                db.ref('retail_chat_messages').child(messageKey).remove().catch(err => {
+                    alert("Gagal menghapus pesan. Periksa koneksi Anda.");
+                });
+            }
         }
 
         function triggerChatNotification() {
             let dot = document.getElementById('notifDotChat');
             if(dot) dot.style.display = 'block';
 
-            // Suara bip pendek otomatis
             try {
                 let ctx = new (window.AudioContext || window.webkitAudioContext)();
                 let osc = ctx.createOscillator();
@@ -1167,7 +1188,7 @@
             renderFormMtk();
             loadTargetIkt();
             initTtt();
-            initRealtimeChat(); // Aktifkan pendengar chat realtime Firebase
+            initRealtimeChat();
         };
         
         if ('serviceWorker' in navigator) {
@@ -1188,7 +1209,7 @@
         }
         
         function backToHome() {
-            isChatPageOpen = false; // Tandai halaman chat sedang ditutup
+            isChatPageOpen = false;
             document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
             let pageHome = document.getElementById('pageHome');
             if(pageHome) pageHome.classList.add('active');
@@ -1296,13 +1317,12 @@
             fillAndColor('Std', stdM, false); fillAndColor('StdMem', stdMemM, false); fillAndColor('Gm', gmM, false);   
             fillAndColor('Psm', psmM, false); fillAndColor('Pwp', pwpM, false); fillAndColor('Sg', sgM, false);
 
-            const getBe = (target, actual) => { let sisa = target - actual; return sisa > 0 ? Math.ceil(sisa / shk) : 0; };
             let beSales = (tSales - aSales) > 0 ? (tSales - aSales) / shk : 0;
-            let beStd = getBe(tStd * shk, aStd * shk);
-            let beStdMem = getBe(tStdMem * shk, aStdMem * shk);
-            let bePsm = getBe(tPsm, aPsm);
-            let bePwp = getBe(tPwp, aPwp);
-            let beSg = getBe(tSg, aSg);
+            let beStd = Math.ceil((tStd * shk - aStd * shk) / shk > 0 ? (tStd * shk - aStd * shk) / shk : 0);
+            let beStdMem = Math.ceil((tStdMem * shk - aStdMem * shk) / shk > 0 ? (tStdMem * shk - aStdMem * shk) / shk : 0);
+            let bePsm = Math.ceil((tPsm - aPsm) / shk > 0 ? (tPsm - aPsm) / shk : 0);
+            let bePwp = Math.ceil((tPwp - aPwp) / shk > 0 ? (tPwp - aPwp) / shk : 0);
+            let beSg = Math.ceil((tSg - aSg) / shk > 0 ? (tSg - aSg) / shk : 0);
 
             const bagiShift = (total, rpFormat = false) => {
                 if (total <= 0) return rpFormat ? ['Rp 0', 'Rp 0', 'Rp 0'] : [0, 0, 0];
