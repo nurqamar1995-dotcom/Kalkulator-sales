@@ -125,11 +125,32 @@
             align-items: center;
             justify-content: center;
             min-height: 105px;
+            position: relative;
         }
 
         .menu-card:active { transform: scale(0.96); opacity: 0.9; }
         .menu-icon { font-size: 32px; margin-bottom: 8px; line-height: 1; }
         .menu-title { font-size: 11.5px; font-weight: 700; color: var(--text-primary); }
+
+        /* ANIMASI NOTIFIKASI BERKEDIP CHAT */
+        @keyframes pulseBlink {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .badge-notif-chat {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 12px;
+            height: 12px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            border: 2px solid var(--card-bg);
+            display: none;
+            animation: pulseBlink 1s infinite;
+            z-index: 5;
+        }
 
         /* SUB PAGES & COMPONENTS */
         .sub-page { display: none; }
@@ -188,7 +209,7 @@
         .btn-del-row { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 13px; padding: 0 4px; font-weight: bold; }
 
         /* REALTIME CHAT STYLES */
-        .chat-container { display: flex; flex-direction: column; height: 65vh; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--input-border); overflow: hidden; }
+        .chat-container { display: flex; flex-direction: column; height: 62vh; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--input-border); overflow: hidden; }
         .chat-messages { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; background: var(--bg-color); }
         .chat-bubble { max-width: 80%; padding: 10px 12px; border-radius: 10px; font-size: 12.5px; line-height: 1.4; word-break: break-word; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .chat-bubble.incoming { align-self: flex-start; background: var(--card-bg); color: var(--text-primary); border-top-left-radius: 2px; border: 1px solid var(--input-border); }
@@ -270,7 +291,7 @@
         <!-- DASHBOARD MENU -->
         <div id="pageHome" class="sub-page active">
             
-            <div class="tf-widget">
+            <div class="tf-widget" style="background:var(--card-bg); padding:12px; border-radius:14px; border:1px solid var(--input-border); margin-bottom:14px; box-shadow:0 2px 6px rgba(0,0,0,0.03);">
                 <div id="tfDate" style="font-size:12px; color:var(--text-secondary); margin-bottom:4px; font-weight:bold;">📅 Memuat Tanggal...</div>
                 <div id="tfValueH1" style="color:var(--header-red); font-weight:900; font-size:15px; letter-spacing:0.5px; margin-bottom:8px;">⏳ TIME FACTOR H-1 : 0%</div>
                 
@@ -282,14 +303,12 @@
                 </div>
             </div>
 
-            <div class="greeting-card" id="kartuSapaan">
+            <div class="greeting-card" id="kartuSapaan" style="background:var(--card-bg); padding:14px; border-radius:14px; border:1px solid var(--input-border); margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;">
                 <div>
-                    <div class="greeting-text" id="labelSapaanUtama">Halo! 👋</div>
-                    <div class="greeting-sub" id="labelSapaanSub">Semangatnya jangan kendor, masih banyak segerr di ciller.</div>
+                    <div class="greeting-text" id="labelSapaanUtama" style="font-weight:bold; font-size:14px; color:var(--text-primary);">Halo! 👋</div>
+                    <div class="greeting-sub" id="labelSapaanSub" style="font-size:11.5px; color:var(--text-secondary); margin-top:2px;">Semangatnya jangan kendor, tetap fokus target toko.</div>
                 </div>
-                <div style="font-size:20px;"></div>
             </div>
-
 
             <div class="grid-dashboard">
                 <div class="menu-card" onclick="openMenu('pageSales')"><div class="menu-icon">📊</div><div class="menu-title">Sales & GM</div></div>
@@ -300,7 +319,14 @@
                 <div class="menu-card" onclick="openMenu('pageDict')"><div class="menu-icon">📖</div><div class="menu-title">Kamus</div></div>
                 <div class="menu-card" onclick="openMenu('pageGame')"><div class="menu-icon">🎮</div><div class="menu-title">Zona Santai</div></div>
                 <div class="menu-card" onclick="openMenu('pageAbsensi')"><div class="menu-icon">📅</div><div class="menu-title">PLAN ABSENSI</div></div>
-                <div class="menu-card" onclick="openMenu('pageChat')"><div class="menu-icon">💬</div><div class="menu-title">Ruang Diskusi</div></div>
+                
+                <!-- MENU CHAT DENGAN INDIKATOR TITIK MERAH BERKEDIP -->
+                <div class="menu-card" onclick="bukaMenuChat()">
+                    <div class="badge-notif-chat" id="notifDotChat"></div>
+                    <div class="menu-icon">💬</div>
+                    <div class="menu-title">Ruang Diskusi</div>
+                </div>
+
                 <div class="menu-card" onclick="openMenu('pageDokumen')"><div class="menu-icon">🗂️</div><div class="menu-title">Pusat Dokumen</div></div>
                 <div class="menu-card" onclick="openMenu('pagePortal')"><div class="menu-icon">🌐</div><div class="menu-title">Portal Internal</div></div>
                 <div class="menu-card" onclick="openMenu('pageReprint')"><div class="menu-icon">🖨️</div><div class="menu-title">Reprint Struk</div></div>
@@ -407,7 +433,7 @@
             </div>
         </div>
 
-        <!-- NEW: RUANG DISKUSI REALTIME (FIREBASE) -->
+        <!-- NEW: RUANG DISKUSI REALTIME (FIREBASE) DENGAN NOTIFIKASI -->
         <div id="pageChat" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
@@ -944,12 +970,15 @@
             }
         }
 
-        // ================= REALTIME CHAT LOGIC (FIREBASE) =================
+        // ================= REALTIME CHAT LOGIC (FIREBASE) DENGAN NOTIFIKASI =================
+        let isChatPageOpen = false;
+
         function initRealtimeChat() {
             const chatRef = db.ref('retail_chat_messages');
             const messageList = document.getElementById('chatMessageList');
             if(!messageList) return;
             
+            let isInitialLoad = true;
             chatRef.limitToLast(50).on('child_added', (snapshot) => {
                 let data = snapshot.val();
                 let currentUser = localStorage.getItem(USER_KEY) || 'Anonim';
@@ -957,7 +986,6 @@
                 
                 let isMyMessage = (data.user === currentUser && data.toko === currentToko);
                 let bubbleClass = isMyMessage ? 'outgoing' : 'incoming';
-
                 let timeString = new Date(data.timestamp || Date.now()).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
 
                 let bubbleDiv = document.createElement('div');
@@ -970,7 +998,39 @@
 
                 messageList.appendChild(bubbleDiv);
                 messageList.scrollTop = messageList.scrollHeight;
+
+                // Jika pesan dari orang lain dan halaman chat tidak sedang dibuka, nyalakan notif kedip & suara bip
+                if (!isInitialLoad && !isMyMessage && !isChatPageOpen) {
+                    triggerChatNotification();
+                }
+                isInitialLoad = false;
             });
+        }
+
+        function triggerChatNotification() {
+            let dot = document.getElementById('notifDotChat');
+            if(dot) dot.style.display = 'block';
+
+            // Suara bip pendek otomatis
+            try {
+                let ctx = new (window.AudioContext || window.webkitAudioContext)();
+                let osc = ctx.createOscillator();
+                let gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.type = 'sine';
+                osc.frequency.value = 750;
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.15);
+            } catch(e) {}
+        }
+
+        function bukaMenuChat() {
+            let dot = document.getElementById('notifDotChat');
+            if(dot) dot.style.display = 'none';
+            isChatPageOpen = true;
+            openMenu('pageChat');
         }
 
         function kirimPesanChat() {
@@ -1107,7 +1167,7 @@
             renderFormMtk();
             loadTargetIkt();
             initTtt();
-            initRealtimeChat(); // 🔥 Mengaktifkan Listener Realtime Chat Firebase
+            initRealtimeChat(); // Aktifkan pendengar chat realtime Firebase
         };
         
         if ('serviceWorker' in navigator) {
@@ -1128,6 +1188,7 @@
         }
         
         function backToHome() {
+            isChatPageOpen = false; // Tandai halaman chat sedang ditutup
             document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
             let pageHome = document.getElementById('pageHome');
             if(pageHome) pageHome.classList.add('active');
