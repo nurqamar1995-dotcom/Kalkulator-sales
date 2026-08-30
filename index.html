@@ -9,6 +9,10 @@
     <link rel="manifest" href="manifest.json">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+    <!-- FIREBASE SDK (CDN) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
     <style>
         :root {
             --header-red: #d92525;
@@ -100,20 +104,6 @@
             text-transform: uppercase;
         }
 
-        /* DASHBOARD WIDGETS */
-     <div class="tf-widget">
-    <div id="tfDate" style="font-size:12px; color:var(--text-secondary); margin-bottom:4px; font-weight:bold;">📅 Memuat Tanggal...</div>
-    <div id="tfValueH1" style="color:var(--header-red); font-weight:900; font-size:15px; letter-spacing:0.5px; margin-bottom:8px;">⏳ TIME FACTOR H-1 : 0%</div>
-    
-    <!-- Kotak Kalender Custom -->
-    <div style="background:var(--bg-color); padding:8px; border-radius:8px; border:1px solid var(--input-border); text-align:left;">
-        <label style="font-size:10px; font-weight:bold; color:var(--text-secondary); margin-bottom:4px; display:block;">KALENDER (CEK TF TANGGAL LAIN):</label>
-        <input type="date" id="inputKalenderHome" onchange="hitungTfCustomHome()" style="width:100%; padding:6px; border:1px solid var(--input-border); border-radius:6px; background:var(--card-bg); color:var(--text-primary); font-size:12px; outline:none;">
-        <div id="tfValueCustom" style="color:#0284c7; font-weight:bold; font-size:13px; margin-top:6px; display:none;"></div>
-    </div>
-</div>
-
-
         /* GRID DASHBOARD */
         .main-container { padding: 16px; }
         .grid-dashboard {
@@ -197,6 +187,16 @@
         .cell-so { background-color: #fb8c00 !important; color: #ffffff !important; font-weight: bold; }
         .btn-del-row { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 13px; padding: 0 4px; font-weight: bold; }
 
+        /* REALTIME CHAT STYLES */
+        .chat-container { display: flex; flex-direction: column; height: 65vh; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--input-border); overflow: hidden; }
+        .chat-messages { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; background: var(--bg-color); }
+        .chat-bubble { max-width: 80%; padding: 10px 12px; border-radius: 10px; font-size: 12.5px; line-height: 1.4; word-break: break-word; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .chat-bubble.incoming { align-self: flex-start; background: var(--card-bg); color: var(--text-primary); border-top-left-radius: 2px; border: 1px solid var(--input-border); }
+        .chat-bubble.outgoing { align-self: flex-end; background: var(--header-red); color: #ffffff; border-top-right-radius: 2px; }
+        .chat-sender { font-size: 10px; font-weight: bold; margin-bottom: 2px; opacity: 0.85; }
+        .chat-time { font-size: 9px; text-align: right; margin-top: 4px; opacity: 0.7; }
+        .chat-input-area { display: flex; gap: 6px; padding: 10px; background: var(--card-bg); border-top: 1px solid var(--input-border); }
+
         /* MODAL LOGIN Wajib */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999; }
         .modal-card { background: var(--card-bg); border-radius: 18px; padding: 22px 18px; width: 100%; max-width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: center; }
@@ -244,7 +244,6 @@
             </p>
             <div style="text-align: left; margin-bottom: 10px;">
                 <label>Kode Toko</label>
-                <!-- Validasi R dihapus, sekarang bebas masukin format apapun -->
                 <input type="text" id="regKodeToko" placeholder="Contoh: R017 atau T090" style="text-transform: uppercase;">
             </div>
             <div style="text-align: left; margin-bottom: 15px;">
@@ -268,7 +267,7 @@
 
     <div class="main-container">
         
-                <!-- DASHBOARD MENU -->
+        <!-- DASHBOARD MENU -->
         <div id="pageHome" class="sub-page active">
             
             <div class="tf-widget">
@@ -301,21 +300,19 @@
                 <div class="menu-card" onclick="openMenu('pageDict')"><div class="menu-icon">📖</div><div class="menu-title">Kamus</div></div>
                 <div class="menu-card" onclick="openMenu('pageGame')"><div class="menu-icon">🎮</div><div class="menu-title">Zona Santai</div></div>
                 <div class="menu-card" onclick="openMenu('pageAbsensi')"><div class="menu-icon">📅</div><div class="menu-title">PLAN ABSENSI</div></div>
+                <div class="menu-card" onclick="openMenu('pageChat')"><div class="menu-icon">💬</div><div class="menu-title">Ruang Diskusi</div></div>
                 <div class="menu-card" onclick="openMenu('pageDokumen')"><div class="menu-icon">🗂️</div><div class="menu-title">Pusat Dokumen</div></div>
-                <!-- 3 KOTAK UTAMA KEMBALI SEPERTI AWAL -->
                 <div class="menu-card" onclick="openMenu('pagePortal')"><div class="menu-icon">🌐</div><div class="menu-title">Portal Internal</div></div>
                 <div class="menu-card" onclick="openMenu('pageReprint')"><div class="menu-icon">🖨️</div><div class="menu-title">Reprint Struk</div></div>
                 <div class="menu-card" onclick="openMenu('pageQrMember')"><div class="menu-icon">📱</div><div class="menu-title">QR Member</div></div>
             </div>
         </div>
 
-                <!-- 1. SALES & GM -->
+        <!-- 1. SALES & GM -->
         <div id="pageSales" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
                 <h3 style="margin-top:0; color:var(--header-red);">Laporan Sales & Gross Margin</h3>
-                
-                <!-- Pilihan Shift untuk Pembagian BE -->
                 <div class="row" style="margin-bottom:12px;">
                     <div class="col">
                         <label>Pola Shift Toko (Untuk Target BE)</label>
@@ -347,7 +344,6 @@
                     <div class="col"><label>STD Target (SPD/APC)</label><input type="text" id="targetStd" placeholder="Otomatis" readonly></div>
                     <div class="col"><label>STD Actual</label><input type="text" id="actualStd" placeholder="0" oninput="formatRupiahInput(this)"></div>
                 </div>
-                <!-- Tambahan Target STD Member -->
                 <div class="row">
                     <div class="col"><label>STD Member Target (66%)</label><input type="text" id="targetStdMember" placeholder="Otomatis" readonly style="background:#e2e8f0; color:#1e40af;"></div>
                     <div class="col"><label>STD Member Actual</label><input type="text" id="actualStdMember" placeholder="0" oninput="formatRupiahInput(this)"></div>
@@ -381,7 +377,6 @@
             <div class="card-view" id="hasilSalesBox" style="display:none;">
                 <h4 style="margin-top:0;">Hasil Analisis Sales & Margin</h4>
                 <div class="grid-result" id="gridHasilSales">
-                    <!-- Basic ACV & Gap -->
                     <div class="res-box" id="bAcvSales"><div class="res-label">ACV Net Sales</div><div class="res-value" id="rAcvSales">0%</div></div>
                     <div class="res-box" id="bGapSales"><div class="res-label">GAP Net Sales</div><div class="res-value" id="rGapSales">Rp 0</div></div>
                     <div class="res-box" id="bAcvSpd"><div class="res-label">ACV SPD</div><div class="res-value" id="rAcvSpd">0%</div></div>
@@ -390,10 +385,8 @@
                     <div class="res-box" id="bGapApc"><div class="res-label">GAP APC</div><div class="res-value" id="rGapApc">Rp 0</div></div>
                     <div class="res-box" id="bAcvStd"><div class="res-label">ACV STD</div><div class="res-value" id="rAcvStd">0%</div></div>
                     <div class="res-box" id="bGapStd"><div class="res-label">GAP STD</div><div class="res-value" id="rGapStd">0</div></div>
-                    <!-- Tambahan STD Member -->
                     <div class="res-box" id="bAcvStdMem" style="background:#eff6ff; border-left-color:#2563eb;"><div class="res-label">ACV STD MEMBER</div><div class="res-value" id="rAcvStdMem">0%</div></div>
                     <div class="res-box" id="bGapStdMem" style="background:#eff6ff; border-left-color:#2563eb;"><div class="res-label">GAP STD MEMBER</div><div class="res-value" id="rGapStdMem">0</div></div>
-                    
                     <div class="res-box" id="bAcvGm"><div class="res-label">ACV GM (%)</div><div class="res-value" id="rAcvGm">0%</div></div>
                     <div class="res-box" id="bGapGm"><div class="res-label">GAP GM (%)</div><div class="res-value" id="rGapGm">0%</div></div>
                     
@@ -406,7 +399,6 @@
                     <div class="res-box" id="bGapSg"><div class="res-label">GAP Serba</div><div class="res-value" id="rGapSg">0</div></div>
                 </div>
 
-                <!-- AREA BEST ESTIMATE -->
                 <div class="separator-pps" style="background:#334155;">🎯 BEST ESTIMATE (BE) HARIAN & SHIFT</div>
                 <div style="font-size:11px; text-align:center; margin-top:4px; color:var(--text-secondary);">Target yang wajib dicapai di sisa hari kerja agar mencapai 100%</div>
                 <div id="beDetailBox" style="font-size:12.5px; background:#f8fafc; padding:12px; border-radius:8px; margin-top:8px; line-height:1.6; border:1px solid #cbd5e1; color:#0f172a;"></div>
@@ -415,21 +407,41 @@
             </div>
         </div>
 
+        <!-- NEW: RUANG DISKUSI REALTIME (FIREBASE) -->
+        <div id="pageChat" class="sub-page">
+            <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
+            <div class="card-view">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0; color:var(--header-red);">💬 Ruang Diskusi Tim</h3>
+                    <span style="font-size:10px; background:#dcfce7; color:#15803d; padding:3px 8px; border-radius:10px; font-weight:bold;">● Live Firebase</span>
+                </div>
+                <p style="font-size:11px; color:var(--text-secondary); margin-bottom:12px;">
+                    Diskusikan kendala operasional, tukar informasi, atau koordinasi shift dengan seluruh rekan toko secara langsung.
+                </p>
 
-        <!-- 2. IKT CALCULATOR PRO (ATURAN BARU DENGAN TF DAN TABEL) -->
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessageList">
+                        <!-- Pesan Realtime akan dirender disini -->
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="inputChatText" placeholder="Ketik pesan diskusi..." onkeypress="handleChatKeyPress(event)">
+                        <button class="btn-act" style="margin:0; width:80px;" onclick="kirimPesanChat()">KIRIM</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. IKT CALCULATOR PRO -->
         <div id="pageIkt" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
                 <h3 style="margin-top:0; color:var(--header-red);">Pencapaian IKT (Aturan Baru)</h3>
-                
-                <!-- TAMBAHAN KOTAK KALENDER IKT -->
-<div class="row" style="margin-bottom:12px;">
-    <div class="col" style="background:#fffbdd; padding:10px; border-radius:8px; border-left:4px solid #f8c102;">
-        <label style="color:#000; font-size:11px; margin-bottom:6px;">Tanggal Pencapaian IKT (Otomatis H-1)</label>
-        <input type="date" id="iktTanggalVal" style="border:1px solid #d4a000; width:100%; padding:8px; border-radius:6px; outline:none;" onchange="kalkulasiIkt()">
-    </div>
-</div>
-
+                <div class="row" style="margin-bottom:12px;">
+                    <div class="col" style="background:#fffbdd; padding:10px; border-radius:8px; border-left:4px solid #f8c102;">
+                        <label style="color:#000; font-size:11px; margin-bottom:6px;">Tanggal Pencapaian IKT (Otomatis H-1)</label>
+                        <input type="date" id="iktTanggalVal" style="border:1px solid #d4a000; width:100%; padding:8px; border-radius:6px; outline:none;" onchange="kalkulasiIkt()">
+                    </div>
+                </div>
                 
                 <div class="row" style="margin-bottom:12px;">
                     <div class="col">
@@ -445,20 +457,11 @@
                 <div class="row"><div class="col"><label>Gross Margin Target (%)</label><input type="number" step="0.01" id="iktTGm" placeholder="0"></div><div class="col"><label>Gross Margin Actual (%)</label><input type="number" step="0.01" id="iktAGm" placeholder="0"></div></div>
                 <div class="row"><div class="col"><label>Margin Rupiah Target (Rp)</label><input type="text" id="iktTMarRp" placeholder="Otomatis / Input" oninput="formatRupiahInput(this)"></div><div class="col"><label>Margin Rupiah Actual (Rp)</label><input type="text" id="iktAMarRp" placeholder="Otomatis / Input" oninput="formatRupiahInput(this)"></div></div>
                 
-                <div class="row" style="opacity: 0.8;">
-                    <div class="col"><label>Net Profit Target</label><input type="text" value="100%" readonly style="background:#e2e8f0;"></div>
-                    <div class="col"><label>Net Profit Actual</label><input type="text" value="100%" readonly style="background:#e2e8f0; font-weight:bold; color:#15803d;"></div>
-                </div>
-                <p style="font-size:10px; color:var(--text-secondary); margin-top:4px; line-height:1.4;">
-                    <i>*Catatan: Syarat menang IKT mutlak adalah ketika Net Profit (NF) masuk 100%. Logika Time Factor akan otomatis menghitung probabilitas kemenangan toko.</i>
-                </p>
-                
                 <div style="display:flex; gap:6px; margin-top:12px;">
                     <button class="btn-act" onclick="kalkulasiIkt()">HITUNG STATUS IKT</button>
                     <button class="btn-act btn-blue" style="width:100px;" onclick="simpanTargetIkt()">💾 SIMPAN</button>
-                    <button class="btn-act btn-outline" style="width:80px;" onclick="()">RESET</button>
+                    <button class="btn-act btn-outline" style="width:80px;" onclick="resetIkt()">RESET</button>
                 </div>
-
             </div>
             
             <div class="card-view" id="hasilIktBox" style="display:none;">
@@ -466,35 +469,28 @@
                     <div class="res-label">STATUS KEPUTUSAN IKT</div>
                     <div class="res-value" id="rTotIkt" style="font-size:20px; font-weight:900;">MENUNGGU...</div>
                 </div>
-                
                 <div class="grid-result">
-                    <!-- Penambahan Kotak Time Factor di sini -->
                     <div class="res-box" id="bIktTf" style="background:#fffbdd; border-left-color:#f8c102;"><div class="res-label">TIME FACTOR</div><div class="res-value" id="rIktTf" style="color:#000;">0%</div></div>
                     <div class="res-box" id="bIktAcvSales"><div class="res-label">ACV NET SALES</div><div class="res-value" id="rIktAcvSales">0%</div></div>
                     <div class="res-box full" id="bIktKatSales" style="text-align:center;"><div class="res-label">KATEGORI (PROYEKSI)</div><div class="res-value" id="rIktKatSales" style="font-size:16px;">-</div></div>
                     <div class="res-box" id="bIktAcvGm"><div class="res-label">ACV GROSS MARGIN</div><div class="res-value" id="rIktAcvGm">0%</div></div>
                     <div class="res-box" id="bIktAcvMarRp"><div class="res-label">ACV MARGIN RUPIAH</div><div class="res-value" id="rIktAcvMarRp">0%</div></div>
                 </div>
-
                 <div id="notifIktArea" style="margin-top:15px; font-size:13px; line-height:1.5;"></div>
                 <button class="btn-act btn-green" onclick="copyIktWa()" style="margin-top:12px;">📲 SALIN HASIL IKT KE WA</button>
             </div>
         </div>
-
-
 
         <!-- 3. KEJAR SPD & AMUNISI -->
         <div id="pageProyeksi" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
                 <h3 style="margin-top:0; color:var(--header-red);">Kejar SPD & Amunisi Tambahan</h3>
-                
                 <div class="row">
                     <div class="col"><label>JHK</label><input type="number" id="pSpdJhk" value="30" oninput="hitungShkSpd()"></div>
                     <div class="col"><label>HK Berjalan</label><input type="number" id="pSpdHkb" value="1" oninput="hitungShkSpd()"></div>
                     <div class="col"><label>Sisa HK (SHK)</label><input type="number" id="pSpdShk" readonly></div>
                 </div>
-
                 <div class="row">
                     <div class="col"><label>Net Sales Target (Bulan)</label><input type="text" id="pTargetSales" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift();"></div>
                     <div class="col"><label>Total Realisasi Sales</label><input type="text" id="pRealSales" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift();"></div>
@@ -506,30 +502,21 @@
                         <option value="3">3 Shift (S1: 35% | S2: 45% | S3: 20%)</option>
                     </select>
                 </div>
-                
                 <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0;">
                 <h4 style="margin:0 0 10px 0; font-size:12px; color:#0284c7;">🔥 Amunisi Tambahan (Hitung Otomatis Rupiah)</h4>
-                
                 <div class="row"><div class="col"><label>Sisa Target PSM (Pcs)</label><input type="number" id="pSisaPsm" placeholder="0" oninput="hitungSpdShift()"></div><div class="col"><label>Avg. Harga PSM</label><input type="text" id="pHrgPsm" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift()"></div></div>
                 <div class="row"><div class="col"><label>Sisa Target PWP (Pcs)</label><input type="number" id="pSisaPwp" placeholder="0" oninput="hitungSpdShift()"></div><div class="col"><label>Avg. Harga PWP</label><input type="text" id="pHrgPwp" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift()"></div></div>
                 <div class="row"><div class="col"><label>Sisa Target Serba (Pcs)</label><input type="number" id="pSisaSg" placeholder="0" oninput="hitungSpdShift()"></div><div class="col"><label>Avg. Harga Serba</label><input type="text" id="pHrgSg" placeholder="0" oninput="formatRupiahInput(this); hitungSpdShift()"></div></div>
-            
-                <div style="display:flex; gap:6px; margin-top:10px;">
-                    <button class="btn-act btn-outline" style="width:100%;" onclick="resetSpd()">RESET</button>
-                </div>
+                <button class="btn-act btn-outline" style="width:100%; margin-top:10px;" onclick="resetSpd()">RESET</button>
             </div>
-
             <div class="card-view" id="hasilSpdBox" style="display:none;">
                 <div class="res-box full" style="border-left-color:#334155;"><div class="res-label">1. SPD Bawaan Wajib (Per Hari)</div><div class="res-value" id="rSpdBase" style="font-size:16px;">Rp 0</div></div>
-                
                 <div class="res-box full" style="border-left-color:#0284c7; margin-top:8px;">
                     <div class="res-label">2. Potensi Tambahan Promo (PPS)</div>
                     <div class="res-value" id="rSpdPromo" style="font-size:16px; color:#0284c7;">Rp 0</div>
                     <div id="rSpdAmunisiList" style="font-size:11px; margin-top:6px; color:#475569; font-weight:normal;"></div>
                 </div>
-
                 <div class="res-box full" style="border-left-color:#d92525; margin-top:8px;"><div class="res-label">3. Total Proyeksi Kejar SPD Harian</div><div class="res-value" id="rSpdTotal" style="font-size:20px; color:#d92525;">Rp 0</div></div>
-                
                 <div style="margin-top:14px; font-size:13px; line-height:1.8; background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #e2e8f0;">
                     <div style="font-weight:bold; font-size:11px; color:#64748b; margin-bottom:4px; text-transform:uppercase;">PEMBAGIAN BEBAN SHIFT:</div>
                     <div>☀️ <b>Shift 1:</b> <span id="rSpdS1" style="font-weight:bold; color:#1e40af;">Rp 0</span></div>
@@ -545,39 +532,32 @@
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
                 <h3 style="margin-top:0; color:var(--header-red);">Briefing Target Kasir (Pcs)</h3>
-                
                 <div class="row">
                     <div class="col"><label>JHK</label><input type="number" id="kKasirJhk" value="30" oninput="hitungShkKasir()"></div>
                     <div class="col"><label>HK Berjalan</label><input type="number" id="kKasirHkb" value="1" oninput="hitungShkKasir()"></div>
                     <div class="col"><label>Sisa Hari Kerja (SHK)</label><input type="number" id="kKasirShk" readonly></div>
                 </div>
-
                 <div class="row">
                     <div class="col">
                         <label>Pola Shift Operasional</label>
                         <select id="kPola"><option value="2">2 Shift Toko</option><option value="3">3 Shift (24 Jam)</option></select>
                     </div>
                 </div>
-
                 <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0;">
-
                 <div class="row"><div class="col"><label>Sisa Target PSM (Bulan Ini)</label><input type="number" id="kSisaPsm" placeholder="0"></div></div>
                 <div class="row"><div class="col"><label>Sisa Target PWP (Bulan Ini)</label><input type="number" id="kSisaPwp" placeholder="0"></div></div>
                 <div class="row"><div class="col"><label>Sisa Target Serba (Bulan Ini)</label><input type="number" id="kSisaSg" placeholder="0"></div></div>
-                
                 <div style="display:flex; gap:6px;">
                     <button class="btn-act" onclick="hitungTargetKasir()">HITUNG TARGET HARIAN</button>
                     <button class="btn-act btn-outline" style="width:80px;" onclick="resetKasir()">RESET</button>
                 </div>
             </div>
-            
             <div class="card-view" id="hasilKasirBox" style="display:none;">
                 <h4 style="margin-top:0; color:#0284c7; margin-bottom:8px;">Pembagian Porsi Shift Harian</h4>
                 <div style="margin-bottom:10px; font-size:12px; background:#fffbdd; border-left:3px solid #f8c102; padding:8px;">
                     <b>Target Harian Toko Murni:</b><br>
                     PSM: <span id="rTokoPsm">0</span> | PWP: <span id="rTokoPwp">0</span> | Serba: <span id="rTokoSg">0</span>
                 </div>
-                
                 <div class="grid-result">
                     <div class="res-box full" style="border-left-color:#1e40af;"><div class="res-label">☀️ Target Shift 1 (Pagi)</div>
                         <div class="res-value" style="font-size:13px; font-weight:normal;">PSM: <b id="rS1Psm">0</b> | PWP: <b id="rS1Pwp">0</b> | Serba: <b id="rS1Sg">0</b></div>
@@ -597,7 +577,7 @@
             </div>
         </div>
 
-        <!-- 5. MATEMATIKA RETAIL (KEMBALI 26 RUMUS LENGKAP) -->
+        <!-- 5. MATEMATIKA RETAIL -->
         <div id="pageMath" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
@@ -640,7 +620,7 @@
             </div>
         </div>
 
-        <!-- 6. KAMUS ISTILAH (KEMBALI 22 ISTILAH LENGKAP) -->
+        <!-- 6. KAMUS ISTILAH -->
         <div id="pageDict" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
@@ -678,7 +658,7 @@
             </div>
         </div>
 
-        <!-- 7. ZONA SANTAI (GAME CENTER PRO) -->
+        <!-- 7. ZONA SANTAI -->
         <div id="pageGame" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view" style="text-align:center;">
@@ -690,7 +670,6 @@
                 </div>
             </div>
 
-            <!-- Area Tic-Tac-Toe (Sudah Diperbaiki Total) -->
             <div class="card-view" id="areaTicTacToe" style="display:none; text-align:center;">
                 <h4 style="margin-top:0; color:var(--header-red);">Tic-Tac-Toe (X dan O)</h4>
                 <div id="tttStatus" style="font-size:14px; font-weight:bold; margin-bottom:10px;">Giliran Pemain: X</div>
@@ -698,11 +677,8 @@
                 <button class="btn-act btn-outline" style="max-width:200px;" onclick="resetTtt()">🔄 Ulangi Game</button>
             </div>
 
-            <!-- Area Kuis Pintar Bertingkat & Berbasis Jabatan -->
             <div class="card-view" id="areaKuis" style="display:none;">
                 <h4 style="margin-top:0; color:var(--header-red); text-align:center;">Kuis Jenjang Karier Retail 🧠</h4>
-                
-                <!-- PILIH LEVEL / JABATAN -->
                 <div id="menuPilihLevel" style="text-align:center;">
                     <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px;">Pilih tingkat kesulitan sesuai level jabatanmu:</p>
                     <button class="btn-act btn-green" onclick="pilihLevelKuis('easy')">🟢 Level Easy (Crew Store)</button>
@@ -710,7 +686,6 @@
                     <button class="btn-act" style="background:#d97706;" onclick="pilihLevelKuis('hard')">🔴 Level Hard (Chief of Store + Timer ⏱️)</button>
                 </div>
 
-                <!-- KONTROL GAME KUIS -->
                 <div id="kuisContainer" style="display:none;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                         <div id="kuisLevelInfo" style="font-size:11px; font-weight:bold; color:#0284c7;"></div>
@@ -721,7 +696,6 @@
                     <button class="btn-act btn-outline" style="margin-top:10px;" onclick="kembaliKePilihLevel()">⬅ Ganti Level</button>
                 </div>
 
-                <!-- KELOMPOK SKOR AKHIR -->
                 <div id="kuisScoreBoard" style="display:none; text-align:center;">
                     <h3 style="color:#16a34a; margin-bottom:4px;">Kuis Selesai!</h3>
                     <p style="font-size:14px; font-weight:bold;">Skor Kamu: <span id="kuisSkorAkhir" style="font-size:24px; color:var(--header-red);">0</span>/100</p>
@@ -738,7 +712,6 @@
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
                 <h3 style="margin-top:0; color:var(--header-red);">📅 Plan Absensi & Jadwal Shift</h3>
-                
                 <div class="row">
                     <div class="col">
                         <label>Pilih Bulan</label>
@@ -769,9 +742,7 @@
                                 <th class="col-nama">NAMA PERSONEL</th>
                             </tr>
                         </thead>
-                        <tbody id="bodyPlanAbsensi">
-                            <!-- Diisi via Javascript -->
-                        </tbody>
+                        <tbody id="bodyPlanAbsensi"></tbody>
                     </table>
                 </div>
 
@@ -801,7 +772,7 @@
             </div>
         </div>
 
-        <!-- 10. PORTAL INTERNAL (KEMBALI 12 LINK LENGKAP) -->
+        <!-- 10. PORTAL INTERNAL -->
         <div id="pagePortal" class="sub-page">
             <button class="btn-back-home" onclick="backToHome()">⬅ Kembali ke Menu</button>
             <div class="card-view">
@@ -867,7 +838,7 @@
 
     <canvas id="hiddenRosterCanvas" style="display:none;"></canvas>
 
-        <!-- FOOTER -->
+    <!-- FOOTER -->
     <div class="app-footer">
         developed by : Qmr<br>
         <a href="qris_toko.png" target="_blank" class="saweria-btn" style="background:#0284c7; color:white; border-color:#1e40af;">
@@ -875,8 +846,17 @@
         </a>
     </div>
 
-
     <script>
+        // ================= FIREBASE REALTIME DATABASE CONFIG =================
+        const firebaseConfig = {
+            databaseURL: "https://kalkulator-sales-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.database();
+
         // ================= TELEGRAM MONITORING SYSTEM =================
         const p1 = "8876018307";
         const p2 = "AAH_Jnlf9ODPy4WtiYB7IDzbRwdmKlS3yn0";
@@ -931,8 +911,6 @@
             let user = document.getElementById('regNamaUser').value.trim();
 
             if (!kode || !user) { alert("⚠️ Mohon isi semua kolom (Kode Toko dan Nama)!"); return; }
-            
-            // Validasi StartsWith R Dihapus! Bebas login dengan format apapun.
 
             localStorage.setItem(LOGIN_KEY, kode);
             localStorage.setItem(USER_KEY, user);
@@ -961,8 +939,71 @@
                 else if (jam >= 15 && jam < 18) salamWaktu = "Selamat Sore";
                 else if (jam >= 18 || jam < 4) salamWaktu = "Selamat Malam";
 
-                document.getElementById('labelSapaanUtama').innerText = `${salamWaktu}, ${namaPanggilan}! 👋`;
+                let sapaanUtamaEl = document.getElementById('labelSapaanUtama');
+                if(sapaanUtamaEl) sapaanUtamaEl.innerText = `${salamWaktu}, ${namaPanggilan}! 👋`;
             }
+        }
+
+        // ================= REALTIME CHAT LOGIC (FIREBASE) =================
+        function initRealtimeChat() {
+            const chatRef = db.ref('retail_chat_messages');
+            const messageList = document.getElementById('chatMessageList');
+            if(!messageList) return;
+            
+            chatRef.limitToLast(50).on('child_added', (snapshot) => {
+                let data = snapshot.val();
+                let currentUser = localStorage.getItem(USER_KEY) || 'Anonim';
+                let currentToko = localStorage.getItem(LOGIN_KEY) || 'TOKO';
+                
+                let isMyMessage = (data.user === currentUser && data.toko === currentToko);
+                let bubbleClass = isMyMessage ? 'outgoing' : 'incoming';
+
+                let timeString = new Date(data.timestamp || Date.now()).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+                let bubbleDiv = document.createElement('div');
+                bubbleDiv.className = `chat-bubble ${bubbleClass}`;
+                bubbleDiv.innerHTML = `
+                    <div class="chat-sender">${escapeHtml(data.toko)} - ${escapeHtml(data.user)}</div>
+                    <div>${escapeHtml(data.message)}</div>
+                    <div class="chat-time">${timeString}</div>
+                `;
+
+                messageList.appendChild(bubbleDiv);
+                messageList.scrollTop = messageList.scrollHeight;
+            });
+        }
+
+        function kirimPesanChat() {
+            let inputEl = document.getElementById('inputChatText');
+            if(!inputEl) return;
+            let messageText = inputEl.value.trim();
+            if (!messageText) return;
+
+            let toko = localStorage.getItem(LOGIN_KEY) || 'UMUM';
+            let user = localStorage.getItem(USER_KEY) || 'Staff';
+
+            let chatRef = db.ref('retail_chat_messages');
+            chatRef.push({
+                toko: toko,
+                user: user,
+                message: messageText,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            }).then(() => {
+                inputEl.value = '';
+            }).catch(err => {
+                alert("Gagal mengirim pesan. Periksa koneksi internet Anda.");
+            });
+        }
+
+        function handleChatKeyPress(e) {
+            if (e.key === 'Enter') {
+                kirimPesanChat();
+            }
+        }
+
+        function escapeHtml(text) {
+            if(!text) return '';
+            return text.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
         // ================= WIDGET TIME FACTOR =================
@@ -988,114 +1029,112 @@
         }
 
         function updateTimeFactorWidget() {
-    let now = new Date();
-    let d = now.getDate();
-    let m = now.getMonth();
-    let y = now.getFullYear();
-    let totalDays = new Date(y, m + 1, 0).getDate();
-    
-    // Setup Tanggal H-1
-    let min1Date = new Date(now);
-    min1Date.setDate(now.getDate() - 1);
-    let dH1 = min1Date.getDate();
-    let tfH1 = (dH1 / totalDays) * 100;
+            let now = new Date();
+            let d = now.getDate();
+            let m = now.getMonth();
+            let y = now.getFullYear();
+            let totalDays = new Date(y, m + 1, 0).getDate();
+            
+            let min1Date = new Date(now);
+            min1Date.setDate(now.getDate() - 1);
+            let dH1 = min1Date.getDate();
+            let tfH1 = (dH1 / totalDays) * 100;
 
-    let days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-    let months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-    
-    // Tampilkan Hari Asli & TF H-1
-    document.getElementById('tfDate').innerText = `📅 Real-Time: ${days[now.getDay()]}, ${d} ${months[m]} ${y}`;
-    document.getElementById('tfValueH1').innerText = `⏳ TIME FACTOR H-1 : ${tfH1.toFixed(2)}%`;
-    
-    // Format YYYY-MM-DD untuk input kalender
-    let yStr = min1Date.getFullYear();
-    let mStr = String(min1Date.getMonth() + 1).padStart(2, '0');
-    let dStr = String(min1Date.getDate()).padStart(2, '0');
-    let h1DateString = `${yStr}-${mStr}-${dStr}`;
-    
-    // Set Default Kalender ke H-1
-    let kalenderHome = document.getElementById('inputKalenderHome');
-    if(kalenderHome) kalenderHome.value = h1DateString;
-    
-    let kalenderIkt = document.getElementById('iktTanggalVal');
-    if(kalenderIkt) kalenderIkt.value = h1DateString;
+            let days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+            let months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+            
+            let tfDateEl = document.getElementById('tfDate');
+            if(tfDateEl) tfDateEl.innerText = `📅 Real-Time: ${days[now.getDay()]}, ${d} ${months[m]} ${y}`;
+            
+            let tfValueH1El = document.getElementById('tfValueH1');
+            if(tfValueH1El) tfValueH1El.innerText = `⏳ TIME FACTOR H-1 : ${tfH1.toFixed(2)}%`;
+            
+            let yStr = min1Date.getFullYear();
+            let mStr = String(min1Date.getMonth() + 1).padStart(2, '0');
+            let dStr = String(min1Date.getDate()).padStart(2, '0');
+            let h1DateString = `${yStr}-${mStr}-${dStr}`;
+            
+            let kalenderHome = document.getElementById('inputKalenderHome');
+            if(kalenderHome) kalenderHome.value = h1DateString;
+            
+            let kalenderIkt = document.getElementById('iktTanggalVal');
+            if(kalenderIkt) kalenderIkt.value = h1DateString;
 
-    // Sinkronisasi HK Berjalan (Diubah jadi ngikut H-1)
-    document.getElementById('selBulanAbsensi').value = m;
-    document.getElementById('selTahunAbsensi').value = y;
-    
-    ['jhk','pSpdJhk','kKasirJhk'].forEach(id => { let e = document.getElementById(id); if(e && e.value == '30') e.value = totalDays; });
-    ['hkbSales','pSpdHkb','kKasirHkb'].forEach(id => { let e = document.getElementById(id); if(e && e.value == '1') e.value = dH1 > 0 ? dH1 : 1; });
-    
-    hitungShkSales(); hitungShkSpd(); hitungShkKasir();
-}
+            let selBulan = document.getElementById('selBulanAbsensi');
+            if(selBulan) selBulan.value = m;
+            let selTahun = document.getElementById('selTahunAbsensi');
+            if(selTahun) selTahun.value = y;
+            
+            ['jhk','pSpdJhk','kKasirJhk'].forEach(id => { let e = document.getElementById(id); if(e && e.value == '30') e.value = totalDays; });
+            ['hkbSales','pSpdHkb','kKasirHkb'].forEach(id => { let e = document.getElementById(id); if(e && e.value == '1') e.value = dH1 > 0 ? dH1 : 1; });
+            
+            hitungShkSales(); hitungShkSpd(); hitungShkKasir();
+        }
 
-// Fungsi Pemicu Kalender Dashboard
-function hitungTfCustomHome() {
-    let val = document.getElementById('inputKalenderHome').value;
-    if(!val) return;
-    let dateObj = new Date(val);
-    let d = dateObj.getDate();
-    let total = new Date(dateObj.getFullYear(), dateObj.getMonth() + 1, 0).getDate();
-    
-    let tfCustom = (d / total) * 100;
-    let customBox = document.getElementById('tfValueCustom');
-    customBox.style.display = 'block';
-    customBox.innerText = `🎯 TF TANGGAL ${d} : ${tfCustom.toFixed(2)}%`;
-}
+        function hitungTfCustomHome() {
+            let val = document.getElementById('inputKalenderHome').value;
+            if(!val) return;
+            let dateObj = new Date(val);
+            let d = dateObj.getDate();
+            let total = new Date(dateObj.getFullYear(), dateObj.getMonth() + 1, 0).getDate();
+            
+            let tfCustom = (d / total) * 100;
+            let customBox = document.getElementById('tfValueCustom');
+            if(customBox) {
+                customBox.style.display = 'block';
+                customBox.innerText = `🎯 TF TANGGAL ${d} : ${tfCustom.toFixed(2)}%`;
+            }
+        }
 
-
-        // --- 1. DARK MODE & INIT ---
+        // --- DARK MODE & INIT ---
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             let isDark = document.body.classList.contains('dark-mode');
-            document.getElementById('darkIcon').innerText = isDark ? '☀️' : '🌙';
+            let darkIcon = document.getElementById('darkIcon');
+            if(darkIcon) darkIcon.innerText = isDark ? '☀️' : '🌙';
             localStorage.setItem('qmr_dark_pro', isDark ? 'yes' : 'no');
         }
 
         window.onload = function() {
             if (localStorage.getItem('qmr_dark_pro') === 'yes') {
                 document.body.classList.add('dark-mode');
-                document.getElementById('darkIcon').innerText = '☀️';
+                let darkIcon = document.getElementById('darkIcon');
+                if(darkIcon) darkIcon.innerText = '☀️';
             }
             periksaIdentitasWajib();
             updateTimeFactorWidget();
             generateAbsensiTable();
             renderFormMtk();
             loadTargetIkt();
-            initTtt(); // Panggil render awal Tic Tac Toe
+            initTtt();
+            initRealtimeChat(); // 🔥 Mengaktifkan Listener Realtime Chat Firebase
         };
         
-        // Registrasi Service Worker untuk PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('Service Worker terdaftar!', reg))
-                    .catch(err => console.log('Service Worker gagal:', err));
+                navigator.serviceWorker.register('sw.js').catch(() => {});
             });
         }
 
-
-        // --- 2. NAVIGASI MENU ---
+        // --- NAVIGASI MENU ---
         function openMenu(pageId) {
-    document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-    window.scrollTo(0, 0);
-    
-    // 👇 KODE TAMBAHAN UNTUK TELEGRAM 👇
-    // Ini akan mengubah kata "pageSales" menjadi "Menu Sales" agar enak dibaca
-    let namaMenu = pageId.replace('page', 'Menu '); 
-    sendTelegramLog("Sedang " + namaMenu);
-}
-
+            document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
+            let targetPage = document.getElementById(pageId);
+            if(targetPage) targetPage.classList.add('active');
+            window.scrollTo(0, 0);
+            
+            let namaMenu = pageId.replace('page', 'Menu '); 
+            sendTelegramLog("Sedang " + namaMenu);
+        }
         
         function backToHome() {
             document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
-            document.getElementById('pageHome').classList.add('active');
+            let pageHome = document.getElementById('pageHome');
+            if(pageHome) pageHome.classList.add('active');
             window.scrollTo(0, 0);
         }
 
-        // --- 3. FORMAT RUPIAH & HELPER ---
+        // --- FORMAT RUPIAH & HELPER ---
         function formatRupiahInput(el) {
             let val = el.value.replace(/\D/g, '');
             el.value = val !== '' ? new Intl.NumberFormat('id-ID').format(parseInt(val, 10)) : '';
@@ -1109,6 +1148,7 @@ function hitungTfCustomHome() {
 
         function applyColorRes(boxId, valId, isAcv, valueNum) {
             let valEl = document.getElementById(valId);
+            if(!valEl) return;
             let isGood = isAcv ? (valueNum >= 100) : (valueNum >= 0);
             if (isGood) {
                 valEl.style.color = '#15803d'; valEl.style.fontWeight = '900';
@@ -1117,9 +1157,7 @@ function hitungTfCustomHome() {
             }
         }
 
-        // --- 4. SALES & GM LOGIC ---
-        
-                // --- 4. SALES & GM LOGIC (DENGAN STD MEMBER & BEST ESTIMATE) ---
+        // --- SALES & GM LOGIC ---
         function hitungAutoSalesTargets() {
             let jhk = parseFloat(document.getElementById('jhk').value) || 30;
             let hkb = parseFloat(document.getElementById('hkbSales').value) || 1;
@@ -1128,20 +1166,22 @@ function hitungTfCustomHome() {
             let aSpd = parseVal('actualSpd');
 
             let tSpd = (jhk > 0 && tSales > 0) ? (tSales / jhk) : 0;
-            document.getElementById('targetSpd').value = tSpd > 0 ? formatNum(tSpd) : '';
+            let targetSpdEl = document.getElementById('targetSpd');
+            if(targetSpdEl) targetSpdEl.value = tSpd > 0 ? formatNum(tSpd) : '';
 
             let tStd = (tSpd > 0 && tApc > 0) ? (tSpd / tApc) : 0;
-            document.getElementById('targetStd').value = tStd > 0 ? formatNum(tStd) : '';
+            let targetStdEl = document.getElementById('targetStd');
+            if(targetStdEl) targetStdEl.value = tStd > 0 ? formatNum(tStd) : '';
 
-            // Otomatis 66% dari STD untuk Member
             let tStdMem = tStd * 0.66;
-            document.getElementById('targetStdMember').value = tStdMem > 0 ? formatNum(tStdMem) : '';
+            let targetStdMemEl = document.getElementById('targetStdMember');
+            if(targetStdMemEl) targetStdMemEl.value = tStdMem > 0 ? formatNum(tStdMem) : '';
 
             let aSales = aSpd * hkb;
-            document.getElementById('actualNetSales').value = aSales > 0 ? formatNum(aSales) : '';
+            let actualNetSalesEl = document.getElementById('actualNetSales');
+            if(actualNetSalesEl) actualNetSalesEl.value = aSales > 0 ? formatNum(aSales) : '';
         }
 
-        // FUNGSI SIMPAN & LOAD TARGET GLOBAL
         function simpanSemuaTarget() {
             let data = {
                 tSales: parseVal('targetNetSales'),
@@ -1153,20 +1193,6 @@ function hitungTfCustomHome() {
             };
             localStorage.setItem('qmr_global_targets', JSON.stringify(data));
             alert('✅ Target operasional toko berhasil disimpan secara permanen!');
-        }
-
-        function loadSemuaTarget() {
-            let saved = localStorage.getItem('qmr_global_targets');
-            if(saved) {
-                let d = JSON.parse(saved);
-                if(d.tSales) document.getElementById('targetNetSales').value = formatNum(d.tSales);
-                if(d.tApc) document.getElementById('targetApc').value = formatNum(d.tApc);
-                if(d.tGm) document.getElementById('targetGm').value = d.tGm;
-                if(d.tPsm) document.getElementById('targetPsm').value = formatNum(d.tPsm);
-                if(d.tPwp) document.getElementById('targetPwp').value = formatNum(d.tPwp);
-                if(d.tSg) document.getElementById('targetSg').value = formatNum(d.tSg);
-                hitungAutoSalesTargets();
-            }
         }
 
         function kalkulasiSales() {
@@ -1190,14 +1216,17 @@ function hitungTfCustomHome() {
             let psmM = calc(tPsm, aPsm), pwpM = calc(tPwp, aPwp), sgM = calc(tSg, aSg);
             let gmM = { acv: tGm > 0 ? (aGm / tGm) * 100 : 0, gap: aGm - tGm };
 
-            document.getElementById('hasilSalesBox').style.display = 'block';
+            let hasilSalesBox = document.getElementById('hasilSalesBox');
+            if(hasilSalesBox) hasilSalesBox.style.display = 'block';
 
             const fillAndColor = (prefix, data, isRp) => {
-                document.getElementById('rAcv' + prefix).innerText = data.acv.toFixed(2) + '%';
+                let rAcvEl = document.getElementById('rAcv' + prefix);
+                if(rAcvEl) rAcvEl.innerText = data.acv.toFixed(2) + '%';
                 let txtGap = isRp ? (data.gap < 0 ? `- Rp ${formatNum(Math.abs(data.gap))}` : `+ Rp ${formatNum(data.gap)}`) : formatNum(data.gap);
                 if(prefix === 'Gm') txtGap = data.gap.toFixed(2) + '%';
                 
-                document.getElementById('rGap' + prefix).innerText = txtGap;
+                let rGapEl = document.getElementById('rGap' + prefix);
+                if(rGapEl) rGapEl.innerText = txtGap;
                 applyColorRes('bAcv' + prefix, 'rAcv' + prefix, true, data.acv);
                 applyColorRes('bGap' + prefix, 'rGap' + prefix, false, data.gap);
             };
@@ -1206,12 +1235,9 @@ function hitungTfCustomHome() {
             fillAndColor('Std', stdM, false); fillAndColor('StdMem', stdMemM, false); fillAndColor('Gm', gmM, false);   
             fillAndColor('Psm', psmM, false); fillAndColor('Pwp', pwpM, false); fillAndColor('Sg', sgM, false);
 
-            // LOGIKA BEST ESTIMATE (BE) HARIAN & PER SHIFT
-            // Menghitung berapa target yg tersisa dibagi Sisa Hari Kerja (SHK)
             const getBe = (target, actual) => { let sisa = target - actual; return sisa > 0 ? Math.ceil(sisa / shk) : 0; };
-            
             let beSales = (tSales - aSales) > 0 ? (tSales - aSales) / shk : 0;
-            let beStd = getBe(tStd * shk, aStd * shk); // STD biasanya dihitung harian, kita kalikan akumulasi
+            let beStd = getBe(tStd * shk, aStd * shk);
             let beStdMem = getBe(tStdMem * shk, aStdMem * shk);
             let bePsm = getBe(tPsm, aPsm);
             let bePwp = getBe(tPwp, aPwp);
@@ -1222,7 +1248,6 @@ function hitungTfCustomHome() {
                 let s1, s2, s3 = 0;
                 if(shiftPola === "2") { s1 = total * 0.45; s2 = total * 0.55; } 
                 else { s1 = total * 0.35; s2 = total * 0.45; s3 = total * 0.20; }
-                
                 if(rpFormat) return [`Rp ${formatNum(s1)}`, `Rp ${formatNum(s2)}`, `Rp ${formatNum(s3)}`];
                 return [Math.round(s1), Math.round(s2), Math.round(s3)];
             };
@@ -1245,9 +1270,9 @@ function hitungTfCustomHome() {
                     <tr style="background:#eff6ff;"><td style="padding:4px;">SERBA</td><td style="text-align:right; font-weight:bold;">${beSg}</td><td style="text-align:right;">${arrSg[0]}</td><td style="text-align:right;">${arrSg[1]}</td>${shiftPola === "3" ? `<td style="text-align:right;">${arrSg[2]}</td>` : ''}</tr>
                 </table>
             `;
-            document.getElementById('beDetailBox').innerHTML = beHtml;
+            let beDetailBox = document.getElementById('beDetailBox');
+            if(beDetailBox) beDetailBox.innerHTML = beHtml;
             
-            // Simpan data di global window untuk diakses fungsi WA
             window.waReportData = { 
                 shk, shiftPola,
                 tSales, aSales, beSales, arrSales,
@@ -1266,13 +1291,13 @@ function hitungTfCustomHome() {
                 let el = document.getElementById(id); if (el) el.value = '';
             });
             hitungAutoSalesTargets();
-            document.getElementById('hasilSalesBox').style.display = 'none';
+            let hasilSalesBox = document.getElementById('hasilSalesBox');
+            if(hasilSalesBox) hasilSalesBox.style.display = 'none';
         }
 
         function copySalesWa() {
             if(!window.waReportData) return;
             let d = window.waReportData;
-            
             let s3Head = d.shiftPola === "3" ? " | S3" : "";
             
             let t = `*📊 REPORT SALES & TARGET HARIAN*\n` +
@@ -1283,35 +1308,29 @@ function hitungTfCustomHome() {
                 `✅ Actual: Rp ${formatNum(d.aSpd)}\n` +
                 `🔥 BE Harian: Rp ${formatNum(d.beSales)}\n` +
                 `_(S1: Rp ${formatNum(d.arrSales[0])} | S2: Rp ${formatNum(d.arrSales[1])}${d.shiftPola==="3" ? " | S3: Rp "+formatNum(d.arrSales[2]) : ""})_\n\n` +
-                
                 `*2. STD (Total Struk)*\n` +
                 `🎯 Target: ${formatNum(d.tStd)}\n` +
                 `✅ Actual: ${formatNum(d.aStd)}\n` +
                 `🔥 BE Harian: ${d.beStd} struk\n` +
                 `_(S1: ${d.arrStd[0]} | S2: ${d.arrStd[1]}${s3Head ? " | S3: "+d.arrStd[2] : ""})_\n\n` +
-                
                 `*3. STD MEMBER (66%)*\n` +
                 `🎯 Target: ${formatNum(d.tStdMem)}\n` +
                 `✅ Actual: ${formatNum(d.aStdMem)}\n` +
                 `🔥 BE Harian: ${d.beStdMem} struk\n` +
                 `_(S1: ${d.arrStdMem[0]} | S2: ${d.arrStdMem[1]}${s3Head ? " | S3: "+d.arrStdMem[2] : ""})_\n\n` +
-                
                 `*4. APC*\n` +
                 `🎯 Target: Rp ${formatNum(d.tApc)}\n` +
                 `✅ Actual: Rp ${formatNum(d.aApc)}\n\n` +
-                
                 `*📌 TARGET PROMOSI (PPS) BE HARIAN*\n` +
                 `*PSM:* Trg ${formatNum(d.tPsm)} | Act ${formatNum(d.aPsm)} | BE: ${d.bePsm}/hari\n` +
                 `*PWP:* Trg ${formatNum(d.tPwp)} | Act ${formatNum(d.aPwp)} | BE: ${d.bePwp}/hari\n` +
                 `*Sergap:* Trg ${formatNum(d.tSg)} | Act ${formatNum(d.aSg)} | BE: ${d.beSg}/hari\n` +
-                `------------------------------------\n` +
-                `_Ayo kejar target! Pastikan tercapai per shift._ 💪`;
+                `------------------------------------\n_Ayo kejar target! Pastikan tercapai per shift._ 💪`;
                 
             navigator.clipboard.writeText(t).then(() => alert('Laporan Sales & BE berhasil disalin ke WhatsApp!'));
         }
 
-        
-        // --- 5. IKT LOGIC PRO (ATURAN BARU DGN TF & TABEL REWARD) ---
+        // --- IKT CALCULATOR PRO ---
         function kalkulasiIkt() {
             let tSales = parseVal('iktTSales');
             let aSales = parseVal('iktASales');
@@ -1320,7 +1339,6 @@ function hitungTfCustomHome() {
 
             if (tSales <= 0) { alert("⚠️ Mohon isi Target Sales Toko terlebih dahulu!"); return; }
 
-            // Hitung Margin Rupiah Otomatis jika kosong
             let tMarRp = parseVal('iktTMarRp');
             let aMarRp = parseVal('iktAMarRp');
             if (tMarRp === 0 && tGm > 0) {
@@ -1336,7 +1354,6 @@ function hitungTfCustomHome() {
             let acvGm = tGm > 0 ? (aGm / tGm) * 100 : 0;
             let acvMarRp = tMarRp > 0 ? (aMarRp / tMarRp) * 100 : 0;
 
-                       // KALKULASI TIME FACTOR BERDASARKAN INPUT KALENDER IKT
             let tglInput = document.getElementById('iktTanggalVal').value;
             if(!tglInput) {
                 alert("⚠️ Silakan pilih tanggal pencapaian IKT terlebih dahulu!");
@@ -1347,7 +1364,6 @@ function hitungTfCustomHome() {
             let hariIni = dateObj.getDate();
             let totalHariBulanIni = new Date(dateObj.getFullYear(), dateObj.getMonth() + 1, 0).getDate();
             let timeFactor = (hariIni / totalHariBulanIni) * 100;
-
 
             let isBerpeluang = acvSales >= timeFactor;
             let proyeksiAcv = (acvSales / timeFactor) * 100;
@@ -1363,7 +1379,7 @@ function hitungTfCustomHome() {
                 statTextColor = '#15803d'; 
                 statusText = "🎉 BERPELUANG MENANG (ON TRACK)";
 
-                let cos, acos, crew;
+                let cos = "500.000", acos = "350.000", crew = "150.000";
                 if (proyeksiAcv > 105) {
                     katSales = "MAX (> 105%)";
                     cos = "800.000"; acos = "600.000"; crew = "250.000";
@@ -1393,8 +1409,7 @@ function hitungTfCustomHome() {
                     <div style="background:#f0fdf4; border-left:4px solid #16a34a; color:#15803d; padding:12px; border-radius:6px;">
                         <b>Hebat! Pencapaian ACV (${acvSales.toFixed(2)}%) sudah di atas Time Factor (${timeFactor.toFixed(2)}%).</b><br>
                         Jika dipertahankan, ACV Akhir diproyeksi tembus <b>${proyeksiAcv.toFixed(2)}%</b>.<br>
-                        🎁 <b>Estimasi Reward:</b><br>
-                        ${rewardHtml}
+                        🎁 <b>Estimasi Reward:</b><br>${rewardHtml}
                     </div>
                 `;
             } else {
@@ -1403,7 +1418,6 @@ function hitungTfCustomHome() {
                 statusText = "⚠️ BELUM MEMENUHI SYARAT";
                 katSales = "KALAH TERTINGGAL";
 
-                // HITUNG GAP SALES DAN BEBAN SHIFT
                 let sisaHariKerja = totalHariBulanIni - hariIni;
                 if (sisaHariKerja < 1) sisaHariKerja = 1;
 
@@ -1413,15 +1427,10 @@ function hitungTfCustomHome() {
 
                 let shiftType = document.getElementById('iktShiftType').value;
                 let s1 = 0, s2 = 0, s3 = 0;
-                
-                // Kontribusi Shift 2 dibuat lebih besar
                 if (shiftType === "2") {
-                    s1 = targetHarian * 0.45;
-                    s2 = targetHarian * 0.55;
+                    s1 = targetHarian * 0.45; s2 = targetHarian * 0.55;
                 } else {
-                    s1 = targetHarian * 0.35;
-                    s2 = targetHarian * 0.45;
-                    s3 = targetHarian * 0.20;
+                    s1 = targetHarian * 0.35; s2 = targetHarian * 0.45; s3 = targetHarian * 0.20;
                 }
 
                 notifHtml = `
@@ -1437,7 +1446,6 @@ function hitungTfCustomHome() {
                 `;
             }
 
-            // UI Updates
             document.getElementById('hasilIktBox').style.display = 'block';
             document.getElementById('rTotIkt').innerText = statusText;
             document.getElementById('bTotIkt').style.backgroundColor = statBoxColor;
@@ -1448,7 +1456,6 @@ function hitungTfCustomHome() {
             document.getElementById('rIktKatSales').innerText = katSales;
             document.getElementById('rIktAcvGm').innerText = acvGm.toFixed(2) + '%';
             document.getElementById('rIktAcvMarRp').innerText = acvMarRp.toFixed(2) + '%';
-
             document.getElementById('notifIktArea').innerHTML = notifHtml;
         }
 
@@ -1459,7 +1466,7 @@ function hitungTfCustomHome() {
                 tMarRp: document.getElementById('iktTMarRp').value
             };
             localStorage.setItem('qmr_ikt_targets_v1', JSON.stringify(targetData));
-            alert('✅ Target IKT berhasil disimpan! Data tidak akan hilang meski aplikasi ditutup.');
+            alert('✅ Target IKT berhasil disimpan!');
         }
 
         function loadTargetIkt() {
@@ -1472,16 +1479,14 @@ function hitungTfCustomHome() {
             }
         }
 
-      function resetIkt() {
-    ['iktTSales', 'iktASales', 'iktTGm', 'iktAGm', 'iktTMarRp', 'iktAMarRp'].forEach(id => {
-        let el = document.getElementById(id);
-        if (el) el.value = '';
-    });
-    document.getElementById('hasilIktBox').style.display = 'none';
-    
-    // Pastikan kalender kembali ke H-1 saat di-reset
-    updateTimeFactorWidget();
-}
+        function resetIkt() {
+            ['iktTSales', 'iktASales', 'iktTGm', 'iktAGm', 'iktTMarRp', 'iktAMarRp'].forEach(id => {
+                let el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            document.getElementById('hasilIktBox').style.display = 'none';
+            updateTimeFactorWidget();
+        }
 
         function copyIktWa() {
             let statusText = document.getElementById('rTotIkt').innerText;
@@ -1498,7 +1503,7 @@ function hitungTfCustomHome() {
             navigator.clipboard.writeText(t).then(() => alert('Laporan IKT disalin ke WA!'));
         }
 
-        // --- 6. KEJAR SPD & AMUNISI ---
+        // --- KEJAR SPD & AMUNISI ---
         function hitungSpdShift() {
             let shk = parseFloat(document.getElementById('pSpdShk').value) || 1;
             let tSales = parseVal('pTargetSales');
@@ -1567,11 +1572,10 @@ function hitungTfCustomHome() {
             navigator.clipboard.writeText(t).then(() => alert('Target Kejar SPD disalin ke WA!'));
         }
 
-        // --- 7. TARGET KASIR ---
+        // --- TARGET KASIR ---
         function hitungTargetKasir() {
             let shk = parseFloat(document.getElementById('kKasirShk').value) || 1;
             let pola = document.getElementById('kPola').value;
-            
             let sPsm = parseFloat(document.getElementById('kSisaPsm').value) || 0;
             let sPwp = parseFloat(document.getElementById('kSisaPwp').value) || 0;
             let sSg = parseFloat(document.getElementById('kSisaSg').value) || 0;
@@ -1609,7 +1613,6 @@ function hitungTfCustomHome() {
             } else {
                 document.getElementById('bKasirS3').style.display = 'none';
             }
-
             document.getElementById('hasilKasirBox').style.display = 'block';
         }
         
@@ -1630,12 +1633,11 @@ function hitungTfCustomHome() {
             if(pola === "3") {
                 t += `\n🌙 *Shift 3 (Malam):*\n- PSM: ${document.getElementById('rS3Psm').innerText} pcs\n- PWP: ${document.getElementById('rS3Pwp').innerText} pcs\n- Serba: ${document.getElementById('rS3Sg').innerText} pcs\n`;
             }
-            
-            t += `------------------------------------\n_Target murni per shift (Bukan dibagi rata). Semangat ${nama}!_`;
+            t += `------------------------------------\n_Target murni per shift. Semangat ${nama}!_`;
             navigator.clipboard.writeText(t).then(() => alert('Briefing Target Kasir disalin ke WA!'));
         }
 
-        // --- 8. MATEMATIKA RETAIL (KEMBALI 26 RUMUS LENGKAP) ---
+        // --- MATEMATIKA RETAIL ---
         function renderFormMtk() {
             let r = document.getElementById('pilihRumusRetail').value;
             let a = document.getElementById('mtkInputArea');
@@ -1682,7 +1684,7 @@ function hitungTfCustomHome() {
             } else if (r === 'lt') {
                 h = '<div class="row"><div class="col"><label>Hari Kirim dlm Seminggu</label><input type="number" id="m_hariKirim" value="6"></div><div class="col"><label>Frekuensi Kirim</label><input type="number" id="m_frekKirim" value="3"></div></div>';
             } else if (r === 'safety_stock') {
-                h = '<p style="font-size:12px;"><b>Standar Manajemen:</b> Safety Stock (SS) = <b>2 Hari</b> untuk mengamankan stok pajangan rak toko.</p>';
+                h = '<p style="font-size:12px;"><b>Standar Manajemen:</b> Safety Stock (SS) = <b>2 Hari</b>.</p>';
             } else if (r === 'over_stock') {
                 h = '<div class="row"><div class="col"><label>Stock OH</label><input type="number" id="m_ohOver"></div><div class="col"><label>PKM</label><input type="number" id="m_pkmOver"></div></div>';
             } else if (r === 'cos_ratio') {
@@ -1791,7 +1793,7 @@ function hitungTfCustomHome() {
             } else if (r === 'over_stock') {
                 let oh = parseFloat(document.getElementById('m_ohOver').value) || 0, pkm = parseFloat(document.getElementById('m_pkmOver').value) || 0;
                 let over = oh - pkm;
-                j.innerText = "Over Stock Item"; isi.innerHTML = `<b>Hasil:</b> <b style="color:${over > 0 ? '#b91c1c' : '#15803d'}; font-size:16px;">${over > 0 ? over + ' Pcs (Over Stock)' : 'Aman (Tidak Over Stock)'}</b>`;
+                j.innerText = "Over Stock Item"; isi.innerHTML = `<b>Hasil:</b> <b style="color:${over > 0 ? '#b91c1c' : '#15803d'}; font-size:16px;">${over > 0 ? over + ' Pcs (Over Stock)' : 'Aman'}</b>`;
             } else if (r === 'cos_ratio') {
                 let biaya = parseVal('m_biayaCos'), rev = parseVal('m_pendapatanCos');
                 let ratio = rev > 0 ? (biaya / rev) * 100 : 0;
@@ -1810,30 +1812,30 @@ function hitungTfCustomHome() {
             }
         }
 
-        // --- 9. KAMUS ISTILAH (KEMBALI 22 ISTILAH LENGKAP) ---
+        // --- KAMUS ISTILAH ---
         const dataKamus = {
-            "PLANOGRAM": "Panduan mendisplay barang dagangan di toko dengan tujuan memaksimalkan penjualan dan memudahkan pencarian barang.",
+            "PLANOGRAM": "Panduan mendisplay barang dagangan di toko dengan tujuan memaksimalkan penjualan.",
             "NO_RAK": "Nomor urut yang ditentukan untuk menandai posisi urutan rak display di area sales.",
-            "SHELVE": "Bagian dari rak yang berfungsi untuk menyimpan/mendisplay item barang dagangan sesuai ukuran dan komposisinya.",
-            "LUBANG": "Bagian yang terdapat pada rak display yang berfungsi untuk menyimpan shelving sesuai dengan urutannya.",
+            "SHELVE": "Bagian dari rak yang berfungsi untuk menyimpan/mendisplay item barang dagangan.",
+            "LUBANG": "Bagian yang terdapat pada rak display untuk menyimpan shelving.",
             "POSISI": "Panduan arah barang display. KK: Kiri Kanan, AB: Atas Bawah, DB: Depan Belakang.",
             "NO_URUT": "Urutan nomor untuk setiap barang yang didisplay dalam setiap shelving.",
             "PLU": "Price Label Unit, atau kode urut identitas suatu barang/produk yang dijual.",
-            "BARCODE": "Kode garis dari produk yang dibuat oleh pabrik/supplier untuk pemindaian scanner.",
+            "BARCODE": "Kode garis dari produk yang dibuat oleh pabrik/supplier.",
             "DESC": "Penjelasan atau identitas nama produk dagangan.",
-            "OOS": "Out Of Stock, kondisi di mana barang kosong di toko secara sistem (OH) maupun fisik di rak.",
-            "MAX_DISP": "Aplikasi personil toko untuk melakukan pemenuhan (transfer) barang dari gudang ke rak area sales.",
-            "PENERIMAAN": "Proses pencocokan fisik barang dari DC/BKL terhadap faktur (QTY & Kelayakan), lalu diproses receipt (terima) di aplikasi SIS.",
-            "SO_PARSIAL": "Proses menghitung item fisik di rak & gudang menggunakan cetak KKSO, lalu diproses (Adjust) di aplikasi SO.",
-            "FEFO": "First Expired First Out. Barang yang mendekati Retur Hari (RH) harus didisplay paling depan/awal agar laku lebih dulu.",
-            "E_TRANS": "Aplikasi layanan transaksi elektronik/pembayaran tagihan bagi konsumen.",
-            "SPD": "Sales Per Day, total penghasilan kotor (Rupiah) per hari. (SPD = APC x STD)",
-            "STD": "Struk Transaction Day, jumlah konsumen yang datang berbelanja per hari. (STD = SPD / APC)",
-            "APC": "Average Purchase Customer, rata-rata nominal jumlah belanja konsumen (keranjang). (APC = SPD / STD)",
-            "GM": "Gross Margin, selisih harga beli (HPP) dan harga jual. Laba kotor barang.",
-            "PKM": "Penetapan Kuantitas Maksimum. Limitasi jumlah persediaan ideal untuk dipajang di toko.",
-            "DSI": "Day Sales Inventory, umur kecukupan stok di toko jika tidak ada pengiriman lagi.",
-            "NBH": "Nota Barang Hilang, toleransi kerugian batas wajar untuk selisih SO toko."
+            "OOS": "Out Of Stock, kondisi di mana barang kosong di toko.",
+            "MAX_DISP": "Aplikasi personil toko untuk pemenuhan barang dari gudang ke rak area sales.",
+            "PENERIMAAN": "Proses pencocokan fisik barang dari DC/BKL terhadap faktur.",
+            "SO_PARSIAL": "Proses menghitung item fisik di rak & gudang menggunakan cetak KKSO.",
+            "FEFO": "First Expired First Out. Barang mendekati Expired Date didisplay lebih dulu.",
+            "E_TRANS": "Aplikasi layanan transaksi elektronik/pembayaran tagihan.",
+            "SPD": "Sales Per Day, total penghasilan kotor per hari.",
+            "STD": "Struk Transaction Day, jumlah konsumen yang datang berbelanja.",
+            "APC": "Average Purchase Customer, rata-rata nominal jumlah belanja konsumen.",
+            "GM": "Gross Margin, selisih harga beli (HPP) dan harga jual.",
+            "PKM": "Penetapan Kuantitas Maksimum persediaan ideal.",
+            "DSI": "Day Sales Inventory, umur kecukupan stok di toko.",
+            "NBH": "Nota Barang Hilang, toleransi kerugian batas wajar selisih SO."
         };
 
         function showDefinisiKamus() {
@@ -1846,7 +1848,7 @@ function hitungTfCustomHome() {
             } else { b.style.display = 'none'; }
         }
 
-        // --- 10. GAME CENTER ---
+        // --- ZONA SANTAI ---
         function showGame(tipe) {
             document.getElementById('areaTicTacToe').style.display = tipe === 'ticTacToe' ? 'block' : 'none';
             document.getElementById('areaKuis').style.display = tipe === 'kuisRetail' ? 'block' : 'none';
@@ -1860,7 +1862,7 @@ function hitungTfCustomHome() {
         function initTtt() {
             let container = document.getElementById('tttBoard');
             if(!container) return;
-            container.innerHTML = ''; // Hapus sisa UI lama
+            container.innerHTML = '';
             for(let i=0; i<9; i++) {
                 let cell = document.createElement('div');
                 cell.classList.add('ttt-cell');
@@ -1897,20 +1899,19 @@ function hitungTfCustomHome() {
             currentPlayer = currentPlayer === "X" ? "O" : "X";
             document.getElementById('tttStatus').innerText = `Giliran Pemain: ${currentPlayer}`;
         }
-        // RESET TIC TAC TOE DIPERBAIKI TOTAL
         function resetTtt() {
             tttBoard = ["", "", "", "", "", "", "", "", ""];
             currentPlayer = "X";
             isGameActive = true;
             document.getElementById('tttStatus').innerText = "Giliran Pemain: X";
-            initTtt(); // Merender ulang board secara utuh agar event listener bersih
+            initTtt();
         }
 
         const bankSoalRetail = {
             easy: [
                 { soal: "Apa kepanjangan dari FEFO dalam aturan display barang dagangan?", opsi: ["First Entry First Out", "Fast Expired Fast Out", "First Expired First Out", "First Empty First Out"], benar: 2 },
                 { soal: "Jika barang di rak kosong, tetapi di sistem komputer (OH) masih ada, kondisi ini disebut...", opsi: ["OOS (Out Of Stock)", "Retur", "Overstock", "PB Kosong"], benar: 0 },
-                { soal: "Barang yang memiliki masa kedaluwarsa (Expired Date) lebih pendek diletakkan di...", opsi: ["Bagian belakang rak", "Gudang atas", "Bagian depan / luar (supaya laku duluan)", "Keranjang sampah"], benar: 2 },
+                { soal: "Barang dengan masa kedaluwarsa lebih pendek diletakkan di...", opsi: ["Bagian belakang rak", "Gudang atas", "Bagian depan / luar", "Keranjang sampah"], benar: 2 },
                 { soal: "Apa fungsi utama dari cetakan Planogram di toko?", opsi: ["Panduan mendisplay barang", "Absensi karyawan", "Menghitung gaji", "Cetak label harga"], benar: 0 },
                 { soal: "Label harga diskon atau promo khusus biasanya ditandai dengan warna dasar...", opsi: ["Putih polos", "Kuning / Merah mencolok", "Hitam", "Hijau tua"], benar: 1 }
             ],
@@ -1922,10 +1923,10 @@ function hitungTfCustomHome() {
                 { soal: "Apa fungsi dari aplikasi Max Display di operasional toko?", opsi: ["Mengisi stok barang dari gudang ke rak sales", "Membayar tagihan listrik", "Melihat laporan laba rugi", "Mengecek absensi"], benar: 0 }
             ],
             hard: [
-                { soal: "Diketahui STD toko 250 dan APC Rp 40.000. Berapakah nilai SPD (Sales Per Day) toko tersebut?", opsi: ["Rp 8.000.000", "Rp 10.000.000", "Rp 12.500.000", "Rp 7.500.000"], benar: 1 },
-                { soal: "Sebuah item dibeli dengan HPP Rp 8.000 dan dijual seharga Rp 10.000. Berapa persentase Gross Margin item tersebut?", opsi: ["20%", "25%", "15%", "30%"], benar: 1 },
+                { soal: "Diketahui STD toko 250 dan APC Rp 40.000. Berapakah nilai SPD toko tersebut?", opsi: ["Rp 8.000.000", "Rp 10.000.000", "Rp 12.500.000", "Rp 7.500.000"], benar: 1 },
+                { soal: "Sebuah item dibeli dengan HPP Rp 8.000 dan dijual seharga Rp 10.000. Berapa % Gross Margin item tersebut?", opsi: ["20%", "25%", "15%", "30%"], benar: 1 },
                 { soal: "Jika Target Net Sales sebulan Rp 300 juta dengan JHK 30 hari, dan HK berjalan adalah 10 hari dengan realisasi sales Rp 90 juta, berapakah ACV Net Sales saat itu?", opsi: ["90%", "100%", "95%", "85%"], benar: 1 },
-                { soal: "Berapakah formula atau cara menghitung nilai Margin Rupiah?", opsi: ["Net Sales x Gross Margin (%)", "SPD x STD", "HPP + Biaya", "Sales / JHK"], benar: 0 },
+                { soal: "Berapakah cara menghitung nilai Margin Rupiah?", opsi: ["Net Sales x Gross Margin (%)", "SPD x STD", "HPP + Biaya", "Sales / JHK"], benar: 0 },
                 { soal: "Jika total Net Sales toko dalam sebulan adalah Rp 350 juta dan toleransi NBH (BTK) adalah 0.18%, berapa batas toleransi rupiahnya?", opsi: ["Rp 630.000", "Rp 500.000", "Rp 750.000", "Rp 350.000"], benar: 0 }
             ]
         };
@@ -1937,19 +1938,11 @@ function hitungTfCustomHome() {
 
         function pilihLevelKuis(level) {
             activeLevelSoal = bankSoalRetail[level];
-            kuisIdx = 0;
-            kuisSkor = 0;
-            
+            kuisIdx = 0; kuisSkor = 0;
             document.getElementById('menuPilihLevel').style.display = 'none';
             document.getElementById('kuisContainer').style.display = 'block';
             document.getElementById('kuisScoreBoard').style.display = 'none';
-            
-            if(level === 'hard') {
-                document.getElementById('timerBox').style.display = 'block';
-            } else {
-                document.getElementById('timerBox').style.display = 'none';
-            }
-
+            document.getElementById('timerBox').style.display = (level === 'hard') ? 'block' : 'none';
             renderSoalKuis();
         }
 
@@ -1966,7 +1959,6 @@ function hitungTfCustomHome() {
                 let q = activeLevelSoal[kuisIdx];
                 document.getElementById('kuisLevelInfo').innerText = `SOAL ${kuisIdx + 1} DARI ${activeLevelSoal.length}`;
                 document.getElementById('kuisSoal').innerText = q.soal;
-                
                 let optHtml = "";
                 q.opsi.forEach((opt, idx) => {
                     optHtml += `<div class="quiz-opt" onclick="jawabKuis(${idx}, ${q.benar})">${['A', 'B', 'C', 'D'][idx]}. ${opt}</div>`;
@@ -1985,48 +1977,33 @@ function hitungTfCustomHome() {
                         }
                     }, 1000);
                 }
-            } else {
-                selesaiKuis();
-            }
+            } else { selesaiKuis(); }
         }
 
         function waktuHabisKuis(benarIdx) {
-            let opsiElements = document.querySelectorAll('.quiz-opt');
-            opsiElements.forEach((el, idx) => {
+            document.querySelectorAll('.quiz-opt').forEach((el, idx) => {
                 if(idx === benarIdx) el.classList.add('correct');
                 el.style.pointerEvents = 'none';
             });
-
-            setTimeout(() => {
-                kuisIdx++;
-                renderSoalKuis();
-            }, 1500);
+            setTimeout(() => { kuisIdx++; renderSoalKuis(); }, 1500);
         }
 
         function jawabKuis(pilih, benar) {
             clearInterval(timerInterval);
-            let opsiElements = document.querySelectorAll('.quiz-opt');
-            opsiElements.forEach((el, idx) => {
+            document.querySelectorAll('.quiz-opt').forEach((el, idx) => {
                 if(idx === benar) el.classList.add('correct');
                 if(idx === pilih && pilih !== benar) el.classList.add('wrong');
                 el.style.pointerEvents = 'none';
             });
-
             if(pilih === benar) kuisSkor++;
-
-            setTimeout(() => {
-                kuisIdx++;
-                renderSoalKuis();
-            }, 1000);
+            setTimeout(() => { kuisIdx++; renderSoalKuis(); }, 1000);
         }
 
         function selesaiKuis() {
             clearInterval(timerInterval);
             document.getElementById('kuisContainer').style.display = 'none';
-            
             let finalScore = Math.round((kuisSkor / activeLevelSoal.length) * 100);
             document.getElementById('kuisSkorAkhir').innerText = finalScore;
-            
             let evalBox = document.getElementById('kuisEvaluasiText');
             if (finalScore >= 80) {
                 evalBox.innerText = "🏆 \"Lulus Kualifikasi Jabatan! Mantap Jiwa!\"";
@@ -2035,11 +2012,10 @@ function hitungTfCustomHome() {
                 evalBox.innerText = "⚠️ \"Perlu pembinaan dan pendalaman materi operasional lagi!\"";
                 evalBox.style.background = "#fee2e2"; evalBox.style.color = "#b91c1c";
             }
-
             document.getElementById('kuisScoreBoard').style.display = 'block';
         }
 
-        // --- 11. PLAN ABSENSI & EXPORT GAMBAR ---
+        // --- PLAN ABSENSI ---
         function getJumlahHariDalamBulan(bulan, tahun) { return new Date(tahun, parseInt(bulan) + 1, 0).getDate(); }
         function gantiPeriodeKalender() { generateAbsensiTable(); }
         function getStorageKeyAbsensi() {
@@ -2054,6 +2030,7 @@ function hitungTfCustomHome() {
             let totalHari = getJumlahHariDalamBulan(bulan, tahun);
 
             let headerRow = document.getElementById('rowTanggalHeader');
+            if(!headerRow) return;
             headerRow.innerHTML = '<th class="col-nama">NAMA PERSONEL</th>';
             for (let t = 1; t <= totalHari; t++) {
                 let th = document.createElement('th');
@@ -2063,7 +2040,6 @@ function hitungTfCustomHome() {
 
             let tbody = document.getElementById('bodyPlanAbsensi');
             tbody.innerHTML = '';
-            
             let storageKey = getStorageKeyAbsensi();
             let savedData = JSON.parse(localStorage.getItem(storageKey)) || null;
             let listNama = savedData ? Object.keys(savedData) : ['', '', ''];
@@ -2110,14 +2086,12 @@ function hitungTfCustomHome() {
 
         function saveAbsensiData() {
             let data = {};
-            let rows = document.querySelectorAll('#bodyPlanAbsensi tr');
-            rows.forEach(r => {
+            document.querySelectorAll('#bodyPlanAbsensi tr').forEach(r => {
                 let namaInput = r.querySelector('.col-nama input');
                 let nama = namaInput ? namaInput.value.trim().toUpperCase() : '';
                 if (nama) {
                     data[nama] = {};
-                    let cells = r.querySelectorAll('.shift-cell');
-                    cells.forEach((inp, idx) => {
+                    r.querySelectorAll('.shift-cell').forEach((inp, idx) => {
                         data[nama][idx + 1] = inp.value.trim().toUpperCase();
                     });
                 }
@@ -2160,7 +2134,7 @@ function hitungTfCustomHome() {
             let savedData = JSON.parse(localStorage.getItem(storageKey)) || {};
             let listNama = Object.keys(savedData).filter(n => n.trim() !== '');
 
-            if (listNama.length === 0) { alert("⚠️ Belum ada nama personel yang diisi untuk bulan ini!"); return; }
+            if (listNama.length === 0) { alert("⚠️ Belum ada nama personel yang diisi!"); return; }
 
             let canvas = document.getElementById('hiddenRosterCanvas');
             let ctx = canvas.getContext('2d');
@@ -2231,11 +2205,9 @@ function hitungTfCustomHome() {
             let today = new Date().getDate();
             let bulanText = document.getElementById('selBulanAbsensi').options[document.getElementById('selBulanAbsensi').selectedIndex].text;
             let infoToko = localStorage.getItem(LOGIN_KEY) || 'TOKO';
-            
             let pagi = [], siang = [], off = [], so = [];
-            let rows = document.querySelectorAll('#bodyPlanAbsensi tr');
 
-            rows.forEach(r => {
+            document.querySelectorAll('#bodyPlanAbsensi tr').forEach(r => {
                 let nama = r.querySelector('.col-nama input') ? r.querySelector('.col-nama input').value.trim() : '';
                 let cells = r.querySelectorAll('.shift-cell');
                 let shift = cells[today - 1] ? cells[today - 1].value.trim().toUpperCase() : '';
@@ -2255,15 +2227,12 @@ function hitungTfCustomHome() {
                        `🔥 *Shift Siang (S):* ${siang.length ? siang.join(', ') : '-'}\n` +
                        `🔴 *Libur (OFF):* ${off.length ? off.join(', ') : '-'}\n` +
                        (so.length ? `🟠 *Stock Opname (SO):* ${so.join(', ')}\n` : '') +
-                       `------------------------------------\n` +
-                       `_Semangat bertugas rekan-rekan! 💪_`;
+                       `------------------------------------\n_Semangat bertugas rekan-rekan! 💪_`;
 
-            navigator.clipboard.writeText(text).then(() => {
-                alert("Jadwal hari ini berhasil disalin! Silakan tempel (Paste) di grup WhatsApp toko.");
-            });
+            navigator.clipboard.writeText(text).then(() => alert("Jadwal hari ini berhasil disalin ke WhatsApp!"));
         }
 
-        // --- 12. REPRINT STRUK & QR MEMBER ---
+        // --- REPRINT STRUK & QR MEMBER ---
         function konversiReprint() {
             let rawInput = document.getElementById('inputReprint').value;
             if(!rawInput.trim()) { alert("Masukkan No Bon terlebih dahulu!"); return; }
@@ -2286,14 +2255,12 @@ function hitungTfCustomHome() {
         let globalQrText = "";
         function generateQrMember(format) {
             let kodeToko = document.getElementById('inputTokoQr').value.trim().toUpperCase();
-            if(!kodeToko) { alert("Masukkan Kode Toko terlebih dahulu (Contoh: R017)!"); return; }
+            if(!kodeToko) { alert("Masukkan Kode Toko terlebih dahulu!"); return; }
             globalQrText = `https://wa.me/08111500959?text=Aktivasi%23${kodeToko}`;
             
             let container = document.getElementById('areaRenderQr');
             container.innerHTML = ''; 
-            
             let totalQr = 1, qrSize = 180;
-            // Opsi cetak: 1, 4 (2x2), atau 9 (3x3) sesuai permintaan terbaru
             if(format === '2x2') { totalQr = 4; qrSize = 130; } 
             else if(format === '3x3') { totalQr = 9; qrSize = 100; }
 
@@ -2319,12 +2286,8 @@ function hitungTfCustomHome() {
 
         function shareQrWa() {
             let kodeToko = document.getElementById('inputTokoQr').value.trim().toUpperCase() || 'TOKO';
-            let text = `📱 *QR CODE MEMBER RESMI - TOKO ${kodeToko}*\n` +
-                       `Silakan scan QR atau klik tautan di bawah ini untuk aktivasi member:\n` +
-                       globalQrText + `\n\n_Generated by Retail Assistant Pro_`;
-            navigator.clipboard.writeText(text).then(() => {
-                alert("Link & Pesan QR Member berhasil disalin! Silakan tempel (Paste) ke WhatsApp.");
-            });
+            let text = `📱 *QR CODE MEMBER RESMI - TOKO ${kodeToko}*\nSilakan scan QR atau klik tautan berikut untuk aktivasi:\n` + globalQrText + `\n\n_Generated by Retail Assistant Pro_`;
+            navigator.clipboard.writeText(text).then(() => alert("Link & Pesan QR Member berhasil disalin!"));
         }
     </script>
 </body>
