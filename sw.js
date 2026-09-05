@@ -1,4 +1,4 @@
-const CACHE_NAME = 'retail-assistant-v9.1'; // Versi dinaikkan agar HP otomatis sadar ada update
+const CACHE_NAME = 'retail-assistant-v9.2'; // Versi dinaikkan agar HP otomatis sadar ada update
 
 const urlsToCache = [
     '/',
